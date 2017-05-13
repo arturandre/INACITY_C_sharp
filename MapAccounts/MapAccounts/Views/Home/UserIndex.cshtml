@@ -1,0 +1,43 @@
+﻿@model MapAccounts.Models.Maps.Primitives.RegionDTO
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="~/Client/Scripts/GSDrawer.js"></script>
+<link rel="stylesheet" type="text/css" href="~/Client/css/map.css" />
+<link rel="stylesheet" type="text/css" href="~/Client/css/controls.css" />
+<script async defer src="~/Client/Scripts/HomeUserIndexScript.js"></script>
+
+@{
+    if (Model != null)
+    {
+        <script>
+            var mRegion = @Html.Raw(new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(@Model));
+            var gsdrawer = new GSDrawer();
+
+            gsdrawer.selectedRegions.push(mRegion);
+            var mapOptions = {
+                zoom: 15,
+                center: { lat: @Model.getCenter().lat, lng: @Model.getCenter().lng}
+            };
+        </script>
+    }
+    else
+    {
+        <script>
+            var mRegion = null;
+            var gsdrawer = new GSDrawer();
+            var mapOptions = {
+                zoom: 15,
+                center: { lat: -23.559359, lng: -46.731667}
+            };
+        </script>
+    }
+
+    ViewBag.Title = "Home Page";
+}
+
+@RenderPage("~/Views/Shared/Home.cshtml")
+
+
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzw_81uL52LSQVYvXEpweaBsr3m-xHYac&callback=initMap">
+</script>

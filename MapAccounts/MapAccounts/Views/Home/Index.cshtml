@@ -1,0 +1,136 @@
+﻿@model MapAccounts.Models.Primitives.RegionDTO
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="~/Scripts/FileSaver.min.js"></script>
+<script src="~/Scripts/jszip.min.js"></script>
+<script src="~/Client/Scripts/Primitives/PointDTO.js"></script>
+<script src="~/Client/Scripts/Primitives/PictureDTO.js"></script>
+<script src="~/Client/Scripts/Primitives/PanoramaDTO.js"></script>
+<script src="~/Client/Scripts/Helpers/Geocoordinate.js"></script>
+<script src="~/Client/Scripts/Modules/GSHeatMap.js"></script>
+<script src="~/Client/Scripts/Modules/GSDrawer.js"></script>
+<script src="~/Client/Scripts/Modules/GSPanoramaMiner.js"></script>
+<script src="~/Client/Scripts/Modules/ImageFilter.js"></script>
+<link rel="stylesheet" type="text/css" href="~/Client/css/map.css" />
+<link rel="stylesheet" type="text/css" href="~/Client/css/controls.css" />
+
+
+@{
+    <script>
+        var gsdrawer = new GSDrawer();
+        var imfilter = new ImageFilter();
+    </script>
+    if (Model != null)
+    {
+        <script>
+            var mRegion = @Html.Raw(new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(@Model));
+
+            gsdrawer.selectedRegions.push(mRegion);
+            var mapOptions = {
+                zoom: 15,
+                center: { lat: @Model.getCenter().lat, lng: @Model.getCenter().lng}
+            };
+        </script>
+    }
+    else
+    {
+        <script>
+            var mRegion = null;
+            var mapOptions = {
+                zoom: 12,
+                center: { lat: -23.559359, lng: -46.731667}
+            };
+        </script>
+    }
+    
+
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>AnurbsVC</h1>
+    <p class="lead">A plataforma de Análise de características urbanas por meio de Visão Computacional</p>
+</div>
+
+<div class="row">
+    <div id="divLoading">
+        <h1>Processando... <img src="~/Content/ajax-loader.gif" /></h1>
+    </div>
+    <br />
+    <div class="col-md-6" margin-left:auto;>
+        <h2>Região de interesse</h2>
+
+        <div class="mapcomponent">
+            <label for="tbAddress">Busca por endereço:</label>
+            <input type="text" id="tbAddress" />
+            <input type="button" id="btAddress" value="Buscar" />
+        </div>
+
+        <div id="divAmenities">
+            <input type="button" id="btSchool" value="Escolas" />
+            <input type="button" id="btPharmacy" value="Farmácias" />
+            <input type="button" id="btBusStop" value="Pontos de ônibus" />
+            <input type="button" id="btHospital" value="Hospitais" />
+        </div>
+        <br/>
+        <div id="divAmenitiesControls">
+            <input type="image" id="btAmenitiesImages" src="~/Content/playbutton.png" />
+            <input type="image" id="btSnapInMap" src="~/Content/snapbutton.png" />
+        </div>
+
+        <br />
+        <p>
+            Selecione o canto superior esquerdo e o inferior direito de uma região:
+        </p>
+        <div id="divMapSide">
+            <div class="mapcomponent" id="map"></div>
+            <div id="divMapNavigator">
+                <label for="sdLocationPoint">Use este controle para navegar entre os pontos encontrados:</label>
+                <input type="range" id="sdLocationPoint" />
+            </div>
+        </div>
+        
+
+    </div>
+    <div class="col-md-6" id="divStreetControls">
+        <h2>Detalhes e relatórios</h2>
+        <div id="divControlsMenu">
+            <input type="button" id="btStreets" class="menu-button" value="Coletar ruas" />
+        </div>
+        <input type="button" id="btSaveSession" class="menu-button-right" value="Salvar sessão" />
+        <br />
+        <div id="divReports">
+            <p>Selecione uma operação:</p>
+            <input type="button" id="btPictures" class="menu-button" value="Ver imagens" />
+            <div id="divFilters">
+                <input type="button" id="btTreesFilter" class="menu-button" value="Filtrar árvores" />
+                <input type="button" id="btCracksFilter" class="menu-button" value="Filtrar rachaduras" />
+                <input type="button" id="btGenericFilter" class="menu-button" value="Filtro customizado" />
+                <input type="button" id="btHeatMapStreetsToggle" class="menu-button" value="Ver HeatMap" />
+            </div>
+            <br />
+            <br />
+            <div id="divNumPoints">
+                <div>
+                    <input checked="checked" type="checkbox" id="cbInterpolatePoints" />
+                    <label for="cbInterpolatePoints">Buscar mais pontos</label>
+                    <img src="~/Content/questionmark.png"
+                         class="masterTooltip" title="Com esta opção os pontos obtidos para a rua serão interpolados a fim de se buscar mais imagens para a rua. A espectativa de tempo pode aumentar." />
+                </div>
+                <br />
+            </div>
+            <input type="button" id="btDownloadImages" class="menu-button-right" value="Descarregar imagens" />
+
+        </div>
+        <img id="imgPreview" width="640" height="640" />
+        <br />
+        
+    </div>
+
+</div>
+
+<script src="~/Client/Scripts/Views/HomeIndexScript.js"></script>
+
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzw_81uL52LSQVYvXEpweaBsr3m-xHYac&callback=initMap&libraries=visualization,geometry">
+</script>

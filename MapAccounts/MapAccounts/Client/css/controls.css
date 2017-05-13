@@ -1,0 +1,66 @@
+﻿
+#divMapSide {
+    display:flex;
+    flex-direction:column;
+}
+#divMapNavigator {
+    display:none;
+    flex-direction:column;
+}
+
+#sdLocationPoint {
+    max-width: none;
+    width: 100%;    
+}
+
+#divStreetControls, #divAmenities, #divFilters, #divAmenitiesControls
+{
+    display:none;
+}
+#divReports
+{
+    display:none;
+    width:100%;
+    float: left;
+    margin-top: 20px;
+}
+#divLoading {
+    margin: 0 auto;
+    width: 30%;
+    display:none;
+
+}
+#imgPreview{
+    width:100%;
+    max-height: 500px;
+    
+}
+
+
+
+/* allow buttons to display on the same line */
+.menu-button { 
+     position:relative;
+     display:block;
+     float:left; 
+}
+
+/* make button float on the right */
+.menu-button-right { 
+    position:relative;
+    display:block;
+    float:right;
+
+}
+
+
+
+.tooltipcustom {
+	position:absolute;
+	border:1px solid #333;
+	background-color:#161616;
+	border-radius:5px;
+	padding:10px;
+	color:#fff;
+	font-size:12px Arial;}
+

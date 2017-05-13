@@ -1,0 +1,37 @@
+﻿<div class="jumbotron">
+    <h1>AnurbsVC</h1>
+    <p class="lead">A plataforma de Análise de características urbanas por meio de Visão Computacional</p>
+</div>
+
+<div class="row">
+    <div class="col-md-6" margin-left:auto;>
+        <h2>Região de interesse</h2>
+
+        <div class="mapcomponent">
+            <label for="tbAddress">Busca por endereço:</label>
+            <input type="text" id="tbAddress" />
+            <input type="button" id="btAddress" value="Buscar" />
+        </div>
+
+        <p>
+            Marque dois pontos para selecionar um região:
+        </p>
+
+        <div class="mapcomponent" id="map"></div>
+
+    </div>
+    <div class="col-md-6" id="divStreetControls">
+        <h2>Detalhes e relatórios</h2>
+        <div id="divControlsMenu">
+            <input type="button" id="btStreets" class="menu-button" value="Coletar ruas" />
+            <input type="button" id="btPictures" class="menu-button" value="Ver imagens" />
+        </div>
+        <input type="button" id="btSaveSection" class="menu-button-right" value="Salvar seção" />
+        <br/>
+        <div id="divReports">
+            <p>Selecione uma operação:</p>
+            <img id="imgPreview" />
+        </div>
+    </div>
+
+</div>

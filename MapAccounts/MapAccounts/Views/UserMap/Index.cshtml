@@ -1,0 +1,75 @@
+﻿@model IEnumerable<MapAccounts.Models.Maps.Primitives.RegionDTO>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<script src="~/Client/Scripts/Primitives/PointDTO.js"></script>
+<script src="~/Client/Scripts/Primitives/PictureDTO.js"></script>
+<script src="~/Client/Scripts/Primitives/PanoramaDTO.js"></script>
+<script src="~/Client/Scripts/Modules/GSHeatMap.js"></script>
+<script src="~/Client/Scripts/Modules/GSDrawer.js"></script>
+
+
+<script>
+        var gsdrawers = [];
+</script>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Bounds)
+        </th>
+        <th></th>
+    </tr>
+    
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            <div id="map"></div>
+            <script>
+                var mapref = document.getElementById("map");
+                mapref.style.width = '100%';
+                mapref.style.height = '191px';
+                mapref.id = "map" + @item.ID;
+                var clng = @item.getCenter().lng;
+                var clat = @item.getCenter().lat;
+
+                var mapOptions = {
+                    zoom: 15,
+                    center: { lat: clat, lng: clng }
+                };
+                var gsdrawer = new GSDrawer();
+                gsdrawer.id = mapref.id;
+                //mapsIds.push(mapref.id);
+                gsdrawer.mapOptions = mapOptions;
+                //mapsOptions.push(mapOptions);
+                var mRegion = @Html.Raw(new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(item));
+                gsdrawer.selectedRegions.push(mRegion);
+                //mapsRegions.push(mRegion);
+                gsdrawers.push(gsdrawer);
+            </script>
+        </td>
+        <td>
+                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                <br />
+            <a href='@Url.Action("UserIndex", "Home", new { regionId = item.ID })'>Retomar Seção</a>
+        </td>
+    </tr>
+}
+
+</table>
+
+<script src="~/Client/Scripts/Views/UserMapIndexScript.js"></script>
+
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzw_81uL52LSQVYvXEpweaBsr3m-xHYac&callback=initMap&libraries=visualization">
+</script>

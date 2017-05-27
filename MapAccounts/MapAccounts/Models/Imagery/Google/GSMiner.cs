@@ -99,8 +99,15 @@ namespace MapAccounts.Models.Imagery.Google
         {
             using (HttpClient client = new HttpClient())
             {
-                var response = client.GetByteArrayAsync(Uri).Result;
-                return Convert.ToBase64String(response);
+                try
+                {
+                    var response = client.GetByteArrayAsync(Uri).Result;
+                    return Convert.ToBase64String(response);
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
             }
         }
         /*

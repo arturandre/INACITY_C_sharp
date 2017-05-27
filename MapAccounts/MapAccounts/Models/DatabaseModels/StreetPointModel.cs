@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MapAccounts.Models
@@ -8,7 +9,7 @@ namespace MapAccounts.Models
         public StreetPointModel() { }
 
         [Key]
-        public int ID { get; set; }
+        public String ID { get; set; }
         public double lat { get; set; }
         public double lng { get; set; }
         public int StreetModelID { get; set; }

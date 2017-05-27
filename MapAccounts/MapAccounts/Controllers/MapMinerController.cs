@@ -40,7 +40,7 @@ namespace MapAccounts.Controllers
                 bs.Y <= region.North)
                         ret.Add(new AmenityDTO()
                     {
-                        ID = -1,
+                        ID = null,
                         lat = bs.Y,
                         lng = bs.X,
                         name = "Nome: "+  bs.pt_nome + "</br>" + "Endereço: " + bs.pt_enderec + "</br>" + "Descrição: " + bs.pt_descric,

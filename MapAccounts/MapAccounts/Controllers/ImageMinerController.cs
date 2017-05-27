@@ -23,7 +23,7 @@ namespace MapAccounts.Controllers
             foreach (var picNotNull in panoramaPoints)
             {
                 var auxPic = picNotNull.PanoramaDTO.Pictures.ElementAt(0);
-                auxPic.location = new PointDTO() { lat = picNotNull.lat, lng = picNotNull.lng };
+                auxPic.location = new PointDTO() { ID = picNotNull.ID, lat = picNotNull.lat, lng = picNotNull.lng };
                 Pictures.Add(auxPic);
             }
 
@@ -44,19 +44,19 @@ namespace MapAccounts.Controllers
             return Pictures;
         }
 
-        [Authorize]
-        [HttpPost]
-        [Route("ImagesFromStreetDB")]
-        public StreetDTO GetImagesFromStreetDB(StreetDTO street)
-        {
-            var streetName = street.Name;
-            var streetModel = db.StreetModel.FirstOrDefault(s => s.Name.Equals(streetName));
-            if (streetModel != null)
-            {
-                return new StreetDTO(streetModel);
-            }
+        //[Authorize]
+        //[HttpPost]
+        //[Route("ImagesFromStreetDB")]
+        //public StreetDTO GetImagesFromStreetDB(StreetDTO street)
+        //{
+        //    var streetName = street.Name;
+        //    var streetModel = db.StreetModel.FirstOrDefault(s => s.Name.Equals(streetName));
+        //    if (streetModel != null)
+        //    {
+        //        return new StreetDTO(streetModel);
+        //    }
 
-            return null;
-        }
+        //    return null;
+        //}
     }
 }

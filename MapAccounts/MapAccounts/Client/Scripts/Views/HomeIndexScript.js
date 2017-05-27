@@ -37,6 +37,8 @@ var btSchool = document.getElementById("btSchool");
 var btPharmacy = document.getElementById("btPharmacy");
 var btBusStop = document.getElementById("btBusStop");
 var btHospital = document.getElementById("btHospital");
+var btTreesHeatMap = document.getElementById("btTreesHeatMap");
+
 
 var divLoading = document.getElementById("divLoading");
 
@@ -267,42 +269,43 @@ function bindings() {
         btHospital.onclick =
         btBusStop.onclick = mapNode;
 
+    btTreesHeatMap.onclick = heatmapFeature;
+
     sdLocationPoint.oninput = sdLocationPoint.onchange = function (e) {
         gsdrawer.clearImagePresentation();
         gsdrawer.setImgPresentationPosition(e.currentTarget.value);
     };
 
     GSDrawer.initMap = function () {
-        var myStyles = [
+    	var myStyles = [
     {
-        featureType: "poi",
-        elementType: "labels",
-        stylers: [
+    	featureType: "poi",
+    	elementType: "labels",
+    	stylers: [
               { visibility: "off" }
-        ]
+    	]
     }
-        ];
-        mapOptions.styles = myStyles;
-        gsdrawer.setMap(new google.maps.Map(document.getElementById("map"),
+    	];
+    	mapOptions.styles = myStyles;
+    	gsdrawer.setMap(new google.maps.Map(document.getElementById("map"),
             mapOptions));
-        $.each(gsdrawer.selectedRegions, function (index, region) {
-            gsdrawer.drawRegionOnMap(region);
-            gsdrawer.drawStreetsInMap(region.StreetDTO);
-        });
-        gsdrawer.onSelectedStreetChanged = function (newStreet) {
-            updateControls(newStreet === null ? 1 : 2);
-        }
-        gsdrawer.onSelectedRegionChanged = function () {
-            updateControls(1);
-        }
-        gsdrawer.onStreetFocused = function (obj) {
-            updateControls(3);
-        }
-        gsdrawer.onImagePresentation = function ()
-        {
-            updateLocationPointSlider();
-        }
-    }
+    	$.each(gsdrawer.selectedRegions, function (index, region) {
+    		gsdrawer.drawRegionOnMap(region);
+    		gsdrawer.drawStreetsInMap(region.StreetDTO);
+    	});
+    	gsdrawer.onSelectedStreetChanged = function (newStreet) {
+    		updateControls(newStreet === null ? 1 : 2);
+    	}
+    	gsdrawer.onSelectedRegionChanged = function () {
+    		updateControls(1);
+    	}
+    	gsdrawer.onStreetFocused = function (obj) {
+    		updateControls(3);
+    	}
+    	gsdrawer.onImagePresentation = function () {
+    		updateLocationPointSlider();
+    	}
+    };
     imgPreview.src = "/out8.jpg";
     gsdrawer.imgPreview = document.getElementById("imgPreview");
 }
@@ -347,13 +350,25 @@ var btStreetsClick = function () {
 };
 
 var btSnapInMapClick = function () {
-    gsdrawer.snapin = !gsdrawer.snapin;
-    btSnapInMap.src = gsdrawer.snapin ? unsnapbutton : snapbutton;
-}
+	gsdrawer.snapin = !gsdrawer.snapin;
+	btSnapInMap.src = gsdrawer.snapin ? unsnapbutton : snapbutton;
+};
 
 var btAmenitiesImagesClick = function () {
     statePlayPause === 1 ? setPlayPauseState(2) : setPlayPauseState(1);
 };
+
+function heatmapFeature(e)
+{
+	switch (e.target.id) {
+		case "btTreesHeatMap":
+			toggleHeatMap(true);
+			gsdrawer.plotHeatmapFromDB("Trees");
+			break;
+		default:
+			break;
+	}
+}
 
 function mapNode(e) {
     var amenity = "";
@@ -361,19 +376,19 @@ function mapNode(e) {
     switch (e.target.id) {
         case "btSchool":
             amenity = "school";
-            message = "Buscando escolas..."
+            message = "Buscando escolas...";
             break;
         case "btPharmacy":
             amenity = "pharmacy";
-            message = "Buscando farmácias..."
+            message = "Buscando farmácias...";
             break;
         case "btBusStop":
             amenity = "bus_station";
-            message = "Buscando pontos de ônibus..."
+            message = "Buscando pontos de ônibus...";
             break;
         case "btHospital":
             amenity = "hospital";
-            message = "Buscando hospitais..."
+            message = "Buscando hospitais...";
             break;
         default:
             break;
@@ -392,7 +407,7 @@ function mapNode(e) {
 
 function toggleHeatMap(force) {
     gsdrawer.toggleHeatMapMode(force);
-    if (force == true || force == false) {
+    if (force === true || force === false) {
         modeStreetHeatMap = force;
         btHeatMapStreetsToggle.value = force ? "Ver ruas" : "Ver HeatMap";
     }

@@ -7,6 +7,7 @@ namespace MapAccounts.Models.Primitives
         public FilterResultDTO()
         {
             this.imageID = -1;
+            this.panoID = null;
         }
 
         public enum CaracteristicType
@@ -18,6 +19,7 @@ namespace MapAccounts.Models.Primitives
         }
         //public PointDTO Location { get; set; }
         public int imageID { get; set; }
+        public String panoID { get; set; }
         public CaracteristicType Type { get; set; }
         public String base64image { get; set; }
         public Boolean IsCaracteristicPresent { get; set; }

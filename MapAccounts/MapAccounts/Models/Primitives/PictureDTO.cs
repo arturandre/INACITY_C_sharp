@@ -17,12 +17,14 @@ namespace MapAccounts.Models.Primitives
         public PictureDTO(GSPicture picture)
         {
             filterResults = new List<FilterResultDTO>();
-            this.ID = picture.ID;
+//            this.imageID = picture.ID;
+            this.panoID = picture.ID;
             this.heading = picture.heading;
             this.base64image = picture.imageURI;
         }
 
-        public int ID { get; set; }
+        public int imageID { get; set; }
+        public String panoID { get; set; }
         public double heading { get; set; }
         public string base64image { get; set; }
         public String imageURI { get; set; }

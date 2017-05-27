@@ -6,6 +6,8 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 using MapAccounts.Models.Primitives;
+using System.Data.Entity.Spatial;
+using System.Globalization;
 
 namespace MapAccounts.Models.Maps.OSM
 {
@@ -89,7 +91,8 @@ namespace MapAccounts.Models.Maps.OSM
                                 foreach (var idNode in way.Value.nodes)
                                 {
                                     var ponto = osm.GetNodesAsDictionary[idNode];
-                                    novoTrecho.Add(new PointDTO() { lat = (float)ponto.lat, lng = (float)ponto.lon});
+                                    novoTrecho.Add(new PointDTO() { ID = idNode.ToString(), lat = (float)ponto.lat, lng = (float)ponto.lon});
+
                                 }
                                 ruaExistente.Trechos.Add(novoTrecho);
                                 //ruaExistente.Trechos = ruaExistente.Trechos.Distinct(new PointComparer()).ToList();
@@ -101,13 +104,16 @@ namespace MapAccounts.Models.Maps.OSM
                             foreach (var idNode in way.Value.nodes)
                             {
                                 var ponto = osm.GetNodesAsDictionary[idNode];
-                                novoTrecho.Add(new PointDTO() { lat = (float)ponto.lat, lng = (float)ponto.lon});
+                                novoTrecho.Add(new PointDTO() { ID = idNode.ToString(), lat = (float)ponto.lat, lng = (float)ponto.lon});
                             }
                             rua.Trechos.Add(novoTrecho);
                             //rua.Trechos = rua.Trechos.Distinct(new PointComparer()).ToList();
                             ruasDetectadas.Add(rua);
                         }
                     }
+                    
+                    
+
                     return ruasDetectadas;
                 }
             }

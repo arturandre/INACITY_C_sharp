@@ -126,7 +126,6 @@ function GSDrawer() {
     this.getGeocoder = function () {
         return geocoder;
     }
-    
 
     this.showAmenityImage = function (address) {
         var that = this;
@@ -193,9 +192,11 @@ function GSDrawer() {
             this.onSelectedStreetChanged(Street);
         }
     }
+
     this.getSelectedStreet = function () {
         return selectedStreet;
     }
+
     this.toggleHeatMapMode = function (force) {
         if (force == true || force == false) {
             heatMapMode = force;
@@ -210,6 +211,7 @@ function GSDrawer() {
             });
         }
     }
+
     this.setHeatMapData = function (type) {
         var locations = [];
         var weights = [];
@@ -220,6 +222,37 @@ function GSDrawer() {
         });
         heatMap.setData(locations, weights);
     }
+
+    this.plotHeatmapFromDB = function (featureType) {
+    	var region = this.selectedRegions[0];
+    	$.ajax({
+    		url: '/api/DBHeatMap/GetFeaturesInRegion',
+    		type: 'POST',
+    		dataType: 'json',
+    		data: region.Bounds,
+    		success: function (data) {
+    			if ($.isArray(data) && data.length > 0)
+    			{
+    				var locations = [];
+    				var weights = [];
+    				$.each(data, function (idxHMP, heatMapPoint)
+    				{
+    					locations.push(heatMapPoint.location);
+    					weights.push(featureType == "Trees" ? heatMapPoint.TreesDensity : CracksDensity);
+    					heatMap.setData(locations, weights);
+    				});
+    			}
+
+    		},
+    		error: function (request, textStatus, errorThrown) {
+    			if (request.statusText === 'abort') {
+    				return;
+    			}
+    			alert(request + '\n' + textStatus + '\n' + errorThrown);
+    		}
+    	});
+    }
+
     this.toggleAmenities = function (forceState) {
         if (forceState != null)
             isAmenitiesVisible = forceState;
@@ -297,8 +330,8 @@ function GSDrawer() {
                             '&key=AIzaSyCzw_81uL52LSQVYvXEpweaBsr3m - xHYac&sensor=false';
                         vMarker.imageUrl = imageUrl;
 
-                        var picture = PictureDTO.initialize(pictureIndex++, cameraHeading, null, imageUrl,
-                        PointDTO.initialize(-1, lat1, lng1), null);
+                        var picture = PictureDTO.initialize(pictureIndex++, position.pano, cameraHeading, null, imageUrl,
+                        PointDTO.initialize(position.ID, lat1, lng1), null);
 
                         that.originalImages.push(picture);
 

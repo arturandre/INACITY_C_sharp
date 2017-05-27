@@ -3,6 +3,7 @@ using MapAccounts.Models;
 using MapAccounts.Models.Primitives;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Spatial;
 using System.Linq;
 using System.Web.Http;
 using static MapAccounts.Models.Primitives.FilterResultDTO;
@@ -21,10 +22,16 @@ namespace MapAccounts.Controllers
             foreach (var p in pictures)
             {
                 p.base64image = (new Models.Imagery.Google.GSMiner()).DownloadBase64ImageFromURI(p.imageURI);
-           }
+            }
+            pictures = pictures.Where(p => p.base64image != null);
             ImageFilterManager.getInstance().detectFeatureInGSSequence(ref pictures, (CaracteristicType)Enum.Parse(typeof(CaracteristicType), filterType));
 
-            return pictures.Select(p => p.filterResults).SelectMany(p => p);
+
+            ResultsStoreManager storage = new ResultsStoreManager();
+            storage.StoreHeatmapPoints(pictures, (CaracteristicType)Enum.Parse(typeof(CaracteristicType), filterType));
+            
+
+            return pictures.Where(p => p.base64image != null).Select(p => p.filterResults).SelectMany(p => p);
         }
 
         [Route("GenericFilterTest")]
@@ -39,7 +46,8 @@ namespace MapAccounts.Controllers
                 ret.Add(new FilterResultDTO()
                 {
                     base64image = p.base64image,
-                    imageID = p.ID,
+                    imageID = p.imageID,
+                    panoID = p.panoID,
                     Type = FilterResultDTO.CaracteristicType.Generic
                 });
             }

@@ -87,6 +87,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -213,13 +215,13 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Comparers\PointComparer.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DBHeatMapController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImageFilterController.cs" />
     <Compile Include="Controllers\ImageMinerController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MapMinerController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Controllers\UserMapController.cs" />
     <Compile Include="Extensions\DoubleExtensions.cs" />
     <Compile Include="Extensions\StringToEnumParser.cs" />
     <Compile Include="Extensions\Vector2D.cs" />
@@ -231,12 +233,14 @@
     <Compile Include="Managers\ImageManager.cs" />
     <Compile Include="Managers\MapManager.cs" />
     <Compile Include="Comparers\StreetComparer.cs" />
+    <Compile Include="Managers\ResultsStoreManager.cs" />
     <Compile Include="Migrations\201612070310348_InitialCreate.cs" />
     <Compile Include="Migrations\201612070310348_InitialCreate.Designer.cs">
       <DependentUpon>201612070310348_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DatabaseModels\SegmentModel.cs" />
+    <Compile Include="Models\DatabaseModels\HeatmapPointModel.cs" />
     <Compile Include="Models\Primitives\Converters\Base64Converter.cs" />
     <Compile Include="Models\Imagery\Google\GSMiner.cs" />
     <Compile Include="Models\Imagery\Google\GSQueryBuilder.cs" />
@@ -247,6 +251,7 @@
     <Compile Include="Managers\ImageFilterManager.cs" />
     <Compile Include="ComputerVision\ImageProcessing\ImageHelper.cs" />
     <Compile Include="ComputerVision\ImageProcessing\TreesFilter.cs" />
+    <Compile Include="Models\Primitives\HeatMapPointDTO.cs" />
     <Compile Include="Models\Primitives\PictureDTO.cs" />
     <Compile Include="Comparers\NodeComparer.cs" />
     <Compile Include="Models\Maps\GeoSampa\BusStopNode.cs" />
@@ -415,6 +420,9 @@
       <DependentUpon>201612070310348_InitialCreate.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

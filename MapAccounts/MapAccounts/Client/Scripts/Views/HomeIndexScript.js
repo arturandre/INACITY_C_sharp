@@ -1,5 +1,6 @@
 ﻿var tbAddress = document.getElementById("tbAddress");
 var btPictures = document.getElementById("btPictures");
+var btPictures2 = document.getElementById("btPictures2");
 var btAmenitiesImages = document.getElementById("btAmenitiesImages");
 var btSnapInMap = document.getElementById("btSnapInMap");
 var btSaveSession = document.getElementById("btSaveSession");
@@ -90,7 +91,8 @@ function updateControls(step) {
             divStreetControls.style.display = 'none';
             btStreets.disabled = true;
             divReports.style.display = 'none';
-            btPictures.disabled = true;
+            //btPictures.disabled = true;
+            btPictures.display = 'block';
             sdLocationPoint.disabled = true;
             btDownloadImages.disabled = true;
             divFilters.style.display = 'none';
@@ -103,7 +105,8 @@ function updateControls(step) {
             divStreetControls.style.display = 'block';
             btStreets.disabled = false;
             divReports.style.display = 'none';
-            btPictures.disabled = true;
+            //btPictures.disabled = true;
+            btPictures.display = 'block';
             sdLocationPoint.disabled = true;
             btDownloadImages.disabled = true;
             divFilters.style.display = 'none';
@@ -116,7 +119,8 @@ function updateControls(step) {
             divStreetControls.style.display = 'block';
             btStreets.disabled = true;
             divReports.style.display = 'none';
-            btPictures.disabled = false;
+            //btPictures.disabled = false;
+            btPictures.display = 'block';
             sdLocationPoint.disabled = true;
             btDownloadImages.disabled = true;
             divFilters.style.display = 'none';
@@ -129,7 +133,8 @@ function updateControls(step) {
             divStreetControls.style.display = 'block';
             btStreets.disabled = true;
             divReports.style.display = 'block';
-            btPictures.disabled = false;
+            //btPictures.disabled = false;
+            btPictures.display = 'block';
             sdLocationPoint.disabled = true;
             btDownloadImages.disabled = true;
             divFilters.style.display = 'none';
@@ -140,9 +145,10 @@ function updateControls(step) {
         case 4:
             divAmenities.style.display = 'block';
             divStreetControls.style.display = 'block';
-            btStreets.disabled = true;
+            //btStreets.disabled = true;
             divReports.style.display = 'block';
-            btPictures.disabled = true;
+            //btPictures.disabled = true;
+            btPictures.display = none;
             sdLocationPoint.disabled = false;
             btDownloadImages.disabled = false;
             divFilters.style.display = 'block';
@@ -155,7 +161,8 @@ function updateControls(step) {
             divStreetControls.style.display = 'block';
             btStreets.disabled = true;
             divReports.style.display = 'block';
-            btPictures.disabled = true;
+            //btPictures.disabled = true;
+            btPictures.display = none;
             sdLocationPoint.disabled = false;
             btDownloadImages.disabled = false;
             divFilters.style.display = 'block';
@@ -168,11 +175,12 @@ function updateControls(step) {
             divStreetControls.style.display = 'block';
             btStreets.disabled = false;
             divReports.style.display = 'none';
-            btPictures.disabled = true;
+            //btPictures.disabled = true;
+            btPictures.display = none;
             sdLocationPoint.disabled = false;
             btDownloadImages.disabled = true;
             divFilters.style.display = 'none';
-            
+
             divAmenitiesControls.style.display = 'flex';
             btHeatMapStreetsToggle.disabled = true;
             break;
@@ -181,13 +189,15 @@ function updateControls(step) {
     }
 }
 
+$(".btn-group > .btn").click(function () {
+    $(this).addClass("active").siblings().removeClass("active");
+});
+
 function updateLocationPointSlider() {
-    if (!gsdrawer || !gsdrawer.originalImages || gsdrawer.originalImages.length === 0)
-    {
+    if (!gsdrawer || !gsdrawer.originalImages || gsdrawer.originalImages.length === 0) {
         divMapNavigator.style.display = 'none';
     }
-    else
-    {
+    else {
         divMapNavigator.style.display = 'flex';
         sdLocationPoint.max = gsdrawer.originalImages.length - 1;
     }
@@ -256,7 +266,7 @@ function bindings() {
     btAmenitiesImages.onclick = btAmenitiesImagesClick;
     btAddress.onclick = panMapByAddress;
     btStreets.onclick = btStreetsClick;
-    btPictures.onclick = getImagesForStreetClick;
+    btPictures.onclick = btPictures2.onclick = getImagesForStreetClick;
     btSaveSession.onclick = saveSessionClick;
     btTreesFilter.onclick = function (e) { getFilteredImages('Trees', e.currentTarget); };
     btCracksFilter.onclick = function (e) { getFilteredImages('Cracks', e.currentTarget); };
@@ -277,34 +287,34 @@ function bindings() {
     };
 
     GSDrawer.initMap = function () {
-    	var myStyles = [
+        var myStyles = [
     {
-    	featureType: "poi",
-    	elementType: "labels",
-    	stylers: [
+        featureType: "poi",
+        elementType: "labels",
+        stylers: [
               { visibility: "off" }
-    	]
+        ]
     }
-    	];
-    	mapOptions.styles = myStyles;
-    	gsdrawer.setMap(new google.maps.Map(document.getElementById("map"),
+        ];
+        mapOptions.styles = myStyles;
+        gsdrawer.setMap(new google.maps.Map(document.getElementById("map"),
             mapOptions));
-    	$.each(gsdrawer.selectedRegions, function (index, region) {
-    		gsdrawer.drawRegionOnMap(region);
-    		gsdrawer.drawStreetsInMap(region.StreetDTO);
-    	});
-    	gsdrawer.onSelectedStreetChanged = function (newStreet) {
-    		updateControls(newStreet === null ? 1 : 2);
-    	}
-    	gsdrawer.onSelectedRegionChanged = function () {
-    		updateControls(1);
-    	}
-    	gsdrawer.onStreetFocused = function (obj) {
-    		updateControls(3);
-    	}
-    	gsdrawer.onImagePresentation = function () {
-    		updateLocationPointSlider();
-    	}
+        $.each(gsdrawer.selectedRegions, function (index, region) {
+            gsdrawer.drawRegionOnMap(region);
+            gsdrawer.drawStreetsInMap(region.StreetDTO);
+        });
+        gsdrawer.onSelectedStreetChanged = function (newStreet) {
+            updateControls(newStreet === null ? 1 : 2);
+        }
+        gsdrawer.onSelectedRegionChanged = function () {
+            updateControls(1);
+        }
+        gsdrawer.onStreetFocused = function (obj) {
+            updateControls(3);
+        }
+        gsdrawer.onImagePresentation = function () {
+            updateLocationPointSlider();
+        }
     };
     imgPreview.src = "/out8.jpg";
     gsdrawer.imgPreview = document.getElementById("imgPreview");
@@ -350,24 +360,23 @@ var btStreetsClick = function () {
 };
 
 var btSnapInMapClick = function () {
-	gsdrawer.snapin = !gsdrawer.snapin;
-	btSnapInMap.src = gsdrawer.snapin ? unsnapbutton : snapbutton;
+    gsdrawer.snapin = !gsdrawer.snapin;
+    btSnapInMap.src = gsdrawer.snapin ? unsnapbutton : snapbutton;
 };
 
 var btAmenitiesImagesClick = function () {
     statePlayPause === 1 ? setPlayPauseState(2) : setPlayPauseState(1);
 };
 
-function heatmapFeature(e)
-{
-	switch (e.target.id) {
-		case "btTreesHeatMap":
-			toggleHeatMap(true);
-			gsdrawer.plotHeatmapFromDB("Trees");
-			break;
-		default:
-			break;
-	}
+function heatmapFeature(e) {
+    switch (e.target.id) {
+        case "btTreesHeatMap":
+            toggleHeatMap(true);
+            gsdrawer.plotHeatmapFromDB("Trees");
+            break;
+        default:
+            break;
+    }
 }
 
 function mapNode(e) {
@@ -465,6 +474,15 @@ function downloadImages() {
 }
 
 function getFilteredImages(type, obj) {
+
+    if (!!gsdrawer.getImagesMetaData()[type]) {
+        gsdrawer.setHeatMapData(type);
+        toggleHeatMap(true);
+        gsdrawer.startImagePresentation(type);
+        updateControls(5);
+        return;
+    }
+
     if (!showTimeEstimationFilterConfirmPopup()) {
         return;
     }
@@ -481,38 +499,8 @@ function getFilteredImages(type, obj) {
 
     gsdrawer.imgPreview = document.getElementById("imgPreview");
 
-    //    filterCall(gsdrawer.getSelectedStreet(), function (filterDTOs, type) {
-    //        var filteredImages = [];
-    //        var locations = [];
-    //        var weights = [];
-    //        /*$.each(filterDTOs, function (i, v) {
-    //            filteredImages.push("data:image/jpeg;base64," + v.ProcessedImageBase64);
-    //            locations.push(v.Location);
-    //            console.log(v);
-    //            if (!!v.Density) {
-    //                weights.push(v.Density);
-    //            }
-    //        });*/
-    //        gsdrawer.filteredImages[type] = filterDTOs;
-    //        gsdrawer.startImagePresentation(type);
-    //        gsdrawer.setHeatMapData(locations, weights);
-    //        //gsdrawer.setFilteredSet(filterDTOs);
+    
 
-
-    //        updateControls(5);
-    //        obj.style.border = '1px solid #00FF00';
-    //        obj.disabled = true;
-    //    });
-    //var pictures = [];
-    //$.each(gsdrawer.getSelectedStreet().Trechos, function (it, t) {
-    //    $.each(t, function (ip, p) {
-    //        var pano = p.PanoramaDTO;
-    //        if (!!pano && pano.Pictures.length > 0) {
-    //            //TODO: Tratar quando forem tiradas fotos de mais de um ângulo para cada panorama
-    //            pictures.push(pano.Pictures[0]);
-    //        }
-    //    });
-    //});
     filterCall(gsdrawer.originalImages, filterUrl + "/" + type, type, function (filterDTOs, type) {
         gsdrawer.setFilteredSet(filterDTOs, type);
         gsdrawer.setHeatMapData(type);
@@ -520,10 +508,9 @@ function getFilteredImages(type, obj) {
         gsdrawer.startImagePresentation(type);
 
 
-
         updateControls(5);
-        obj.style.border = '1px solid #00FF00';
-        obj.disabled = true;
+        //obj.style.border = '1px solid #00FF00';
+        //obj.disabled = true;
     });
     //}
 
@@ -539,8 +526,13 @@ function getCrackFilteredImages() {
 
 function getImagesForStreetClick() {
     //console.log(Street.Points.length);
-    gsdrawer.getImagesFromSelectedStreet(function () {
-        alert('Imagens carregadas com sucesso!');
+    gsdrawer.getImagesFromSelectedStreet(function (status) {
+        if (status.validImage === 0) {
+            alert('Não foi possível coletar nenhuma imagem para esta rua. \n' + status.wrongImage + ' localizações em endereços incorretos. \n' + status.zeroImage + ' localizações sem imagens.');
+        }
+        else {
+            alert('Foram coletadas ' + status.validImage + ' imagem(ns) válida(s) para esta rua. \n' + status.wrongImage + ' localização(ões) em endereço(s) incorreto(s). \n' + status.zeroImage + ' localização(ões) sem imagem(ns).');
+        }
         updateControls(4);
     }, cbInterpolatePoints.checked);
 }

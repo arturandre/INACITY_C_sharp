@@ -30,6 +30,11 @@ function GSDrawer() {
     this.imgIndex = 0;
 
     this.originalImages = [];
+    var imagesMetaData =
+        {
+            "streetName": null,
+            "interpolate": null,
+        };
 
     this.regionMarkers = [];
     this.amenityMarkers = [];
@@ -135,8 +140,7 @@ function GSDrawer() {
             var p2 = new google.maps.LatLng({ lat: lat2, lng: lng2 });
 
             if (status === google.maps.GeocoderStatus.OK) {
-                if (checkForDistance(p2, results[0].geometry.location))
-                {
+                if (checkForDistance(p2, results[0].geometry.location)) {
                     lat2 = results[0].geometry.location.lat();
                     lng2 = results[0].geometry.location.lng();
                     p2 = new google.maps.LatLng({ lat: lat2, lng: lng2 });
@@ -188,9 +192,22 @@ function GSDrawer() {
         this.clearImagePresentation();
         if (selectedStreet == Street) return;
         selectedStreet = Street;
+        resetImageData();
         if (!!this.onSelectedStreetChanged) {
             this.onSelectedStreetChanged(Street);
         }
+    }
+
+    var resetImageData = function () {
+        imagesMetaData =
+        {
+            "interpolate": null,
+        };
+        this.originalImages = [];
+    }
+
+    this.getImagesMetaData = function () {
+        return imagesMetaData;
     }
 
     this.getSelectedStreet = function () {
@@ -218,39 +235,39 @@ function GSDrawer() {
         $.each(this.originalImages, function (ip, p) {
             locations.push(p.location);
             var f = p.filterResults[type];
-            weights.push(!!f.Density ? f.Density : f.isCaracteristicPresent == true ? 1 : 0);
+            if (!!f) {
+                weights.push(!!f.Density ? f.Density : f.isCaracteristicPresent == true ? 1 : 0);
+            }
         });
         heatMap.setData(locations, weights);
     }
 
     this.plotHeatmapFromDB = function (featureType) {
-    	var region = this.selectedRegions[0];
-    	$.ajax({
-    		url: '/api/DBHeatMap/GetFeaturesInRegion',
-    		type: 'POST',
-    		dataType: 'json',
-    		data: region.Bounds,
-    		success: function (data) {
-    			if ($.isArray(data) && data.length > 0)
-    			{
-    				var locations = [];
-    				var weights = [];
-    				$.each(data, function (idxHMP, heatMapPoint)
-    				{
-    					locations.push(heatMapPoint.location);
-    					weights.push(featureType == "Trees" ? heatMapPoint.TreesDensity : CracksDensity);
-    					heatMap.setData(locations, weights);
-    				});
-    			}
+        var region = this.selectedRegions[0];
+        $.ajax({
+            url: '/api/DBHeatMap/GetFeaturesInRegion',
+            type: 'POST',
+            dataType: 'json',
+            data: region.Bounds,
+            success: function (data) {
+                if ($.isArray(data) && data.length > 0) {
+                    var locations = [];
+                    var weights = [];
+                    $.each(data, function (idxHMP, heatMapPoint) {
+                        locations.push(heatMapPoint.location);
+                        weights.push(featureType == "Trees" ? heatMapPoint.TreesDensity : CracksDensity);
+                        heatMap.setData(locations, weights);
+                    });
+                }
 
-    		},
-    		error: function (request, textStatus, errorThrown) {
-    			if (request.statusText === 'abort') {
-    				return;
-    			}
-    			alert(request + '\n' + textStatus + '\n' + errorThrown);
-    		}
-    	});
+            },
+            error: function (request, textStatus, errorThrown) {
+                if (request.statusText === 'abort') {
+                    return;
+                }
+                alert(request + '\n' + textStatus + '\n' + errorThrown);
+            }
+        });
     }
 
     this.toggleAmenities = function (forceState) {
@@ -287,8 +304,7 @@ function GSDrawer() {
                 var p2 = new google.maps.LatLng({ lat: lat2, lng: lng2 });
 
                 if (status === google.maps.GeocoderStatus.OK) {
-                    if (checkForDistance(p2, results[0].geometry.location))
-                    {
+                    if (checkForDistance(p2, results[0].geometry.location)) {
                         lat2 = results[0].geometry.location.lat();
                         lng2 = results[0].geometry.location.lng();
                         p2 = new google.maps.LatLng({ lat: lat2, lng: lng2 });
@@ -362,14 +378,13 @@ function GSDrawer() {
                     }
 
                     //geocoderThreadCounter e getPanoramaIdThreadCounter são usados para identificar o final das chamadas assíncronas
-                    if (geocoderThreadCounter == getPanoramaIdThreadCounter && geocoderThreadCounter == 0)
-                    {
+                    if (geocoderThreadCounter == getPanoramaIdThreadCounter && geocoderThreadCounter == 0) {
                         that.startImagePresentation("originalSet");
                     }
                 }, AMENITY_PANORAMA_MAXDISTANCE);//gspan.getPanoramaId(p2, function (data, status) {
             });
         });
-        
+
     }
 
     this.putAmenity = function (latLng, title, address) {

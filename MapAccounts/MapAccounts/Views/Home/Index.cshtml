@@ -53,9 +53,11 @@
 </div>
 
 <div class="row">
+    <div class="alert alert-warning" role="alert">A plataforma foi desenvolvida e testada com o navegador Google Chrome Versão 58.0.3029.110 (64-bit), caso tenha problemas usando um navegador diferente experimente ele.</div>
     <div id="divLoading">
         <h1>Processando... <img src="~/Content/ajax-loader.gif" /></h1>
     </div>
+
     <br />
     <div class="col-md-6" margin-left:auto;>
         <h2>Região de interesse</h2>
@@ -66,12 +68,12 @@
             <input type="button" id="btAddress" value="Buscar" />
         </div>
 
-        <div id="divAmenities">
-            <input type="button" id="btSchool" value="Escolas" />
-            <input type="button" id="btPharmacy" value="Farmácias" />
-            <input type="button" id="btBusStop" value="Pontos de ônibus" />
-            <input type="button" id="btHospital" value="Hospitais" />
-            <input type="button" id="btTreesHeatMap" value="Árvores" />
+        <div id="divAmenities" class="btn-group" >
+            <input type="button" id="btSchool" value="Escolas" class="btn btn-default" />
+            <input type="button" id="btPharmacy" value="Farmácias" class="btn btn-default" />
+            <input type="button" id="btBusStop" value="Pontos de ônibus" class="btn btn-default" />
+            <input type="button" id="btHospital" value="Hospitais" class="btn btn-default" />
+            <input type="button" id="btTreesHeatMap" value="Árvores" class="btn btn-default" />
         </div>
         <br/>
         <div id="divAmenitiesControls">
@@ -102,12 +104,25 @@
         <br />
         <div id="divReports">
             <p>Selecione uma operação:</p>
-            <input type="button" id="btPictures" class="menu-button" value="Ver imagens" />
+            <input type="button" id="btPictures" class="btn-group" value="Ver imagens" />
             <div id="divFilters">
-                <input type="button" id="btTreesFilter" class="menu-button" value="Filtrar árvores" />
-                <input type="button" id="btCracksFilter" class="menu-button" value="Filtrar rachaduras" />
-                <input type="button" id="btGenericFilter" class="menu-button" value="Filtro customizado" />
-                <input type="button" id="btHeatMapStreetsToggle" class="menu-button" value="Ver HeatMap" />
+                <!-- Single button -->
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Visualizar <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li id="btPictures2" class="btn">Imagens sem filtro</li>
+                        <li id="btTreesFilter" class="btn">Filtrar árvores</li>
+                        <li id="btCracksFilter" class="btn">Filtrar rachaduras</li>
+                        <li role="separator" class="divider"></li>
+                        <li id="btGenericFilter" class="btn">Filtro customizado</li>
+                    </ul>
+                </div>
+                @*<input type="button" id="btTreesFilter" class="btn btn-default" value="Filtrar árvores" />
+                <input type="button" id="btCracksFilter" class="btn btn-default" value="Filtrar rachaduras" />
+                <input type="button" id="btGenericFilter" class="btn btn-default" value="Filtro customizado" />*@
+                <input type="button" id="btHeatMapStreetsToggle" class="btn btn-default" value="Ver HeatMap" />
             </div>
             <br />
             <br />

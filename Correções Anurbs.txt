@@ -1,0 +1,18 @@
+Melhoras:
+
+
+Próximas:
+
+*
+* Dar algum feedback quando estiver buscando as imagens originais
+* Corrigir os tempos de espera dos filtros (tirar o tempo fixo de 60 à 120 segundos)
+* Tratar as imagens do google que vem com erro usando o .onerror do imgPreview
+* Corrigir o bug causado quando a mesma rua é selecionada várias vezes e então mais e mais pontos são adicionados aos segmentos da rua
+* Dar um jeito de pausar o autoplay com um botão
+* Fazer o slider de posição da câmera se mover junto com a câmera no caso do auto-play
+* Detectar qual o browser e mostrar o alerta só quando o browser for diferente ao invés de exibir sempre
+
+Talvez:
+
+& Exibir o progresso do processamento de um filtro / trazer imagens conforme são processadas ao invés de esperar terminar tudo
+& Não necessariamente começar com a imagem original, começar já com as imagens processadas

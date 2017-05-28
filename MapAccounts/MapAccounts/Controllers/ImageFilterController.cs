@@ -6,10 +6,11 @@ using System.Collections.Generic;
 using System.Data.Entity.Spatial;
 using System.Linq;
 using System.Web.Http;
-using static MapAccounts.Models.Primitives.FilterResultDTO;
+
 
 namespace MapAccounts.Controllers
 {
+    using CaracteristicType = FilterResultDTO.CaracteristicType;
     [RoutePrefix("api/ImageFilter")]
     public class ImageFilterController : ApiController
     {
@@ -26,9 +27,15 @@ namespace MapAccounts.Controllers
             pictures = pictures.Where(p => p.base64image != null);
             ImageFilterManager.getInstance().detectFeatureInGSSequence(ref pictures, (CaracteristicType)Enum.Parse(typeof(CaracteristicType), filterType));
 
-
-            ResultsStoreManager storage = new ResultsStoreManager();
-            storage.StoreHeatmapPoints(pictures, (CaracteristicType)Enum.Parse(typeof(CaracteristicType), filterType));
+            try
+            {
+                ResultsStoreManager storage = new ResultsStoreManager();
+                storage.StoreHeatmapPoints(pictures, (CaracteristicType)Enum.Parse(typeof(CaracteristicType), filterType));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);                
+            }
             
 
             return pictures.Where(p => p.base64image != null).Select(p => p.filterResults).SelectMany(p => p);

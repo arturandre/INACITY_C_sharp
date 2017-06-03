@@ -1,4 +1,9 @@
-﻿
+﻿.limarked {
+  border-style: solid ;
+  color: blue;
+  border-color: black;
+  font-weight: bold;
+}
 #divMapSide {
     display:flex;
     flex-direction:column;

@@ -1,6 +1,6 @@
 ﻿var tbAddress = document.getElementById("tbAddress");
+//var btPictures = document.getElementById("btPictures");
 var btPictures = document.getElementById("btPictures");
-var btPictures2 = document.getElementById("btPictures2");
 var btAmenitiesImages = document.getElementById("btAmenitiesImages");
 var btSnapInMap = document.getElementById("btSnapInMap");
 var btSaveSession = document.getElementById("btSaveSession");
@@ -85,89 +85,93 @@ function updateControls(step) {
     }
     switch (step) {
         //Tela inicial do sistema -> Selecionar região
-        case 0:
+    	case 0:
+    		$("#btHeatMapStreetsToggle").addClass("disabled");
+    		$("#btPictures").siblings().addClass("disabled");
             gsdrawer.clearRegions();
             divAmenities.style.display = 'none';
             divStreetControls.style.display = 'none';
             btStreets.disabled = true;
             divReports.style.display = 'none';
             //btPictures.disabled = true;
-            btPictures.display = 'block';
+            //btPictures.display = 'block';
             sdLocationPoint.disabled = true;
             btDownloadImages.disabled = true;
-            divFilters.style.display = 'none';
+            //divFilters.style.display = 'none';
             divAmenitiesControls.style.display = 'none';
-            btHeatMapStreetsToggle.disabled = true;
             break;
             //Região selecionada -> Coletar ruas | Amenities
-        case 1:
+    	case 1:
+    		$("#btPictures").siblings().addClass("disabled");
             divAmenities.style.display = 'block';
             divStreetControls.style.display = 'block';
             btStreets.disabled = false;
             divReports.style.display = 'none';
             //btPictures.disabled = true;
-            btPictures.display = 'block';
+            //btPictures.display = 'block';
             sdLocationPoint.disabled = true;
             btDownloadImages.disabled = true;
-            divFilters.style.display = 'none';
+            //divFilters.style.display = 'none';
             divAmenitiesControls.style.display = 'none';
-            btHeatMapStreetsToggle.disabled = true;
             break;
             //Ruas coletadas -> Selecionar rua
-        case 2:
+    	case 2:
+    		$("#btHeatMapStreetsToggle").addClass("disabled");
+    		$("#btPictures").siblings().addClass("disabled");
             divAmenities.style.display = 'block';
             divStreetControls.style.display = 'block';
             btStreets.disabled = true;
             divReports.style.display = 'none';
             //btPictures.disabled = false;
-            btPictures.display = 'block';
+            //btPictures.display = 'block';
             sdLocationPoint.disabled = true;
             btDownloadImages.disabled = true;
-            divFilters.style.display = 'none';
+            //divFilters.style.display = 'none';
             divAmenitiesControls.style.display = 'none';
-            btHeatMapStreetsToggle.disabled = true;
             break;
             //Rua selecionada -> Ver imagens
-        case 3:
-            divAmenities.style.display = 'block';
+    	case 3:
+    		$("#btHeatMapStreetsToggle").addClass("disabled");
+        	$("#btPictures").siblings().addClass("disabled");
+        	divAmenities.style.display = 'block';
             divStreetControls.style.display = 'block';
             btStreets.disabled = true;
             divReports.style.display = 'block';
             //btPictures.disabled = false;
-            btPictures.display = 'block';
+            //btPictures.display = 'block';
             sdLocationPoint.disabled = true;
             btDownloadImages.disabled = true;
-            divFilters.style.display = 'none';
+            //divFilters.style.display = 'none';
             divAmenitiesControls.style.display = 'none';
-            btHeatMapStreetsToggle.disabled = true;
             break;
             //Imagens coletadas -> Selecionar filtro(s)
-        case 4:
+    	case 4:
+    		$("#btHeatMapStreetsToggle").addClass("disabled");
+    		$("#btPictures").siblings().removeClass("disabled");
             divAmenities.style.display = 'block';
             divStreetControls.style.display = 'block';
             //btStreets.disabled = true;
             divReports.style.display = 'block';
             //btPictures.disabled = true;
-            btPictures.display = 'none';
+            //btPictures.display = 'none';
             sdLocationPoint.disabled = false;
             btDownloadImages.disabled = false;
-            divFilters.style.display = 'block';
+            //divFilters.style.display = 'block';
             divAmenitiesControls.style.display = 'none';
-            btHeatMapStreetsToggle.disabled = true;
             break;
             //Filtro selecionado -> Ver HeatMap | Interagir com slider de imagem
-        case 5:
+    	case 5:
+    		$("#btHeatMapStreetsToggle").removeClass("disabled");
             divAmenities.style.display = 'block';
             divStreetControls.style.display = 'block';
             btStreets.disabled = true;
             divReports.style.display = 'block';
             //btPictures.disabled = true;
-            btPictures.display = 'none';
+            //btPictures.display = 'none';
             sdLocationPoint.disabled = false;
             btDownloadImages.disabled = false;
-            divFilters.style.display = 'block';
+            //divFilters.style.display = 'block';
             divAmenitiesControls.style.display = 'none';
-            btHeatMapStreetsToggle.disabled = false;
             break;
             //Vendo imagens de amenities (Pontos de ônibus e afins)
         case 6:
@@ -176,20 +180,19 @@ function updateControls(step) {
             btStreets.disabled = false;
             divReports.style.display = 'none';
             //btPictures.disabled = true;
-            btPictures.display = 'none';
+            //btPictures.display = 'none';
             sdLocationPoint.disabled = false;
             btDownloadImages.disabled = true;
-            divFilters.style.display = 'none';
+            //divFilters.style.display = 'none';
 
             divAmenitiesControls.style.display = 'flex';
-            btHeatMapStreetsToggle.disabled = true;
             break;
         default:
             break;
     }
 }
 
-$(".btn-group > .btn").click(function () {
+$(".dropdown-menu > .btn").click(function () {
     $(this).addClass("active").siblings().removeClass("active");
 });
 
@@ -266,7 +269,7 @@ function bindings() {
     btAmenitiesImages.onclick = btAmenitiesImagesClick;
     btAddress.onclick = panMapByAddress;
     btStreets.onclick = btStreetsClick;
-    btPictures.onclick = btPictures2.onclick = getImagesForStreetClick;
+    btPictures.onclick = getImagesForStreetClick;
     btSaveSession.onclick = saveSessionClick;
     btTreesFilter.onclick = function (e) { getFilteredImages('Trees', e.currentTarget); };
     btCracksFilter.onclick = function (e) { getFilteredImages('Cracks', e.currentTarget); };
@@ -535,11 +538,11 @@ function getImagesForStreetClick() {
                 alert('Foram coletadas ' + status.validImage + ' imagem(ns) válida(s) para esta rua. \n' + status.wrongImage + ' localização(ões) em endereço(s) incorreto(s). \n' + status.zeroImage + ' localização(ões) sem imagem(ns).');
             }
             updateControls(4);
+            divLoading.style.display = 'none';
         }, cbInterpolatePoints.checked);
     } catch (e) {
-        console.log(e);
-    } finally {
-        divLoading.style.display = 'none';
+    	console.log(e);
+    	divLoading.style.display = 'none';
     }
 }
 

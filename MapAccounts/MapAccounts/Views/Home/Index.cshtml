@@ -42,7 +42,7 @@
             };
         </script>
     }
-    
+
 
     ViewBag.Title = "Home Page";
 }
@@ -68,14 +68,14 @@
             <input type="button" id="btAddress" value="Buscar" />
         </div>
 
-        <div id="divAmenities" class="btn-group" >
+        <div id="divAmenities" class="btn-group">
             <input type="button" id="btSchool" value="Escolas" class="btn btn-default" />
             <input type="button" id="btPharmacy" value="Farmácias" class="btn btn-default" />
             <input type="button" id="btBusStop" value="Pontos de ônibus" class="btn btn-default" />
             <input type="button" id="btHospital" value="Hospitais" class="btn btn-default" />
             <input type="button" id="btTreesHeatMap" value="Árvores" class="btn btn-default" />
         </div>
-        <br/>
+        <br />
         <div id="divAmenitiesControls">
             <input type="image" id="btAmenitiesImages" src="~/Content/playbutton.png" />
             <input type="image" id="btSnapInMap" src="~/Content/snapbutton.png" />
@@ -92,7 +92,7 @@
                 <input type="range" id="sdLocationPoint" />
             </div>
         </div>
-        
+
 
     </div>
     <div class="col-md-6" id="divStreetControls">
@@ -104,26 +104,21 @@
         <br />
         <div id="divReports">
             <p>Selecione uma operação:</p>
-            <input type="button" id="btPictures" class="btn-group" value="Ver imagens" />
-            <div id="divFilters">
-                <!-- Single button -->
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Visualizar <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li id="btPictures2" class="btn">Imagens sem filtro</li>
-                        <li id="btTreesFilter" class="btn">Filtrar árvores</li>
-                        <li id="btCracksFilter" class="btn">Filtrar rachaduras</li>
-                        <li role="separator" class="divider"></li>
-                        <li id="btGenericFilter" class="btn">Filtro customizado</li>
-                    </ul>
-                </div>
-                @*<input type="button" id="btTreesFilter" class="btn btn-default" value="Filtrar árvores" />
-                <input type="button" id="btCracksFilter" class="btn btn-default" value="Filtrar rachaduras" />
-                <input type="button" id="btGenericFilter" class="btn btn-default" value="Filtro customizado" />*@
-                <input type="button" id="btHeatMapStreetsToggle" class="btn btn-default" value="Ver HeatMap" />
+            @*<input type="button" id="btPictures" class="btn-group" value="Ver imagens" />*@
+            <!-- Single button -->
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Visualizar <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li id="btPictures" class="btn">Imagens sem filtro</li>
+                    <li id="btTreesFilter" class="btn disabled">Filtrar árvores</li>
+                    <li id="btCracksFilter" class="btn disabled">Filtrar rachaduras</li>
+                    <li role="separator" class="divider"></li>
+                    <li id="btGenericFilter" class="btn disabled">Filtro customizado</li>
+                </ul>
             </div>
+            <input type="button" id="btHeatMapStreetsToggle" class="btn btn-default disabled" value="Ver HeatMap" />
             <br />
             <br />
             <div id="divNumPoints">
@@ -140,7 +135,7 @@
         </div>
         <img id="imgPreview" width="640" height="640" />
         <br />
-        
+
     </div>
 
 </div>

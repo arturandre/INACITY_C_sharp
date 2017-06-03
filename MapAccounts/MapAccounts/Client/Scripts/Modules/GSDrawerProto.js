@@ -191,8 +191,6 @@ GSDrawer.prototype.saveRegions = function (callback) {
 GSDrawer.prototype.getImagesFromSelectedStreet = function (callback, interpolate) {
     var that = this;
 
-
-
     if (!callback) throw "Error in getImagesFromSelectedStreet! Callback is missing!";
 
     if (!!that.originalImages && that.originalImages.length > 0 &&

@@ -189,6 +189,7 @@ function GSDrawer() {
     }
 
     this.setSelectedStreet = function (Street) {
+    	this.originalImages = [];
         this.clearImagePresentation();
         if (selectedStreet == Street) return;
         selectedStreet = Street;

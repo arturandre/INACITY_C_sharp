@@ -1,11 +1,19 @@
+Limitações:
+
+! Verificar porque o filtro de árvores na Av. Corifeu de Azevedo Marques da um erro 500
+!! Limitação do servidor do Azure porque o número de imagens é muito alto (460+) localmente funciona normalmente
+
+
+Bugs:
+
+
 Melhoras:
 
+-> Corrigir os tempos de espera dos filtros (tirar o tempo fixo de 60 à 120 segundos)
 
 Próximas:
 
-*
-* Dar algum feedback quando estiver buscando as imagens originais
-* Corrigir os tempos de espera dos filtros (tirar o tempo fixo de 60 à 120 segundos)
+
 * Tratar as imagens do google que vem com erro usando o .onerror do imgPreview
 * Corrigir o bug causado quando a mesma rua é selecionada várias vezes e então mais e mais pontos são adicionados aos segmentos da rua
 * Dar um jeito de pausar o autoplay com um botão
@@ -16,3 +24,7 @@ Talvez:
 
 & Exibir o progresso do processamento de um filtro / trazer imagens conforme são processadas ao invés de esperar terminar tudo
 & Não necessariamente começar com a imagem original, começar já com as imagens processadas
+
+Done:
+
+-> Dar algum feedback quando estiver buscando as imagens originais

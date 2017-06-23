@@ -1,7 +1,7 @@
 Limitações:
 
 ! Verificar porque o filtro de árvores na Av. Corifeu de Azevedo Marques da um erro 500
-!! Limitação do servidor do Azure porque o número de imagens é muito alto (460+) localmente funciona normalmente
+!! Limitação do servidor do Azure porque o número de imagens é muito alto (460+) localmente funciona normalmente.
 
 
 Bugs:

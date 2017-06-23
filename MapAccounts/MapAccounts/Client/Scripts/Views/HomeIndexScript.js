@@ -240,7 +240,7 @@ function showTimeEstimationFilterConfirmPopup(time, maxtime) {
 			var mmaxmessage = (maxtmins > 0) ? maxtmins + " minutos " : "";
 			var smaxmessage = (maxtsegs > 0) ? maxtsegs + " segundos " : "";
 
-			var tmaxmessage = hmessage + mmessage + smessage;
+			var tmaxmessage = hmaxmessage + mmaxmessage + smaxmessage;
 			
 			message = "O tempo estimado para esta consulta é de " + tmessage + " a " + tmaxmessage + ", deseja continuar?";
 		}

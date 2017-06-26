@@ -5,6 +5,11 @@ var btAmenitiesImages = document.getElementById("btAmenitiesImages");
 var btSnapInMap = document.getElementById("btSnapInMap");
 var btSaveSession = document.getElementById("btSaveSession");
 
+var btPreviousStreetImage = document.getElementById("btPreviousStreetImage");
+var btAutoPlayStreetImages = document.getElementById("btAutoPlayStreetImages");
+var btAutoPlayPauseStreetImages = document.getElementById("btAutoPlayPauseStreetImages");
+var btNextStreetImage = document.getElementById("btNextStreetImage");
+
 var btStreets = document.getElementById("btStreets");
 var lblMaxImages = document.getElementById("lblMaxImages");
 var lblNImages = document.getElementById("lblNImages");
@@ -306,6 +311,9 @@ function bindings() {
 	btGenericFilter.onclick = function (e) { getFilteredImages('Generic', e.currentTarget); };
 	btDownloadImages.onclick = downloadImages;
 	btHeatMapStreetsToggle.onclick = toggleHeatMap;
+	btPreviousStreetImage.onclick = btPreviousStreetImageClick;
+	btAutoPlayPauseStreetImages.onclick = btAutoPlayStreetImages.onclick = btAutoPlayStreetImagesClick;
+	btNextStreetImage.onclick = btNextStreetImageClick;
 
 	btSchool.onclick =
         btPharmacy.onclick =
@@ -351,6 +359,23 @@ function bindings() {
 	};
 	imgPreview.src = "/out8.jpg";
 	gsdrawer.imgPreview = document.getElementById("imgPreview");
+}
+
+var btPreviousStreetImageClick = function ()
+{
+
+}
+
+var btAutoPlayStreetImagesClick = function ()
+{
+
+	btAutoPlayStreetImages.classList.toggle('hidden');
+	btAutoPlayPauseStreetImages.classList.toggle('hidden');
+}
+
+var btNextStreetImageClick = function ()
+{
+
 }
 
 var btStreetsClick = function () {

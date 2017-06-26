@@ -131,9 +131,33 @@
                 <br />
             </div>
             <input type="button" id="btDownloadImages" class="menu-button-right" value="Descarregar imagens" />
-
+            <br/>
+            <div id="divImageNavControls" class="row" style="margin-top:15px;">
+                <div class="col-md-3 pull-left">
+                    <button type="button" class="btn btn-default" aria-label="Imagem anterior"
+                            id="btPreviousStreetImage">
+                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="col-md-6 text-center">
+                    <button type="button" class="btn btn-default hidden" aria-label="Play"
+                            id="btAutoPlayStreetImages">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" class="btn btn-default" aria-label="Pause"
+                            id="btAutoPlayPauseStreetImages">
+                        <span class="glyphicon glyphicon-pause" aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="col-md-3 pull-right">
+                    <button type="button" class="btn btn-default pull-right" aria-label="Imagem anterior"
+                            id="btNextStreetImage">
+                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </div>
         </div>
-        <img id="imgPreview" width="640" height="640" />
+        <img id="imgPreview" width="640" height="640" style="margin-top:5px" />
         <br />
 
     </div>

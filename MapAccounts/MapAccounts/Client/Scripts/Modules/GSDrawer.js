@@ -42,6 +42,7 @@ function GSDrawer() {
     this.polylinesOnMap = [];
     this.lastInfoWindow = null;
     this.selectedMarker = null;
+    this.autoplay = true;
     var geocoder = null;
 
     var map = null;
@@ -189,9 +190,10 @@ function GSDrawer() {
     }
 
     this.setSelectedStreet = function (Street) {
+    	if (selectedStreet == Street) return;
+
     	this.originalImages = [];
         this.clearImagePresentation();
-        if (selectedStreet == Street) return;
         selectedStreet = Street;
         resetImageData();
         if (!!this.onSelectedStreetChanged) {

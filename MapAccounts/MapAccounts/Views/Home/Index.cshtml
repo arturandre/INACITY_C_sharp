@@ -82,15 +82,14 @@
         </div>
 
         <br />
-        <p>
-            Selecione o canto superior esquerdo e o inferior direito de uma região:
-        </p>
+        <div style="display:flex;">
+            <p id="lblGuide">
+                Selecione o canto superior esquerdo e o inferior direito de uma região:
+            </p>
+            <input type="button" id="btUnsetStreet" value="Desmarcar rua" class="btn btn-default hidden" />
+        </div>
         <div id="divMapSide">
             <div class="mapcomponent" id="map"></div>
-            <div id="divMapNavigator">
-                <label for="sdLocationPoint">Use este controle para navegar entre os pontos encontrados:</label>
-                <input type="range" id="sdLocationPoint" />
-            </div>
         </div>
 
 
@@ -98,9 +97,9 @@
     <div class="col-md-6" id="divStreetControls">
         <h2>Detalhes e relatórios</h2>
         <div id="divControlsMenu">
-            <input type="button" id="btStreets" class="menu-button" value="Coletar ruas" />
+            <input type="button" id="btStreets" class="btn btn-default" value="Coletar ruas" />
+            <input type="button" id="btSaveSession" class="btn btn-default pull-right" value="Salvar sessão" />
         </div>
-        <input type="button" id="btSaveSession" class="menu-button-right" value="Salvar sessão" />
         <br />
         <div id="divReports">
             <p>Selecione uma operação:</p>
@@ -130,8 +129,8 @@
                 </div>
                 <br />
             </div>
-            <input type="button" id="btDownloadImages" class="menu-button-right" value="Descarregar imagens" />
-            <br/>
+            <input type="button" id="btDownloadImages" class="btn btn-default pull-right" value="Descarregar imagens" />
+            <br />
             <div id="divImageNavControls" class="row" style="margin-top:15px;">
                 <div class="col-md-3 pull-left">
                     <button type="button" class="btn btn-default" aria-label="Imagem anterior"
@@ -155,6 +154,11 @@
                         <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                     </button>
                 </div>
+            </div>
+            <br />
+            <div id="divMapNavigator">
+                <label for="sdLocationPoint">Use este controle para navegar entre os pontos encontrados:</label>
+                <input type="range" id="sdLocationPoint" />
             </div>
         </div>
         <img id="imgPreview" width="640" height="640" style="margin-top:5px" />

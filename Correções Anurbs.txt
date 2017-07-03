@@ -1,22 +1,36 @@
 Limitações:
 
-! Verificar porque o filtro de árvores na Av. Corifeu de Azevedo Marques da um erro 500
+!  Verificar porque o filtro de árvores na Av. Corifeu de Azevedo Marques da um erro 500
 !! Limitação do servidor do Azure porque o número de imagens é muito alto (460+) localmente funciona normalmente.
+
+!  Rua Conde Luis Eduardo Matarazzo (Google) vs Rua Conde Luiz E. Matarazzo (OSM)
+!! Diferenças na marcação dos nomes da mesma rua nos diferentes mapas
+
+! Eliseu de Almeida tem problemas de coerência temporal (cada lado da rua apresenta coisas diferentes, um apresente um ponto de ônibus e o outro um posto de gasolina)
+https://www.google.com.br/maps/@-23.5893518,-46.7339528,3a,75y,21.15h,78t/data=!3m6!1e1!3m4!1s8wJRHLYxWqY7t--cNd-SSQ!2e0!7i13312!8i6656
+
+!! Um dos lados da rua possui fotos de 2013 e do outro lado a foto mais recente é de 2011
 
 
 Bugs:
 
+* Consertar Clicar para ver imagens da mesma rua aumenta o vetor de imagens
 
 Melhoras:
 
-* Dar um jeito de pausar o autoplay com um botão
-* Botões de próximo/anterior acionam o pause
+* Sampling 2D dos mapas
+* Exibir o panorama do google para a visualização de features pontuais (ex. Pontos de ônibus)
+
 
 Próximas:
 
 
 
-* Fazer o slider de posição da câmera se mover junto com a câmera no caso do auto-play
+
+
+
+
+* Implementar novo filtro de árvores
 * Detectar qual o browser e mostrar o alerta só quando o browser for diferente ao invés de exibir sempre
 * Evitar que clicando errado a região seja re-selecionada acidentalmente (ou a rua).
 
@@ -24,9 +38,16 @@ Talvez:
 
 & Exibir o progresso do processamento de um filtro / trazer imagens conforme são processadas ao invés de esperar terminar tudo
 & Não necessariamente começar com a imagem original, começar já com as imagens processadas
+& Estimar o tempo de espera conforme as chamadas são feitas individualmente
 
 Done:
 
+-> Fazer o slider de navegação se mover conforme as imagens mudam
+-> Mudar o slider de navegação de lugar (deixar ele junto dos botões de navegação)
+-> Parar o autoplay quando o usuário clicar para ver uma feature urbana (ponto de ônibus)
+-> Navegar tanto pelos botões de próximo/anterior como pela barra
+-> Botões de próximo/anterior acionam o pause
+-> Dar um jeito de pausar o autoplay com um botão
 -> Dar algum feedback quando estiver buscando as imagens originais
 -> Corrigir os tempos de espera dos filtros (tirar o tempo fixo de 60 à 120 segundos)
 -> Tratar as imagens do google que vem com erro usando o .onerror do imgPreview

@@ -21,13 +21,22 @@ function callInitMap() {
     }
 }
 
+
+GSDrawer.prototype.onPause = null;
+GSDrawer.prototype.onImagePresentation = null;
+GSDrawer.prototype.onImageChanged = null;
+GSDrawer.prototype.onSelectedStreetChanged = null;
+GSDrawer.prototype.onSelectedRegionChanged = null;
+GSDrawer.prototype.onStreetFocused = null;
+
+
 function GSDrawer() {
     var that = this;
 
     var filterType = ["Cracks", "Trees"];
 
     this.snapin = false;
-    this.imgIndex = 0;
+    
 
     this.originalImages = [];
     var imagesMetaData =
@@ -43,6 +52,9 @@ function GSDrawer() {
     this.lastInfoWindow = null;
     this.selectedMarker = null;
     this.autoplay = true;
+
+    var imgIndex = 0;
+
     var geocoder = null;
 
     var map = null;
@@ -55,6 +67,9 @@ function GSDrawer() {
     var heatMapMode = false;
 
     var isAmenitiesVisible = false;
+
+    this.getImgIndex = function () { return imgIndex; }
+    this.setImgIndex = function (nval) { imgIndex = nval; }
 
     this.setMap = function (_map) {
         if (!geometryLib) geometryLib = google.maps.geometry;
@@ -174,7 +189,7 @@ function GSDrawer() {
                         '&heading=' + busStopHeading +
                         '&pitch=0' +
                         '&key=AIzaSyCzw_81uL52LSQVYvXEpweaBsr3m - xHYac&sensor=false';
-                    that.clearImagePresentation();
+                    that.pause();
                     that.setImgByUrl(busStopImageUrl);
                     console.debug(busStopImageUrl);
                 }
@@ -193,7 +208,7 @@ function GSDrawer() {
     	if (selectedStreet == Street) return;
 
     	this.originalImages = [];
-        this.clearImagePresentation();
+        this.pause();
         selectedStreet = Street;
         resetImageData();
         if (!!this.onSelectedStreetChanged) {
@@ -353,28 +368,6 @@ function GSDrawer() {
                         PointDTO.initialize(position.ID, lat1, lng1), null);
 
                         that.originalImages.push(picture);
-
-                        //$.ajax({
-                        //    url: '/api/MapMiner/StreetsInRegion',
-                        //    type: 'POST',
-                        //    dataType: 'json',
-                        //    data: localRegion.Bounds,
-                        //    success: function (data) {
-                        //        if ($.isArray(data) && data.length > 0) {
-                        //            localRegion.StreetDTO = data;
-                        //            picture.localRegion = localRegion;  
-                        //        }
-                        //    },
-                        //    error: function (request, textStatus, errorThrown) {
-                        //        if (request.statusText === 'abort') {
-                        //            return;
-                        //        }
-                        //        alert(request + '\n' + textStatus + '\n' + errorThrown);
-                        //    }
-                        //});
-
-                        //that.setImgByUrl(busStopImageUrl);
-                        //console.debug(busStopImageUrl);
                     }
                     else {
                         //alert("Infelizmente não foi possível encontrar imagens para este ponto.");
@@ -440,10 +433,6 @@ GSDrawer.prototype.clearAmenities = function () {
     this.amenityMarkers = [];
 }
 
-GSDrawer.prototype.onImagePresentation = null;
-GSDrawer.prototype.onSelectedStreetChanged = null;
-GSDrawer.prototype.onSelectedRegionChanged = null;
-GSDrawer.prototype.onStreetFocused = null;
 
 GSDrawer.prototype.showAmenity = function (amenityType, callback) {
     this.clearAmenities();

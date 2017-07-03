@@ -5,9 +5,6 @@ using Emgu.CV.Structure;
 using MapAccounts.Models;
 using MapAccounts.Models.Primitives;
 using MapAccounts.ComputerVision.ImageProcessing;
-using System.Threading.Tasks;
-using System.Data.Entity.Spatial;
-using System.Globalization;
 
 namespace MapAccounts.Managers
 {

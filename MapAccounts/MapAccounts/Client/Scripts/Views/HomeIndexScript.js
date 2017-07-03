@@ -638,7 +638,7 @@ function getImagesForStreetClick() {
             }, cbInterpolatePoints.checked);
         }
     } catch (e) {
-        console.log(e);
+        console.log(e);dsa
         divLoading.style.display = 'none';
     }
 }

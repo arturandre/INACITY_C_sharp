@@ -48,32 +48,34 @@
 }
 
 <div class="jumbotron">
-    <h1>AnurbsVC</h1>
-    <p class="lead">A plataforma de Análise de características urbanas por meio de Visão Computacional</p>
+    <h1>INACITY</h1>
+    <p class="lead">@Resources.Global.PJT_NAME</p>
 </div>
 
 <div class="row">
-    <div class="alert alert-warning" role="alert">A plataforma foi desenvolvida e testada com o navegador Google Chrome Versão 58.0.3029.110 (64-bit), caso tenha problemas usando um navegador diferente experimente ele.</div>
+    <div class="alert alert-warning" role="alert">
+        @Resources.Global.BRW_WARN
+    </div>
     <div id="divLoading">
-        <h1>Processando... <img src="~/Content/ajax-loader.gif" /></h1>
+        <h1>@Resources.Global.LOADING <img src="~/Content/ajax-loader.gif" /></h1>
     </div>
 
     <br />
     <div class="col-md-6" margin-left:auto;>
-        <h2>Região de interesse</h2>
+        <h2>@Resources.Home.ROI</h2>
 
         <div class="mapcomponent">
-            <label for="tbAddress">Busca por endereço:</label>
+            <label for="tbAddress">@Resources.Home.ADDRESS</label>
             <input type="text" id="tbAddress" />
-            <input type="button" id="btAddress" value="Buscar" />
+            <input type="button" id="btAddress" value="@Resources.Home.SEARCH" />
         </div>
 
         <div id="divAmenities" class="btn-group">
-            <input type="button" id="btSchool" value="Escolas" class="btn btn-default" />
-            <input type="button" id="btPharmacy" value="Farmácias" class="btn btn-default" />
-            <input type="button" id="btBusStop" value="Pontos de ônibus" class="btn btn-default" />
-            <input type="button" id="btHospital" value="Hospitais" class="btn btn-default" />
-            <input type="button" id="btTreesHeatMap" value="Árvores" class="btn btn-default" />
+            <input type="button" id="btSchool" value="@Resources.Home.SCHOOLS" class="btn btn-default" />
+            <input type="button" id="btPharmacy" value="@Resources.Home.PHARMACIES" class="btn btn-default" />
+            <input type="button" id="btBusStop" value="@Resources.Home.BUS_STOPS" class="btn btn-default" />
+            <input type="button" id="btHospital" value="@Resources.Home.HOSPITALS" class="btn btn-default" />
+            <input type="button" id="btTreesHeatMap" value="@Resources.Home.TREES" class="btn btn-default" />
         </div>
         <br />
         <div id="divAmenitiesControls">
@@ -84,9 +86,9 @@
         <br />
         <div style="display:flex;">
             <p id="lblGuide">
-                Selecione o canto superior esquerdo e o inferior direito de uma região:
+                @Resources.Home.GD_STEP1
             </p>
-            <input type="button" id="btUnsetStreet" value="Desmarcar rua" class="btn btn-default hidden" />
+            <input type="button" id="btUnsetStreet" value="@Resources.Home.UNSET_STREET" class="btn btn-default hidden" />
         </div>
         <div id="divMapSide">
             <div class="mapcomponent" id="map"></div>
@@ -97,27 +99,27 @@
     <div class="col-md-6" id="divStreetControls">
         <h2>Detalhes e relatórios</h2>
         <div id="divControlsMenu">
-            <input type="button" id="btStreets" class="btn btn-default" value="Coletar ruas" />
-            <input type="button" id="btSaveSession" class="btn btn-default pull-right" value="Salvar sessão" />
+            <input type="button" id="btStreets" class="btn btn-default" value="@Resources.Home.GET_STREETS" />
+            <input type="button" id="btSaveSession" class="btn btn-default pull-right" value="@Resources.Home.SAVE_SESSION" />
         </div>
         <br />
         <div id="divReports">
-            <p>Selecione uma operação:</p>
+            <p>@Resources.Home.SELECT_OPERATION</p>
             @*<input type="button" id="btPictures" class="btn-group" value="Ver imagens" />*@
             <!-- Single button -->
             <div class="btn-group">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Visualizar <span class="caret"></span>
+                    @Resources.Home.VISUALIZE<span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
-                    <li id="btPictures" class="btn">Imagens sem filtro</li>
-                    <li id="btTreesFilter" class="btn disabled">Filtrar árvores</li>
-                    <li id="btCracksFilter" class="btn disabled">Filtrar rachaduras</li>
+                    <li id="btPictures" class="btn">@Resources.Home.IMG_ORIG</li>
+                    <li id="btTreesFilter" class="btn disabled">@Resources.Home.IMG_TREES</li>
+                    <li id="btCracksFilter" class="btn disabled">@Resources.Home.IMG_CRACKS</li>
                     <li role="separator" class="divider"></li>
-                    <li id="btGenericFilter" class="btn disabled">Filtro customizado</li>
+                    <li id="btGenericFilter" class="btn disabled">@Resources.Home.IMG_CUSTOM</li>
                 </ul>
             </div>
-            <input type="button" id="btHeatMapStreetsToggle" class="btn btn-default disabled" value="Ver HeatMap" />
+            <input type="button" id="btHeatMapStreetsToggle" class="btn btn-default disabled" value="@Resources.Home.TG_HEATMAP" />
             <br />
             <br />
             <div id="divNumPoints">

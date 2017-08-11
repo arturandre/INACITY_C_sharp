@@ -117,17 +117,44 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ABORT_CALL" xml:space="preserve">
+    <value>Abortar chamada</value>
+  </data>
   <data name="ADDRESS" xml:space="preserve">
     <value>Busca por endereço:</value>
   </data>
   <data name="BUS_STOPS" xml:space="preserve">
     <value>Pontos de ônibus</value>
   </data>
+  <data name="CONTACT" xml:space="preserve">
+    <value>Contato</value>
+  </data>
+  <data name="CONTACT_PAGE" xml:space="preserve">
+    <value>Contato</value>
+  </data>
+  <data name="DETAILS_REPORTS" xml:space="preserve">
+    <value>Detalhes e relatórios</value>
+  </data>
+  <data name="DOWNLOAD_IMAGES" xml:space="preserve">
+    <value>Descarregar imagens</value>
+  </data>
   <data name="GD_STEP1" xml:space="preserve">
     <value>Selecione o canto superior esquerdo e o inferior direito de uma região:</value>
   </data>
+  <data name="GD_STEP2" xml:space="preserve">
+    <value>Pressione coletar ruas se a região for a desejada.</value>
+  </data>
+  <data name="GD_STEP3" xml:space="preserve">
+    <value>Selecione uma rua ou visualize as imagens da região.</value>
+  </data>
   <data name="GET_STREETS" xml:space="preserve">
     <value>Coletar ruas</value>
+  </data>
+  <data name="HOME" xml:space="preserve">
+    <value>Página inicial</value>
+  </data>
+  <data name="HOME_PAGE" xml:space="preserve">
+    <value>Página inicial</value>
   </data>
   <data name="HOSPITALS" xml:space="preserve">
     <value>Hospitais</value>
@@ -144,8 +171,29 @@
   <data name="IMG_TREES" xml:space="preserve">
     <value>Filtrar árvores</value>
   </data>
+  <data name="LOCATION_SLIDER_HELP" xml:space="preserve">
+    <value>Use este controle para navegar entre os pontos encontrados:</value>
+  </data>
+  <data name="MORE_POINTS" xml:space="preserve">
+    <value>Buscar mais pontos</value>
+  </data>
+  <data name="MORE_POINTS_HELP" xml:space="preserve">
+    <value>Com esta opção os pontos obtidos para a rua serão interpolados a fim de se buscar mais imagens para a rua. A espectativa de tempo pode aumentar.</value>
+  </data>
+  <data name="NEXT_IMAGE" xml:space="preserve">
+    <value>Imagem seguinte</value>
+  </data>
+  <data name="PAUSE" xml:space="preserve">
+    <value>Pause</value>
+  </data>
   <data name="PHARMACIES" xml:space="preserve">
     <value>Farmácias</value>
+  </data>
+  <data name="PLAY" xml:space="preserve">
+    <value>Play</value>
+  </data>
+  <data name="PREV_IMAGE" xml:space="preserve">
+    <value>Imagem anterior</value>
   </data>
   <data name="ROI" xml:space="preserve">
     <value>Região de interesse</value>

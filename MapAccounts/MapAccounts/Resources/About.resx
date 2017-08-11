@@ -117,16 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BRW_WARN" xml:space="preserve">
-    <value>A plataforma foi desenvolvida e testada com o navegador Google Chrome Versão 58.0.3029.110 (64-bit), caso tenha problemas usando um navegador diferente experimente ele.</value>
+  <data name="ABOUT" xml:space="preserve">
+    <value>About</value>
   </data>
-  <data name="LOADING" xml:space="preserve">
-    <value>Processando...</value>
+  <data name="ABOUT_PAGE" xml:space="preserve">
+    <value>About page</value>
   </data>
-  <data name="PJT_NAME" xml:space="preserve">
-    <value>INvestigate and Analyse a City - INACITY</value>
+  <data name="DESCRIPTION" xml:space="preserve">
+    <value>is a platform that empowers the users by allowing them to easily find urban features inside selected regions of interest.</value>
   </data>
-  <data name="PJT_SHORT" xml:space="preserve">
-    <value>INACITY</value>
+  <data name="GITHUB_ADV" xml:space="preserve">
+    <value>Technical details and user guides can be find in the oficial GitHub page:</value>
+  </data>
+  <data name="LINK" xml:space="preserve">
+    <value>link</value>
   </data>
 </root>

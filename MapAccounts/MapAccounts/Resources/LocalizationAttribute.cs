@@ -27,7 +27,7 @@ namespace MapAccounts.Resources
                     Thread.CurrentThread.CurrentCulture =
                     Thread.CurrentThread.CurrentUICulture = new CultureInfo(lang);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     throw new NotSupportedException(String.Format("ERROR: Invalid language code '{0}'.", lang));
                 }

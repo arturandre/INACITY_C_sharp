@@ -117,16 +117,112 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BRW_WARN" xml:space="preserve">
-    <value>A plataforma foi desenvolvida e testada com o navegador Google Chrome Versão 58.0.3029.110 (64-bit), caso tenha problemas usando um navegador diferente experimente ele.</value>
+  <data name="ABORT_CALL" xml:space="preserve">
+    <value>Arrêter l'appel</value>
   </data>
-  <data name="LOADING" xml:space="preserve">
-    <value>Processando...</value>
+  <data name="ADDRESS" xml:space="preserve">
+    <value>Recherche par adresse:</value>
   </data>
-  <data name="PJT_NAME" xml:space="preserve">
-    <value>INvestigate and Analyse a City - INACITY</value>
+  <data name="BUS_STOPS" xml:space="preserve">
+    <value>Arrêts de bus</value>
   </data>
-  <data name="PJT_SHORT" xml:space="preserve">
-    <value>INACITY</value>
+  <data name="CONTACT" xml:space="preserve">
+    <value>Contacter</value>
+  </data>
+  <data name="CONTACT1" xml:space="preserve">
+    <value>Contact</value>
+  </data>
+  <data name="CONTACT_PAGE" xml:space="preserve">
+    <value>Contacter</value>
+  </data>
+  <data name="DETAILS_REPORTS" xml:space="preserve">
+    <value>Détails et rapports</value>
+  </data>
+  <data name="DOWNLOAD_IMAGES" xml:space="preserve">
+    <value>Télécharger des images</value>
+  </data>
+  <data name="GD_STEP1" xml:space="preserve">
+    <value>Choississez le coin supérieur gauche et le inférieur droit d'une région:</value>
+  </data>
+  <data name="GD_STEP2" xml:space="preserve">
+    <value>Appuyez "Collecter des rues" si la région est celle souhaitée.</value>
+  </data>
+  <data name="GD_STEP3" xml:space="preserve">
+    <value>Choississez une rue ou choississez voir les images de la région.</value>
+  </data>
+  <data name="GET_STREETS" xml:space="preserve">
+    <value>Collecter des rues</value>
+  </data>
+  <data name="HOME" xml:space="preserve">
+    <value>Accueil</value>
+  </data>
+  <data name="HOME_PAGE" xml:space="preserve">
+    <value>Accueil</value>
+  </data>
+  <data name="HOSPITALS" xml:space="preserve">
+    <value>Hôpitaux</value>
+  </data>
+  <data name="IMG_CRACKS" xml:space="preserve">
+    <value>Filtrer des fissures</value>
+  </data>
+  <data name="IMG_CUSTOM" xml:space="preserve">
+    <value>Filtre personnalisé</value>
+  </data>
+  <data name="IMG_ORIG" xml:space="preserve">
+    <value>Images sans filtre</value>
+  </data>
+  <data name="IMG_TREES" xml:space="preserve">
+    <value>Filtrer des arbres</value>
+  </data>
+  <data name="LOCATION_SLIDER_HELP" xml:space="preserve">
+    <value>Utilisez ce contrôle pour naviguer parmi les points retrouvés:</value>
+  </data>
+  <data name="MORE_POINTS" xml:space="preserve">
+    <value>Trouver plus de points</value>
+  </data>
+  <data name="MORE_POINTS_HELP" xml:space="preserve">
+    <value>Avec cette option les points obtenus de la rue seront interpolés afin de trouver plus d'images de la rue. Le temps d'attente peut augmenter.</value>
+  </data>
+  <data name="NEXT_IMAGE" xml:space="preserve">
+    <value>Image suivante</value>
+  </data>
+  <data name="PAUSE" xml:space="preserve">
+    <value>Pause</value>
+  </data>
+  <data name="PHARMACIES" xml:space="preserve">
+    <value>Pharmacies</value>
+  </data>
+  <data name="PLAY" xml:space="preserve">
+    <value>Play</value>
+  </data>
+  <data name="PREV_IMAGE" xml:space="preserve">
+    <value>Image précédente</value>
+  </data>
+  <data name="ROI" xml:space="preserve">
+    <value>Région d'intérêt</value>
+  </data>
+  <data name="SAVE_SESSION" xml:space="preserve">
+    <value>Sauvegarder la session</value>
+  </data>
+  <data name="SCHOOLS" xml:space="preserve">
+    <value>Écoles</value>
+  </data>
+  <data name="SEARCH" xml:space="preserve">
+    <value>Chercher</value>
+  </data>
+  <data name="SELECT_OPERATION" xml:space="preserve">
+    <value>Choississez une opération:</value>
+  </data>
+  <data name="TG_HEATMAP" xml:space="preserve">
+    <value>Voir carte de chaleur</value>
+  </data>
+  <data name="TREES" xml:space="preserve">
+    <value>Arbres</value>
+  </data>
+  <data name="UNSET_STREET" xml:space="preserve">
+    <value>Désélectionner rue</value>
+  </data>
+  <data name="VISUALIZE" xml:space="preserve">
+    <value>Visualiser</value>
   </data>
 </root>

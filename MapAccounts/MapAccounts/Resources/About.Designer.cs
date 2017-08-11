@@ -22,14 +22,14 @@ namespace Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Global {
+    public class About {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Global() {
+        internal About() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MapAccounts.Resources.Global", typeof(Global).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MapAccounts.Resources.About", typeof(About).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,38 +61,47 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The platform was developed and tested using the Google Chrome 58.0.3029.110 (64-bit) browser, if you find any issues while using other browser try to use Chrome&apos;s browser..
+        ///   Looks up a localized string similar to About.
         /// </summary>
-        public static string BRW_WARN {
+        public static string ABOUT {
             get {
-                return ResourceManager.GetString("BRW_WARN", resourceCulture);
+                return ResourceManager.GetString("ABOUT", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Loading....
+        ///   Looks up a localized string similar to About page.
         /// </summary>
-        public static string LOADING {
+        public static string ABOUT_PAGE {
             get {
-                return ResourceManager.GetString("LOADING", resourceCulture);
+                return ResourceManager.GetString("ABOUT_PAGE", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to INvestigate and Analyse a City - INACITY.
+        ///   Looks up a localized string similar to is a platform that empowers the users by allowing them to easily find urban features inside selected regions of interest..
         /// </summary>
-        public static string PJT_NAME {
+        public static string DESCRIPTION {
             get {
-                return ResourceManager.GetString("PJT_NAME", resourceCulture);
+                return ResourceManager.GetString("DESCRIPTION", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to INACITY.
+        ///   Looks up a localized string similar to Technical details and user guides can be find in the oficial GitHub page:.
         /// </summary>
-        public static string PJT_SHORT {
+        public static string GITHUB_ADV {
             get {
-                return ResourceManager.GetString("PJT_SHORT", resourceCulture);
+                return ResourceManager.GetString("GITHUB_ADV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to link.
+        /// </summary>
+        public static string LINK {
+            get {
+                return ResourceManager.GetString("LINK", resourceCulture);
             }
         }
     }

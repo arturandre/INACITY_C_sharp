@@ -61,6 +61,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Abort.
+        /// </summary>
+        public static string ABORT_CALL {
+            get {
+                return ResourceManager.GetString("ABORT_CALL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Search this address:.
         /// </summary>
         public static string ADDRESS {
@@ -79,6 +88,42 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Contact.
+        /// </summary>
+        public static string CONTACT {
+            get {
+                return ResourceManager.GetString("CONTACT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Contact page.
+        /// </summary>
+        public static string CONTACT_PAGE {
+            get {
+                return ResourceManager.GetString("CONTACT_PAGE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Details and reports.
+        /// </summary>
+        public static string DETAILS_REPORTS {
+            get {
+                return ResourceManager.GetString("DETAILS_REPORTS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Download images.
+        /// </summary>
+        public static string DOWNLOAD_IMAGES {
+            get {
+                return ResourceManager.GetString("DOWNLOAD_IMAGES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Set the upper left and bottom right corners of a region:.
         /// </summary>
         public static string GD_STEP1 {
@@ -88,11 +133,47 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Press collect streets if the selected region is correct..
+        /// </summary>
+        public static string GD_STEP2 {
+            get {
+                return ResourceManager.GetString("GD_STEP2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Choose a street or visualize the region&apos;s images..
+        /// </summary>
+        public static string GD_STEP3 {
+            get {
+                return ResourceManager.GetString("GD_STEP3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Get streets.
         /// </summary>
         public static string GET_STREETS {
             get {
                 return ResourceManager.GetString("GET_STREETS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Home.
+        /// </summary>
+        public static string HOME {
+            get {
+                return ResourceManager.GetString("HOME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Home page.
+        /// </summary>
+        public static string HOME_PAGE {
+            get {
+                return ResourceManager.GetString("HOME_PAGE", resourceCulture);
             }
         }
         
@@ -142,11 +223,74 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Use this control to navigate among the points retrieved:.
+        /// </summary>
+        public static string LOCATION_SLIDER_HELP {
+            get {
+                return ResourceManager.GetString("LOCATION_SLIDER_HELP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Find more points.
+        /// </summary>
+        public static string MORE_POINTS {
+            get {
+                return ResourceManager.GetString("MORE_POINTS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a With this option all the points belonging to the selected street will be interpolated in order to find more images of the street. The waiting time may increase..
+        /// </summary>
+        public static string MORE_POINTS_HELP {
+            get {
+                return ResourceManager.GetString("MORE_POINTS_HELP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Next image.
+        /// </summary>
+        public static string NEXT_IMAGE {
+            get {
+                return ResourceManager.GetString("NEXT_IMAGE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Pause.
+        /// </summary>
+        public static string PAUSE {
+            get {
+                return ResourceManager.GetString("PAUSE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Pharmacies.
         /// </summary>
         public static string PHARMACIES {
             get {
                 return ResourceManager.GetString("PHARMACIES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Play.
+        /// </summary>
+        public static string PLAY {
+            get {
+                return ResourceManager.GetString("PLAY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Previous image.
+        /// </summary>
+        public static string PREV_IMAGE {
+            get {
+                return ResourceManager.GetString("PREV_IMAGE", resourceCulture);
             }
         }
         

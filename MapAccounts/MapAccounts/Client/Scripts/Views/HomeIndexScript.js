@@ -1,5 +1,4 @@
-﻿var tbAddress = document.getElementById("tbAddress");
-//var btPictures = document.getElementById("btPictures");
+﻿var btSearchAddress = document.getElementById("btSearchAddress");
 var btPictures = document.getElementById("btPictures");
 var btAmenitiesImages = document.getElementById("btAmenitiesImages");
 var btSnapInMap = document.getElementById("btSnapInMap");
@@ -20,6 +19,8 @@ var modeStreetHeatMap = false;
 var divReports = document.getElementById("divReports");
 var divAmenities = document.getElementById("divAmenities");
 var divAmenitiesControls = document.getElementById("divAmenitiesControls");
+var divImageNavControls = document.getElementById("divImageNavControls");
+
 
 var divStreetControls = document.getElementById("divStreetControls");
 var divFilters = document.getElementById("divFilters");
@@ -65,12 +66,12 @@ var setPlayPauseState = function (state) {
             gsdrawer.clearImagePresentation();
             btAmenitiesImages.src = "Content/playbutton.png";
             break;
-            //Playing
+        //Playing
         case 1:
             gsdrawer.showAllAmenitiesImages();
             btAmenitiesImages.src = "Content/pausebutton.png";
             break;
-            //Paused
+        //Paused
         case 2:
             gsdrawer.pause();
             btAmenitiesImages.src = "Content/playbutton.png";
@@ -87,16 +88,22 @@ function updateControls(step) {
         filterButtons[i].style.border = '';
         filterButtons[i].disabled = false;
     }
+
+    //Definido no Index.cshtml da Home
+    //setHelpMessage(step);
+    $("#lblGuide").html("");
     switch (step) {
         //Tela inicial do sistema -> Selecionar região
         case 0:
-            $("#lblGuide").html("Selecione o canto superior esquerdo e o inferior direito de uma região:");
+            //$("#lblGuide").html("Selecione o canto superior esquerdo e o inferior direito de uma região:");
             $("#btHeatMapStreetsToggle").addClass("disabled");
             $("#btPictures").siblings().addClass("disabled");
+            $("#divImageNavControls").addClass("hidden");
+            $("#lblGuide").html(getResourceString("GD_STEP1"));
             gsdrawer.clearRegions();
             divAmenities.style.display = 'none';
             divStreetControls.style.display = 'none';
-            btStreets.disabled = true;
+
             divReports.style.display = 'none';
             //btPictures.disabled = true;
             //btPictures.display = 'block';
@@ -105,13 +112,14 @@ function updateControls(step) {
             //divFilters.style.display = 'none';
             divAmenitiesControls.style.display = 'none';
             break;
-            //Região selecionada -> Coletar ruas | Amenities
+        //Região selecionada -> Coletar ruas | Amenities
         case 1:
-            $("#lblGuide").html("Pressione coletar ruas se a região for a desejada.");
+            //$("#lblGuide").html("Pressione coletar ruas se a região for a desejada.");
             $("#btPictures").siblings().addClass("disabled");
+            $("#divImageNavControls").addClass("hidden");
+            $("#lblGuide").html(getResourceString("GD_STEP2"));
             divAmenities.style.display = 'block';
             divStreetControls.style.display = 'block';
-            btStreets.disabled = false;
             divReports.style.display = 'none';
             //btPictures.disabled = true;
             //btPictures.display = 'block';
@@ -120,14 +128,15 @@ function updateControls(step) {
             //divFilters.style.display = 'none';
             divAmenitiesControls.style.display = 'none';
             break;
-            //Ruas coletadas -> Selecionar rua
+        //Ruas coletadas -> Selecionar rua
         case 2:
-            $("#lblGuide").html("Selecione uma rua ou escolha visualizar as imagens da região.");
+            //$("#lblGuide").html("Selecione uma rua ou escolha visualizar as imagens da região.");
             $("#btHeatMapStreetsToggle").addClass("disabled");
             $("#btPictures").siblings().addClass("disabled");
+            $("#divImageNavControls").addClass("hidden");
+            $("#lblGuide").html(getResourceString("GD_STEP3"));
             divAmenities.style.display = 'block';
             divStreetControls.style.display = 'block';
-            btStreets.disabled = true;
             divReports.style.display = 'block';
             //btPictures.disabled = false;
             //btPictures.display = 'block';
@@ -136,63 +145,59 @@ function updateControls(step) {
             //divFilters.style.display = 'none';
             divAmenitiesControls.style.display = 'none';
             break;
-            //Rua selecionada -> Ver imagens
+        //Rua selecionada -> Ver imagens
         case 3:
-            $("#lblGuide").html("");
+            //$("#lblGuide").html("");
             $("#btHeatMapStreetsToggle").addClass("disabled");
             $("#btPictures").siblings().addClass("disabled");
             divAmenities.style.display = 'block';
             divStreetControls.style.display = 'block';
-            btStreets.disabled = true;
             divReports.style.display = 'block';
             //btPictures.disabled = false;
             //btPictures.display = 'block';
-            sdLocationPoint.disabled = true;
+            //sdLocationPoint.disabled = true;
             btDownloadImages.disabled = true;
             //divFilters.style.display = 'none';
             divAmenitiesControls.style.display = 'none';
             break;
-            //Imagens coletadas -> Selecionar filtro(s)
+        //Imagens coletadas -> Selecionar filtro(s)
         case 4:
-            $("#lblGuide").html("");
+            //$("#lblGuide").html("");
             $("#btHeatMapStreetsToggle").addClass("disabled");
             $("#btPictures").siblings().removeClass("disabled");
             divAmenities.style.display = 'block';
             divStreetControls.style.display = 'block';
-            //btStreets.disabled = true;
             divReports.style.display = 'block';
             //btPictures.disabled = true;
             //btPictures.display = 'none';
-            sdLocationPoint.disabled = false;
+            //sdLocationPoint.disabled = false;
             btDownloadImages.disabled = false;
             //divFilters.style.display = 'block';
             divAmenitiesControls.style.display = 'none';
             break;
-            //Filtro selecionado -> Ver HeatMap | Interagir com slider de imagem
+        //Filtro selecionado -> Ver HeatMap | Interagir com slider de imagem
         case 5:
-            $("#lblGuide").html("");
+            //$("#lblGuide").html("");
             $("#btHeatMapStreetsToggle").removeClass("disabled");
             divAmenities.style.display = 'block';
             divStreetControls.style.display = 'block';
-            btStreets.disabled = true;
             divReports.style.display = 'block';
             //btPictures.disabled = true;
             //btPictures.display = 'none';
-            sdLocationPoint.disabled = false;
+            //sdLocationPoint.disabled = false;
             btDownloadImages.disabled = false;
             //divFilters.style.display = 'block';
             divAmenitiesControls.style.display = 'none';
             break;
-            //Vendo imagens de amenities (Pontos de ônibus e afins)
+        //Vendo imagens de amenities (Pontos de ônibus e afins)
         case 6:
-            $("#lblGuide").html("");
+            //$("#lblGuide").html("");
             divAmenities.style.display = 'block';
             divStreetControls.style.display = 'block';
-            //btStreets.disabled = false;
             //divReports.style.display = 'none';
             //btPictures.disabled = true;
             //btPictures.display = 'none';
-            sdLocationPoint.disabled = false;
+            //sdLocationPoint.disabled = false;
             //btDownloadImages.disabled = true;
             //divFilters.style.display = 'none';
 
@@ -298,7 +303,8 @@ $(function () {
         },
         ajaxStop: function () {
             divLoading.style.display = 'none';
-            btStreets.value = 'Coletar ruas';
+            //btStreets.value = 'Coletar ruas';
+            btStreets.value = getResourceString("GET_STREETS");
             var request_time = new Date().getTime() - start_time;
             console.log("Ajax call took: " + request_time + " ms");
         }
@@ -308,7 +314,7 @@ $(function () {
 function bindings() {
     btSnapInMap.onclick = btSnapInMapClick;
     btAmenitiesImages.onclick = btAmenitiesImagesClick;
-    btAddress.onclick = panMapByAddress;
+    btSearchAddress.onclick = panMapByAddress;
     btStreets.onclick = btStreetsClick;
     btPictures.onclick = getImagesForStreetClick;
     btSaveSession.onclick = saveSessionClick;
@@ -335,13 +341,13 @@ function bindings() {
 
     GSDrawer.initMap = function () {
         var myStyles = [
-    {
-        featureType: "poi",
-        elementType: "labels",
-        stylers: [
-              { visibility: "off" }
-        ]
-    }
+            {
+                featureType: "poi",
+                elementType: "labels",
+                stylers: [
+                    { visibility: "off" }
+                ]
+            }
         ];
         mapOptions.styles = myStyles;
         gsdrawer.setMap(new google.maps.Map(document.getElementById("map"),
@@ -361,7 +367,7 @@ function bindings() {
         }
 
         gsdrawer.onSelectedStreetChanged = function (newStreet) {
-            updateControls(newStreet === null ? 1 : 2);
+
             if (newStreet === null) {
                 $("#btUnsetStreet").addClass("hidden");
             }
@@ -371,13 +377,21 @@ function bindings() {
 
         }
         gsdrawer.onSelectedRegionChanged = function () {
-            updateControls(1);
+            updateControls(2);
         }
         gsdrawer.onStreetFocused = function (obj) {
             updateControls(3);
         }
         gsdrawer.onImagePresentation = function () {
+            divImageNavControls.classList.remove("hidden");
+            sdLocationPoint.disabled = false;
             updateLocationPointSlider();
+        }
+        gsdrawer.onStreetsLoaded = function () {
+            btStreets.disabled = true;
+        }
+        gsdrawer.onStreetsLoaded = function () {
+            btStreets.disabled = false;
         }
     };
     imgPreview.src = "/out8.jpg";
@@ -413,7 +427,7 @@ var btNextStreetImageClick = function () {
 }
 
 var btStreetsClick = function () {
-    if (btStreets.value === 'Abortar chamada') {
+    if (btStreets.value === getResourceString("ABORT_CALL")) {
         if (!!getStreetsInRegionAjaxArray) {
             $.each(getStreetsInRegionAjaxArray, function (index, ajaxCall) {
                 ajaxCall.abort();
@@ -424,7 +438,7 @@ var btStreetsClick = function () {
         return;
     }
     var confirmaSelecao = showTimeEstimationConfirmPopup(
-            area(
+        area(
             {
                 lat: gsdrawer.selectedRegions[0].Bounds.North,
                 lng: gsdrawer.selectedRegions[0].Bounds.West
@@ -436,16 +450,7 @@ var btStreetsClick = function () {
     if (confirmaSelecao) {
         btStreets.value = 'Abortar chamada';
         getStreetsInRegionAjaxArray = gsdrawer.getStreetsInRegions(function () {
-            $.each(gsdrawer.selectedRegions, function (indexOfRegion, region) {
-                gsdrawer.drawStreetsInMap(region.StreetDTO);
-                /*$.each(region.StreetDTO, function (iStreet, Street) {
-                    var gspan = new GSPanoramaMiner();
-                    gspan.getPanoramasForStreet(Street, function () {
-                        console.log(gspan.validPanoramas);
-                        gsdrawer.resetStreetColor(Street);
-                    });
-                });*/
-            });
+
             updateControls(2);
         });
     }
@@ -529,10 +534,10 @@ function downloadImages() {
                     img.file("" + i + ".jpg", data[i].base64image, { base64: true });
                 }
                 zip.generateAsync({ type: "blob" })
-                .then(function (content) {
-                    // see FileSaver.js
-                    saveAs(content, "imagens.zip");
-                });
+                    .then(function (content) {
+                        // see FileSaver.js
+                        saveAs(content, "imagens.zip");
+                    });
             }
         });
     }
@@ -544,10 +549,10 @@ function downloadImages() {
                 img.file("" + i + ".jpg", gsdrawer.originalImages[i].filterResults[gsdrawer.imageType].base64image, { base64: true });
             }
             zip.generateAsync({ type: "blob" })
-            .then(function (content) {
-                // see FileSaver.js
-                saveAs(content, "imagens.zip");
-            });
+                .then(function (content) {
+                    // see FileSaver.js
+                    saveAs(content, "imagens.zip");
+                });
         }
     }
 }
@@ -613,19 +618,21 @@ function getImagesForStreetClick() {
     divLoading.style.display = 'block';
     try {
         if (gsdrawer.getSelectedStreet()) {
-            gsdrawer.getImagesFromSelectedStreet(function (status) {
-                if (status.validImage === 0) {
-                    alert('Não foi possível coletar nenhuma imagem para esta rua. \n' + status.wrongImage + ' localizações em endereços incorretos. \n' + status.zeroImage + ' localizações sem imagens.');
-                }
-                else {
-                    alert('Foram coletadas ' + status.validImage + ' imagem(ns) válida(s) para esta rua. \n' + status.wrongImage + ' localização(ões) em endereço(s) incorreto(s). \n' + status.zeroImage + ' localização(ões) sem imagem(ns).');
-                }
-                updateControls(4);
-                divLoading.style.display = 'none';
-            }, cbInterpolatePoints.checked);
+            gsdrawer.getImagesForStreet(gsdrawer.getSelectedStreet(), cbInterpolatePoints.checked,
+                function (status) {
+                    if (status.validImage === 0) {
+                        alert('Não foi possível coletar nenhuma imagem para esta rua. \n' + status.wrongImage + ' localizações em endereços incorretos. \n' + status.zeroImage + ' localizações sem imagens.');
+                    }
+                    else {
+                        alert('Foram coletadas ' + status.validImage + ' imagem(ns) válida(s) para esta rua. \n' + status.wrongImage + ' localização(ões) em endereço(s) incorreto(s). \n' + status.zeroImage + ' localização(ões) sem imagem(ns).');
+                    }
+                    updateControls(4);
+                    divLoading.style.display = 'none';
+                }, 10, 10);
+            gsdrawer.loadImagesFromStreetIntoArray();
+            //gsdrawer.getImagesFromSelectedStreet(, cbInterpolatePoints.checked);
         }
-        else
-        {
+        else {
             gsdrawer.getImagesFromSelectedRegion(function (status) {
                 if (status.validImage === 0) {
                     alert('Não foi possível coletar nenhuma imagem para esta rua. \n' + status.wrongImage + ' localizações em endereços incorretos. \n' + status.zeroImage + ' localizações sem imagens.');
@@ -638,7 +645,7 @@ function getImagesForStreetClick() {
             }, cbInterpolatePoints.checked);
         }
     } catch (e) {
-        console.log(e);dsa
+        console.log(e);
         divLoading.style.display = 'none';
     }
 }
@@ -658,6 +665,7 @@ function panMapByAddress() {
     gsdrawer.getGeocoder().geocode({ 'address': address }, function (results, status) {
         if (status === google.maps.GeocoderStatus.OK) {
             gsdrawer.getMap().setCenter(results[0].geometry.location);
+            gsdrawer.getMap().setZoom(15);
         } else {
             alert('Geocode falhou: ' + status);
         }

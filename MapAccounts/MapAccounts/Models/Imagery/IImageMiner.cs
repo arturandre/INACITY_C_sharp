@@ -2,9 +2,9 @@
 
 namespace MapAccounts.Models.Imagery
 {
-    interface IImageMiner
+    public interface IImageMiner
     {
-        //void getImagesForPoints(IEnumerable<PointDTO> points);
         void getImagesForPoints(ICollection<StreetPointModel> streetPointModel);
+        string getImageBase64(object param);
     }
 }

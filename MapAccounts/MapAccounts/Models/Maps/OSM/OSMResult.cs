@@ -20,7 +20,7 @@ namespace MapAccounts.Models.Maps.OSM
         {
             get
             {
-                if (NodesDictionary == null) NodesDictionary = nodes.Distinct(new NodeComparer()).ToDictionary<node, long>(p => p.id);
+                if (NodesDictionary == null) NodesDictionary = nodes.Distinct(new OSMNodeComparer()).ToDictionary<node, long>(p => p.id);
                 return NodesDictionary;
             }
         }

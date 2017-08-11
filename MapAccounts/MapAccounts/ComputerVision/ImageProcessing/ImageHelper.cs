@@ -46,7 +46,7 @@ namespace MapAccounts.ComputerVision.ImageProcessing
             {
                 CvInvoke.Add(sqrtChannels, onesMatrix, sqrtChannels, zeroMask.ToImage<Gray, byte>());
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 throw;

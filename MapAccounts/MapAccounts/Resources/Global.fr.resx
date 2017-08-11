@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="BRW_WARN" xml:space="preserve">
-    <value>A plataforma foi desenvolvida e testada com o navegador Google Chrome Versão 58.0.3029.110 (64-bit), caso tenha problemas usando um navegador diferente experimente ele.</value>
+    <value>La platforme a été developpée et testée avec le navigateur Google Chrome du version 58.0.3029.110 (64-bit), si vous avez des problèmes en utilisant un autre navigateur essayez-vous celui-là.</value>
   </data>
   <data name="LOADING" xml:space="preserve">
-    <value>Processando...</value>
+    <value>Chargement en cours...</value>
   </data>
   <data name="PJT_NAME" xml:space="preserve">
     <value>INvestigate and Analyse a City - INACITY</value>

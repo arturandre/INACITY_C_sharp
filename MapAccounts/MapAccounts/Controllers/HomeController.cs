@@ -4,6 +4,7 @@ using MapAccounts.Models.Primitives;
 using MapAccounts.Security;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -106,7 +107,9 @@ namespace MapAccounts.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+
+            ViewBag.Message = Global.PJT_NAME;
+            //ViewBag.Message = "Your application description page.";
 
             return View();
         }

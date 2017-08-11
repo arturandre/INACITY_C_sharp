@@ -126,4 +126,7 @@
   <data name="PJT_NAME" xml:space="preserve">
     <value>INvestigate and Analyse a City - INACITY</value>
   </data>
+  <data name="PJT_SHORT" xml:space="preserve">
+    <value>INACITY</value>
+  </data>
 </root>

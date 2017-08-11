@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Análise de características urbanas por meio de visão computacional</title>
+    <title>@ViewBag.Title - @Resources.Global.PJT_NAME</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
@@ -17,16 +17,16 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("AnurbVC", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("INACITY", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("User Maps", "Index", "UserMap")</li>
+                    <li>@Html.ActionLink(Resources.Home.HOME, "Index", "Home")</li>
+                    <li>@Html.ActionLink(Resources.About.ABOUT, "About", "Home")</li>
+                    <li>@Html.ActionLink(Resources.Home.CONTACT, "Contact", "Home")</li>
+                    @*<li>@Html.ActionLink("User Maps", "Index", "UserMap")</li>*@
                 </ul>
-                @Html.Partial("_LoginPartial")
+                @*@Html.Partial("_LoginPartial")*@
             </div>
         </div>
     </div>
@@ -34,7 +34,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>@DateTime.Now.Year - Anurbs</p>
+            <p>@DateTime.Now.Year - @Resources.Global.PJT_SHORT</p>
         </footer>
     </div>
 

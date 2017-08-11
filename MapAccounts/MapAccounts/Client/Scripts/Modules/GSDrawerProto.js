@@ -4,7 +4,7 @@ GSDrawer.prototype.focusStreetOnMap = function (Street) {
     if (this.getSelectedStreet() === Street) return;
     var that = this;
     this.setSelectedStreet(Street);
-    console.log(!!Street ? Street.Trechos.length : null);
+    console.log(Street ? Street.Trechos.length : null);
     for (var polyline in that.polylinesOnMap) {
         $.each(that.polylinesOnMap[polyline], function (i, segment) {
             if (polyline === Street.Name) {
@@ -25,7 +25,7 @@ GSDrawer.prototype.focusStreetOnMap = function (Street) {
 
     });
     this.polylinesOnMap[Street.Name] = polylines;
-    if (!!this.onStreetFocused) {
+    if (this.onStreetFocused) {
         this.onStreetFocused(this);
     }
 };
@@ -37,6 +37,7 @@ GSDrawer.prototype.clearPolylinesOnMap = function () {
         });
     }
     this.polylinesOnMap = [];
+    if (this.onStreetsUnloaded) this.onStreetsUnloaded();
     this.setSelectedStreet(null);
 };
 
@@ -66,7 +67,7 @@ GSDrawer.streetToGSPolylineArray = function (Street, mColor) {
     var polylineArray = [];
     $.each(Street.Trechos, function (indexSegment, segment) {
         var configStroke = GSDrawer.redStroke;
-        configStroke.strokeColor = (!!mColor) ? mColor : Street.color;
+        configStroke.strokeColor = mColor ? mColor : Street.color;
         configStroke.path = segment;
         var polyline = new google.maps.Polyline(configStroke);
         polylineArray.push(polyline);
@@ -133,16 +134,16 @@ GSDrawer.rColor = function () {
     return '#' + text;
 };
 
-GSDrawer.prototype.areStreetsLoaded = function ()
-{
-    return (this.selectedRegions.length > 0) && (gsdrawer.selectedRegions[0].StreetDTO.length > 0);
-}
+GSDrawer.prototype.areStreetsLoaded = function () {
+    return this.selectedRegions.length > 0 && gsdrawer.selectedRegions[0].StreetDTO.length > 0;
+};
 
 GSDrawer.prototype.getStreetsInRegions = function (callback) {
-    if (!callback) throw "Error in getStreetsInRegions! Callback missing!";
+    //if (!callback) throw "Error in getStreetsInRegions! Callback missing!";
+    that = this;
     jQuery.support.cors = true;
     var ajaxCalls = [];
-    $.each(this.selectedRegions, function (indexOfRegion, region) {
+    $.each(that.selectedRegions, function (indexOfRegion, region) {
         var call = $.ajax({
             url: '/api/MapMiner/StreetsInRegion',
             type: 'POST',
@@ -151,7 +152,14 @@ GSDrawer.prototype.getStreetsInRegions = function (callback) {
             success: function (data) {
                 if ($.isArray(data) && data.length > 0) {
                     region.StreetDTO = data;
-                    callback();
+                    $.each(that.selectedRegions, function (indexOfRegion, region) {
+                        that.drawStreetsInMap(region.StreetDTO);
+                    });
+                    if (that.onStreetsLoaded) {
+                        that.onStreetsLoaded();
+                    }
+                    if (callback)
+                        callback();
                 }
             },
             error: function (request, textStatus, errorThrown) {
@@ -163,6 +171,7 @@ GSDrawer.prototype.getStreetsInRegions = function (callback) {
         });
         ajaxCalls.push(call);
     });
+
     return ajaxCalls;
 };
 
@@ -176,72 +185,79 @@ GSDrawer.prototype.saveRegions = function (callback) {
             dataType: 'json',
             data: region,
             statusCode:
-                {
-                    500: function (x, y, z) {
-                        console.log("x: " + x);
-                        console.log("y: " + y);
-                        console.log("z: " + z);
-                    },
-                    403: function () { },
-                    200: function (data) {
-                        console.debug("saved!");
-                    }
+            {
+                500: function (x, y, z) {
+                    console.log("x: " + x);
+                    console.log("y: " + y);
+                    console.log("z: " + z);
+                },
+                403: function () { },
+                200: function (data) {
+                    console.debug("saved!");
                 }
+            }
         });
     });
 };
 
-GSDrawer.prototype.getImagesFromSelectedRegion = function (interpolate, callback)
-{
+GSDrawer.prototype.getImagesFromSelectedRegion = function (interpolate, callback) {
     var that = this;
 
     var auxImagesVector = [];
     var streetThreads = 0;
+    var auxFunc = function () {
+        gsdrawer.selectedRegions.map(function (i) { streetThreads += i.StreetDTO.length; });
+        $.each(that.selectedRegions, function (idxRegion, region) {
+            $.each(region.StreetDTO, function (idxStreet, Street) {
 
-    gsdrawer.selectedRegions.map(function (i) { streetThreads += i.StreetDTO.length; });
-    $.each(that.selectedRegions, function (idxRegion, region)
-    {
-        $.each(region.StreetDTO, function (idxStreet, Street)
-        {
-            
-            that.getImagesForStreet(Street, interpolate, function (Street, status)
-            {
-                auxImagesVector.push(Street);
-                //console.log(Street); console.log(status);
-                if (--streetThreads == 0)
-                {
-                    that.originalImages = [];
-                    
-                    $.each(auxImagesVector, function (idxImagesVector, ImagesVector) {
-                        //that.originalImages.push(ImagesVector);
-                        for (j = 0; j < ImagesVector.Trechos.length; j++) {
-                            for (i = 0; i < ImagesVector.Trechos[j].length; i++) {
-                                var ponto = ImagesVector.Trechos[j][i];
-                                var panoDTO = ponto.PanoramaDTO;
-                                if (panoDTO && panoDTO.pano) {
-                                    panoDTO.Pictures[0].filterResults = {};
-                                    that.originalImages.push(panoDTO.Pictures[0]);
+                that.getImagesForStreet(Street, interpolate, function (status) {
+                    auxImagesVector.push(Street);
+                    //console.log(Street); console.log(status);
+                    if (--streetThreads === 0) {
+                        that.originalImages = [];
+
+                        $.each(auxImagesVector, function (idxImagesVector, ImagesVector) {
+                            //that.originalImages.push(ImagesVector);
+                            for (j = 0; j < ImagesVector.Trechos.length; j++) {
+                                for (i = 0; i < ImagesVector.Trechos[j].length; i++) {
+                                    var ponto = ImagesVector.Trechos[j][i];
+                                    var panoDTO = ponto.PanoramaDTO;
+                                    if (panoDTO && panoDTO.pano) {
+                                        panoDTO.Pictures[0].filterResults = {};
+                                        that.originalImages.push(panoDTO.Pictures[0]);
+                                    }
                                 }
                             }
-                        }
-                        if (that.getImgIndex() >= that.originalImages.length) {
-                            that.setImgIndex(0);
-                        }
-                        if (!!that.originalImages && that.originalImages.length > 0) {
-                            that.startImagePresentation("originalSet");
-                        }
-                    });
-                }
+                            if (that.getImgIndex() >= that.originalImages.length) {
+                                that.setImgIndex(0);
+                            }
+                            if (that.originalImages && that.originalImages.length > 0) {
+                                that.startImagePresentation("originalSet");
+                            }
+                        });
+                    }
+                });
+                //auxImagesVector.push(that.originalImages);
             });
-            //auxImagesVector.push(that.originalImages);
         });
-    });
-    
-}
+    };
 
-GSDrawer.prototype.getImagesFromSelectedStreet = function (callback, interpolate) {
+    //TODO: Tratar para todas as regiões selecionadas
+    if (!that.selectedRegions[0].StreetDTO) {
+        that.getStreetsInRegions(function () {
+            auxFunc();
+        });
+    }
+    else {
+        auxFunc();
+    }
+
+};
+/*
+GSDrawer.prototype.getImagesFromSelectedStreet = function (callback, interpolate, _maxDistance, _maxRadius) {
     var that = this;
-
+    //var maxDistance = _maxDistance ? _maxDistance : 10;
+    //var maxRadius = _maxRadius ? _maxRadius : 10;
     if (!callback) throw "Error in getImagesFromSelectedStreet! Callback is missing!";
 
     if (!!that.originalImages && that.originalImages.length > 0 &&
@@ -257,11 +273,11 @@ GSDrawer.prototype.getImagesFromSelectedStreet = function (callback, interpolate
     that.interpolate = interpolate;
     jQuery.support.cors = true;
 
+    that.getImagesForStreet(callback, interpolate, _maxDistance, _maxRadius);
 
-
+    /*
     //INTERPOLATE STREET'S POINTS
     if (interpolate) {
-        var maxDist = 10;
         for (var iTrecho = 0; iTrecho < that.getSelectedStreet().Trechos.length; iTrecho++) {
             var trecho = that.getSelectedStreet().Trechos[iTrecho];
             var points = trecho.slice(0);
@@ -273,7 +289,7 @@ GSDrawer.prototype.getImagesFromSelectedStreet = function (callback, interpolate
                 do {
                     var updated = false;
                     var pm2 = p2;
-                    while (distance(pm1, pm2) > maxDist) {
+                    while (distance(pm1, pm2) > maxDistance) {
                         pm2 = midpoint(pm1, pm2);
                         updated = true;
                     }
@@ -290,8 +306,94 @@ GSDrawer.prototype.getImagesFromSelectedStreet = function (callback, interpolate
 
     //GET Panorama information
 
+    var panoramaCallback = function () {
+        var zeroImage = 0;
+        var wrongImage = 0;
+        var validImage = 0;
+        $.each(that.getSelectedStreet().Trechos, function (iTrecho, Trecho) {
+            $.each(Trecho, function (idxPoint, Point) {
+                var vPano = Point.panoramaStatus;
+                if (vPano === 'ZERO_RESULTS' || !vPano) zeroImage++;
+                else if (vPano === 'WRONG_STREET') wrongImage++;
+                else validImage++;
+            });
+        });
+        var ret_status = {
+            "validImage": validImage,
+            "wrongImage": wrongImage,
+            "zeroImage": zeroImage
+        };
+        if (validImage === 0) {
+            callback(ret_status);
+            return;
+        }
+        //gsdrawer.resetStreetColor(Street);
+        var pictureIndex = 0;
+        var trechos = that.getSelectedStreet().Trechos;
+        for (var j = 0; j < trechos.length; j++) {
+            var points = trechos[j];
+            for (var i = 0; i < points.length - 1; i++) {
+                var point = points[i];
+                var nextPoint = points[i + 1];
+                //if (!point.PanoramaDTO) point.PanoramaDTO = {};
+                //if (point.PanoramaDTO.Pictures === null) point.PanoramaDTO.Pictures = [];
+                var pano = point.PanoramaDTO.pano;
+                if (!!pano && pano.length === 22) {
+                    var finalURL = 'http://maps.googleapis.com/maps/api/streetview?size=640x640&pano=' +
+                        pano + '&heading=' +
+                        point.PanoramaDTO.frontAngle +
+                        '&pitch=' + point.PanoramaDTO.pitch +
+                        '&key=AIzaSyCzw_81uL52LSQVYvXEpweaBsr3m - xHYac&sensor=false';
+                    //var finalURL = 'https://geo0.ggpht.com/cbk?cb_client=maps_sv.tactile&authuser=0&hl=en&panoid=' + pano + '&output=tile&x=1&y=0&zoom=2&nbt&fover=2&key=AIzaSyCzw_81uL52LSQVYvXEpweaBsr3m - xHYac';
+                    //var finalURL = 'https://geo0.ggpht.com/cbk?cb_client=maps_sv.tactile&authuser=0&hl=en&panoid='+pano+'&output=tile&x=1&y=1&zoom=2&nbt&fover=2&key=AIzaSyCzw_81uL52LSQVYvXEpweaBsr3m - xHYac'
+                    //var finalURL = 'https://cbks1.googleapis.com/cbk?output=tile&cb_client=apiv3&v=4&gl=US&zoom=3&x=3&y=1&panoid=' + pano + '&fover=2&onerr=3&key=AIzaSyCzw_81uL52LSQVYvXEpweaBsr3m - xHYac';
+                    //var finalURL = 'https://geo0.ggpht.com/cbk?cb_client=maps_sv.tactile&authuser=0&hl=en&panoid=' + pano + '&output=tile&x=6&y=3&zoom=4&nbt&fover=2&key=AIzaSyCzw_81uL52LSQVYvXEpweaBsr3m - xHYac';
+                    var picture = PictureDTO.initialize(pictureIndex++, pano, point.PanoramaDTO.frontAngle, null, finalURL,
+                        PointDTO.initialize(point.ID, point.lat, point.lng), null);
+
+                    point.PanoramaDTO.Pictures.push(picture);
+                    that.getSelectedStreet().imagesLoaded = true;
+                }
+            }
+            var lastPoint = points[points.length - 1];
+            if (!lastPoint.PanoramaDTO) lastPoint.PanoramaDTO = {};
+            var secondToLastPoint = points[points.length - 2];
+            var lastAngle = secondToLastPoint.PanoramaDTO.frontAngle;
+            if (lastPoint.PanoramaDTO.Pictures === null) lastPoint.PanoramaDTO.Pictures = [];
+
+            var lastPano = lastPoint.PanoramaDTO.pano;
+            if (!!lastPano) {
+                //var finalURL = 'https://geo0.ggpht.com/cbk?cb_client=maps_sv.tactile&authuser=0&hl=en&panoid=' + lastPano + '&output=tile&x=6&y=3&zoom=4&nbt&fover=2&key=AIzaSyCzw_81uL52LSQVYvXEpweaBsr3m - xHYac';
+                finalURL = 'http://maps.googleapis.com/maps/api/streetview?size=640x640&pano=' +
+                    lastPano + '&heading=' +
+
+                    lastPoint.PanoramaDTO.frontAngle +
+                    '&pitch=' + point.PanoramaDTO.pitch +
+                    '&key=AIzaSyCzw_81uL52LSQVYvXEpweaBsr3m - xHYac&sensor=false';
+
+
+
+
+                picture = PictureDTO.initialize(pictureIndex++, lastPano, lastPoint.PanoramaDTO.frontAngle, null, finalURL,
+                    PointDTO.initialize(lastPoint.ID, lastPoint.lat, lastPoint.lng), null);
+
+                lastPoint.PanoramaDTO.Pictures.push(picture);
+                that.getSelectedStreet().imagesLoaded = true;
+            }
+        }
+        that.loadImagesFromStreetIntoArray();
+        callback(ret_status);
+
+    };
+
+    var gspano = new GSPanoramaMiner(that.getSelectedStreet(),
+        panoramaCallback, 10);
+    gspano.getPanoramasForStreet();
+    */
+    /*
     var gspan = new GSPanoramaMiner();
-    gspan.getPanoramasForStreet(that.getSelectedStreet(), function () {
+    gspan.getPanoramasForStreet(that.getSelectedStreet(),
+    function () {
         console.log(gspan.validPanoramas);
         var zeroImage = 0;
         var wrongImage = 0;
@@ -323,17 +425,17 @@ GSDrawer.prototype.getImagesFromSelectedStreet = function (callback, interpolate
                 var pano = point.PanoramaDTO.pano;
                 if (!!pano && pano.length === 22) {
                     var finalURL = 'http://maps.googleapis.com/maps/api/streetview?size=640x640&pano=' +
-                    pano + '&heading=' +
-                    point.PanoramaDTO.frontAngle +
-                    '&pitch=' + point.PanoramaDTO.pitch +
-                    '&key=AIzaSyCzw_81uL52LSQVYvXEpweaBsr3m - xHYac&sensor=false';
+                        pano + '&heading=' +
+                        point.PanoramaDTO.frontAngle +
+                        '&pitch=' + point.PanoramaDTO.pitch +
+                        '&key=AIzaSyCzw_81uL52LSQVYvXEpweaBsr3m - xHYac&sensor=false';
                     //var finalURL = 'https://geo0.ggpht.com/cbk?cb_client=maps_sv.tactile&authuser=0&hl=en&panoid=' + pano + '&output=tile&x=1&y=0&zoom=2&nbt&fover=2&key=AIzaSyCzw_81uL52LSQVYvXEpweaBsr3m - xHYac';
                     //var finalURL = 'https://geo0.ggpht.com/cbk?cb_client=maps_sv.tactile&authuser=0&hl=en&panoid='+pano+'&output=tile&x=1&y=1&zoom=2&nbt&fover=2&key=AIzaSyCzw_81uL52LSQVYvXEpweaBsr3m - xHYac'
                     //var finalURL = 'https://cbks1.googleapis.com/cbk?output=tile&cb_client=apiv3&v=4&gl=US&zoom=3&x=3&y=1&panoid=' + pano + '&fover=2&onerr=3&key=AIzaSyCzw_81uL52LSQVYvXEpweaBsr3m - xHYac';
                     //var finalURL = 'https://geo0.ggpht.com/cbk?cb_client=maps_sv.tactile&authuser=0&hl=en&panoid=' + pano + '&output=tile&x=6&y=3&zoom=4&nbt&fover=2&key=AIzaSyCzw_81uL52LSQVYvXEpweaBsr3m - xHYac';
                     var picture = PictureDTO.initialize(pictureIndex++, pano, point.PanoramaDTO.frontAngle, null, finalURL,
                         PointDTO.initialize(point.ID, point.lat, point.lng), null);
-                    
+
                     point.PanoramaDTO.Pictures.push(picture);
                     that.getSelectedStreet().imagesLoaded = true;
                 }
@@ -343,7 +445,7 @@ GSDrawer.prototype.getImagesFromSelectedStreet = function (callback, interpolate
             var secondToLastPoint = points[points.length - 2];
             var lastAngle = secondToLastPoint.PanoramaDTO.frontAngle;
             if (lastPoint.PanoramaDTO.Pictures === null) lastPoint.PanoramaDTO.Pictures = [];
-            
+
             var lastPano = lastPoint.PanoramaDTO.pano;
             if (!!lastPano) {
                 //var finalURL = 'https://geo0.ggpht.com/cbk?cb_client=maps_sv.tactile&authuser=0&hl=en&panoid=' + lastPano + '&output=tile&x=6&y=3&zoom=4&nbt&fover=2&key=AIzaSyCzw_81uL52LSQVYvXEpweaBsr3m - xHYac';
@@ -358,7 +460,7 @@ GSDrawer.prototype.getImagesFromSelectedStreet = function (callback, interpolate
 
 
                 picture = PictureDTO.initialize(pictureIndex++, lastPano, lastPoint.PanoramaDTO.frontAngle, null, finalURL,
-                        PointDTO.initialize(lastPoint.ID, lastPoint.lat, lastPoint.lng), null);
+                    PointDTO.initialize(lastPoint.ID, lastPoint.lat, lastPoint.lng), null);
 
                 lastPoint.PanoramaDTO.Pictures.push(picture);
                 that.getSelectedStreet().imagesLoaded = true;
@@ -368,11 +470,14 @@ GSDrawer.prototype.getImagesFromSelectedStreet = function (callback, interpolate
         callback(ret_status);
 
     });
-
+    
 };
-
-GSDrawer.prototype.getImagesForStreet = function (Street, interpolate, callback) {
+*/
+GSDrawer.prototype.getImagesForStreet = function (Street, interpolate, callback, _maxDistance, _maxRadius) {
     if (!callback) throw "Error in getImagesForStreet! Callback is missing!";
+
+    var maxDistance = _maxDistance ? _maxDistance : 10;
+    var maxRadius = _maxRadius ? _maxRadius : 10;
 
     jQuery.support.cors = true;
 
@@ -380,7 +485,6 @@ GSDrawer.prototype.getImagesForStreet = function (Street, interpolate, callback)
 
     //INTERPOLATE STREET'S POINTS
     if (interpolate) {
-        var maxDist = 10;
         for (var iTrecho = 0; iTrecho < Street.Trechos.length; iTrecho++) {
             var trecho = Street.Trechos[iTrecho];
             var points = trecho.slice(0);
@@ -392,7 +496,7 @@ GSDrawer.prototype.getImagesForStreet = function (Street, interpolate, callback)
                 do {
                     var updated = false;
                     var pm2 = p2;
-                    while (distance(pm1, pm2) > maxDist) {
+                    while (distance(pm1, pm2) > maxDistance) {
                         pm2 = midpoint(pm1, pm2);
                         updated = true;
                     }
@@ -409,16 +513,17 @@ GSDrawer.prototype.getImagesForStreet = function (Street, interpolate, callback)
 
     //GET Panorama information
 
-    var gspan = new GSPanoramaMiner();
-    gspan.getPanoramasForStreet(Street, function () {
-        console.log(gspan.validPanoramas);
+    var panoramaCallback = function () {
         var zeroImage = 0;
         var wrongImage = 0;
         var validImage = 0;
-        $.each(gspan.validPanoramas, function (idxPano, vPano) {
-            if (vPano === 'ZERO_RESULTS' || !vPano) zeroImage++;
-            else if (vPano === 'WRONG_STREET') wrongImage++;
-            else validImage++;
+        $.each(Street.Trechos, function (iTrecho, Trecho) {
+            $.each(Trecho, function (idxPoint, Point) {
+                var vPano = Point.panoramaStatus;
+                if (vPano === 'ZERO_RESULTS' || !vPano) zeroImage++;
+                else if (vPano === 'WRONG_STREET') wrongImage++;
+                else validImage++;
+            });
         });
         var ret_status = {
             "validImage": validImage,
@@ -426,7 +531,7 @@ GSDrawer.prototype.getImagesForStreet = function (Street, interpolate, callback)
             "zeroImage": zeroImage
         };
         if (validImage === 0) {
-            callback(Street, ret_status);
+            callback(ret_status);
             return;
         }
         //gsdrawer.resetStreetColor(Street);
@@ -437,15 +542,15 @@ GSDrawer.prototype.getImagesForStreet = function (Street, interpolate, callback)
             for (var i = 0; i < points.length - 1; i++) {
                 var point = points[i];
                 var nextPoint = points[i + 1];
-                if (!point.PanoramaDTO) point.PanoramaDTO = {};
-                if (point.PanoramaDTO.Pictures === null) point.PanoramaDTO.Pictures = [];
+                //if (!point.PanoramaDTO) point.PanoramaDTO = {};
+                //if (point.PanoramaDTO.Pictures === null) point.PanoramaDTO.Pictures = [];
                 var pano = point.PanoramaDTO.pano;
                 if (!!pano && pano.length === 22) {
                     var finalURL = 'http://maps.googleapis.com/maps/api/streetview?size=640x640&pano=' +
-                    pano + '&heading=' +
-                    point.PanoramaDTO.frontAngle +
-                    '&pitch=' + point.PanoramaDTO.pitch +
-                    '&key=AIzaSyCzw_81uL52LSQVYvXEpweaBsr3m - xHYac&sensor=false';
+                        pano + '&heading=' +
+                        point.PanoramaDTO.frontAngle +
+                        '&pitch=' + point.PanoramaDTO.pitch +
+                        '&key=AIzaSyCzw_81uL52LSQVYvXEpweaBsr3m - xHYac&sensor=false';
                     //var finalURL = 'https://geo0.ggpht.com/cbk?cb_client=maps_sv.tactile&authuser=0&hl=en&panoid=' + pano + '&output=tile&x=1&y=0&zoom=2&nbt&fover=2&key=AIzaSyCzw_81uL52LSQVYvXEpweaBsr3m - xHYac';
                     //var finalURL = 'https://geo0.ggpht.com/cbk?cb_client=maps_sv.tactile&authuser=0&hl=en&panoid='+pano+'&output=tile&x=1&y=1&zoom=2&nbt&fover=2&key=AIzaSyCzw_81uL52LSQVYvXEpweaBsr3m - xHYac'
                     //var finalURL = 'https://cbks1.googleapis.com/cbk?output=tile&cb_client=apiv3&v=4&gl=US&zoom=3&x=3&y=1&panoid=' + pano + '&fover=2&onerr=3&key=AIzaSyCzw_81uL52LSQVYvXEpweaBsr3m - xHYac';
@@ -477,28 +582,33 @@ GSDrawer.prototype.getImagesForStreet = function (Street, interpolate, callback)
 
 
                 picture = PictureDTO.initialize(pictureIndex++, lastPano, lastPoint.PanoramaDTO.frontAngle, null, finalURL,
-                        PointDTO.initialize(lastPoint.ID, lastPoint.lat, lastPoint.lng), null);
+                    PointDTO.initialize(lastPoint.ID, lastPoint.lat, lastPoint.lng), null);
 
                 lastPoint.PanoramaDTO.Pictures.push(picture);
                 Street.imagesLoaded = true;
             }
         }
-        callback(Street, ret_status);
+        
+        callback(ret_status);
 
-    });
+    };
+
+    var gspano = new GSPanoramaMiner(Street,
+        panoramaCallback, maxRadius);
+    gspano.getPanoramasForStreet();
 
 };
 
 //Private
 GSDrawer.prototype.loadImagesFromStreetIntoArray = function () {
     var that = this;
-    pano = null;
+    //pano = null;
     that.originalImages = [];
     for (j = 0; j < that.getSelectedStreet().Trechos.length; j++) {
         for (i = 0; i < that.getSelectedStreet().Trechos[j].length; i++) {
             var ponto = that.getSelectedStreet().Trechos[j][i];
             var panoDTO = ponto.PanoramaDTO;
-            if (!!panoDTO.pano) {
+            if (panoDTO.pano) {
                 panoDTO.Pictures[0].filterResults = {};
                 that.originalImages.push(panoDTO.Pictures[0]);
             }
@@ -511,7 +621,7 @@ GSDrawer.prototype.loadImagesFromStreetIntoArray = function () {
         that.startImagePresentation("originalSet");
     }
 
-}
+};
 
 GSDrawer.prototype.clearImagePresentation = function () {
     if (this.imgPresenter) {
@@ -530,13 +640,12 @@ GSDrawer.prototype.startImagePresentation = function (chosenSet) {
     this.setImgPresenter();
 };
 
-GSDrawer.prototype.nextImage = function()
-{
+GSDrawer.prototype.nextImage = function () {
     var actualImgIndex = this.getImgIndex();
     actualImgIndex++;
     actualImgIndex %= this.originalImages.length;
     this.setImgIndex(actualImgIndex);
-}
+};
 
 GSDrawer.prototype.previousImage = function () {
     var actualImgIndex = this.getImgIndex();
@@ -544,7 +653,7 @@ GSDrawer.prototype.previousImage = function () {
     actualImgIndex += this.originalImages.length;
     actualImgIndex %= this.originalImages.length;
     this.setImgIndex(actualImgIndex);
-}
+};
 
 GSDrawer.prototype.setImgPresenter = function () {
     if (!this.imgPreview || !this.originalImages || this.originalImages.length === 0) {
@@ -556,7 +665,7 @@ GSDrawer.prototype.setImgPresenter = function () {
     this.setImgPresentationPosition(this.getImgIndex());
     this.nextImage();
     //}.bind(this), 1000);
-    if (!!this.onImagePresentation) {
+    if (this.onImagePresentation) {
         this.onImagePresentation();
     }
 };
@@ -571,26 +680,23 @@ GSDrawer.prototype.setImgByUrl = function (imageUrl) {
 
 GSDrawer.prototype.setImgByBase64Data = function (base64image) {
     this.imgPreview.src = "data:image/png;base64," + base64image;
-    if (this.onImageChanged)
-    {
+    if (this.onImageChanged) {
         this.onImageChanged();
     }
 };
 
-GSDrawer.prototype.play = function()
-{
+GSDrawer.prototype.play = function () {
     this.autoplay = true;
     this.setImgPresentationPosition(this.getImgIndex());
-}
+};
 
 GSDrawer.prototype.pause = function () {
     this.autoplay = false;
     this.clearImagePresentation();
-    if (!!this.onPause)
-    {
+    if (this.onPause) {
         this.onPause();
     }
-}
+};
 
 GSDrawer.prototype.setImgPresentationPosition = function (pos) {
     var that = this;
@@ -598,8 +704,7 @@ GSDrawer.prototype.setImgPresentationPosition = function (pos) {
     if (!pos) {
         pos = that.getImgIndex();
     }
-    else
-    {
+    else {
         that.setImgIndex(pos);
     }
 
@@ -612,14 +717,14 @@ GSDrawer.prototype.setImgPresentationPosition = function (pos) {
                     that.nextImage();
                 }, 1000);
             }
-        }
+        };
     }
     if (!that.imgPreview.onerror) {
         that.imgPreview.onerror = function (e) {
             console.log("Erro na imagem de index: " + that.getImgIndex());
             that.setImgPresentationPosition(that.getImgIndex());
             that.nextImage();
-        }
+        };
     }
 
     if (this.imageType === 'originalSet') {
@@ -632,7 +737,7 @@ GSDrawer.prototype.setImgPresentationPosition = function (pos) {
     }
     else {
         //this.imgPreview.src = "data:image/png;base64," + this.originalImages[pos].filterResults[this.imageType].base64image;
-        if (!!this.originalImages[pos].filterResults)
+        if (this.originalImages[pos].filterResults)
             this.setImgByBase64Data(this.originalImages[pos].filterResults[this.imageType].base64image);
     }
     if (this.snapin === true) {

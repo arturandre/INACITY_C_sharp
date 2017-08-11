@@ -1,4 +1,5 @@
-﻿using MapAccounts.Models;
+﻿using MapAccounts.Extensions;
+using MapAccounts.Models;
 using MapAccounts.Models.Primitives;
 using System;
 using System.Collections.Generic;
@@ -20,12 +21,14 @@ namespace MapAccounts.Controllers
         [Route("GetFeaturesInRegion")]
         public IEnumerable<HeatMapPointDTO> GetFeaturesInRegion([FromBody] Bound region)
         {
-            var poly = DbGeography.PolygonFromText("POLYGON((" +
-                region.West + " " + region.North + "," +
-                region.West + " " + region.South + "," +
-                region.East + " " + region.South + "," +
-                region.East + " " + region.North + "," +
-                region.West + " " + region.North + "))", 4326);
+            String polygonQuery = "POLYGON((" +
+                region.West.ToString(true) + " " + region.North.ToString(true) + "," +
+                region.West.ToString(true) + " " + region.South.ToString(true) + "," +
+                region.East.ToString(true) + " " + region.South.ToString(true) + "," +
+                region.East.ToString(true) + " " + region.North.ToString(true) + "," +
+                region.West.ToString(true) + " " + region.North.ToString(true) + "))";
+
+            var poly = DbGeography.PolygonFromText(polygonQuery, 4326);
             var points = db.HeatmapPointModel.Where(p => poly.Intersects(p.coordinates))
                 .Select(p => new HeatMapPointDTO()
                 {

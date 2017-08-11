@@ -110,38 +110,48 @@ namespace MapAccounts.Models.Imagery.Google
                 }
             }
         }
-        /*
-        public void getImagesForPoints(IEnumerable<PointDTO> points)
+
+        public string getImageBase64(object param)
         {
-            for (int i = 0; i < points.Count() - 1; i++)
+            //Url case
+            if (param is String)
             {
-                var point = points.ElementAt(i);
-                var nextPoint = points.ElementAt(i + 1);
-                var vectorA = new Vector2D(point.lng, point.lat);
-                var vectorB = new Vector2D(nextPoint.lng, nextPoint.lat);
-                var vectorNorth = new Vector2D(0, 1);
-                var vectorAB = vectorB - vectorA;
-                var estimatedAngle = (180.0 * Vector2D.angleBetween(vectorNorth, vectorAB)) / (Math.PI);
-                point.PanoramaDTO = point.PanoramaDTO ?? new PanoramaDTO();
-                point.PanoramaDTO.frontAngle = estimatedAngle;
-                point.PanoramaDTO.Pictures = new List<PictureDTO>();
-                var pano = point.PanoramaDTO.pano;
-                if (pano != null)
-                {
-                    GSQueryBuilder querybuilder = new GSQueryBuilder(pano, 640, 640, point.PanoramaDTO.frontAngle, point.PanoramaDTO.pitch, key);
-                    using (HttpClient client = new HttpClient())
-                    {
-                        var picture = new PictureDTO();
-                        
-                        string finalURL = gsURL + querybuilder.getQueryPanoId();
-                        var response = client.GetByteArrayAsync(finalURL).Result;
-                        picture.base64image = Convert.ToBase64String(response);
-                        
-                        picture.heading = point.PanoramaDTO.frontAngle;
-                        point.PanoramaDTO.Pictures.Add(picture);
-                    }
-                }
+                return DownloadBase64ImageFromURI(param.ToString());
             }
-        }*/
+            return null;
+        }
+        /*
+public void getImagesForPoints(IEnumerable<PointDTO> points)
+{
+   for (int i = 0; i < points.Count() - 1; i++)
+   {
+       var point = points.ElementAt(i);
+       var nextPoint = points.ElementAt(i + 1);
+       var vectorA = new Vector2D(point.lng, point.lat);
+       var vectorB = new Vector2D(nextPoint.lng, nextPoint.lat);
+       var vectorNorth = new Vector2D(0, 1);
+       var vectorAB = vectorB - vectorA;
+       var estimatedAngle = (180.0 * Vector2D.angleBetween(vectorNorth, vectorAB)) / (Math.PI);
+       point.PanoramaDTO = point.PanoramaDTO ?? new PanoramaDTO();
+       point.PanoramaDTO.frontAngle = estimatedAngle;
+       point.PanoramaDTO.Pictures = new List<PictureDTO>();
+       var pano = point.PanoramaDTO.pano;
+       if (pano != null)
+       {
+           GSQueryBuilder querybuilder = new GSQueryBuilder(pano, 640, 640, point.PanoramaDTO.frontAngle, point.PanoramaDTO.pitch, key);
+           using (HttpClient client = new HttpClient())
+           {
+               var picture = new PictureDTO();
+
+               string finalURL = gsURL + querybuilder.getQueryPanoId();
+               var response = client.GetByteArrayAsync(finalURL).Result;
+               picture.base64image = Convert.ToBase64String(response);
+
+               picture.heading = point.PanoramaDTO.frontAngle;
+               point.PanoramaDTO.Pictures.Add(picture);
+           }
+       }
+   }
+}*/
     }
 }

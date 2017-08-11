@@ -1,10 +1,11 @@
 ﻿@{
-    ViewBag.Title = "About";
+    ViewBag.Title = Resources.About.ABOUT_PAGE;
 }
 <h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>
 
 <p>
-    Anurbs - Análise de características urbanas por meio de Visão Computacional é uma plataforma
-    que permite ao usuário facilmente selecionar e visualizar características urbanas dentro de uma
-    região de interesse.</p>
+    @Resources.Global.PJT_SHORT @Resources.About.DESCRIPTION
+</p>
+
+<p>@Resources.About.GITHUB_ADV <a href="https://github.com/arturandre/INACITY/wiki">@Resources.About.LINK</a></p>

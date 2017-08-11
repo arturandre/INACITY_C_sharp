@@ -35,7 +35,7 @@ namespace MapAccounts.Models.Maps.OSM
         private Bound Bounds { get; set; }
         private String currentConfig = "";
         private List<String> currentStatements = new List<string>();
-        private String currentOut = "";
+        
         public OverpassQueryBuilder(Bound _Bounds,
             String _outFormat = _defaultOutFormat,
             int _Timeout = _defaultTimeout,

@@ -1,4 +1,5 @@
 ﻿using MapAccounts.Models;
+using MapAccounts.Models.Imagery;
 using MapAccounts.Models.Primitives;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace MapAccounts.Controllers
 
         [HttpPost]
         [Route("ImagesFromStreet")]
-        public IEnumerable<PictureDTO> GetImagesFromStreet([FromBody] StreetDTO Street)
+        public IEnumerable<PictureDTO> GetImagesFromStreet([FromBody] StreetDTO Street, ImageProvider imageProvider = ImageProvider.Google)
         {
             var panoramaPoints = Street.Trechos.SelectMany(p => p).Where(p => p.PanoramaDTO != null && p.PanoramaDTO.pano != null);
 
@@ -31,8 +32,19 @@ namespace MapAccounts.Controllers
             {
                 try
                 {
-                    picture.base64image =
-                    (new Models.Imagery.Google.GSMiner()).DownloadBase64ImageFromURI(picture.imageURI);
+                    IImageMiner imageMiner = null;
+                    switch (imageProvider)
+                    {
+                        case ImageProvider.Google:
+                            imageMiner = new Models.Imagery.Google.GSMiner();
+                            break;
+                        default:
+                            imageMiner = new Models.Imagery.Google.GSMiner();
+                            break;
+                    }
+
+                    picture.base64image = imageMiner.getImageBase64(picture.imageURI);
+                    //(new Models.Imagery.Google.GSMiner()).DownloadBase64ImageFromURI();
                 }
                 catch (Exception)
                 {

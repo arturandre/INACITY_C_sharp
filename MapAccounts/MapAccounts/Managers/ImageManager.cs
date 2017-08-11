@@ -9,13 +9,14 @@ namespace MapAccounts.Managers
     public class ImageManager
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-        private static ICollection<IImageMiner> ImageMiners { get; set; }
+        private static Dictionary<ImageProvider, IImageMiner> ImageMiners { get; set; }
         private static ImageManager instance = null;
 
         private ImageManager()
         {
-            ImageMiners = new List<IImageMiner>()
-            { new GSMiner() };
+            ImageMiners = new Dictionary<ImageProvider, IImageMiner>();
+            ImageMiners.Add(ImageProvider.Google, new GSMiner());
+            //{ ImageProvider.Google, new GSMiner() };
         }
 
         public static ImageManager getInstance()
@@ -23,29 +24,15 @@ namespace MapAccounts.Managers
             if (instance == null) instance = new ImageManager();
             return instance;
         }
-        /*
-        public void getStreetPictures(ref StreetDTO Street)
-        {
-            if (Street.Points[0].PanoramaDTO == null)
-            {
-                foreach (var miner in ImageMiners)
-                {
-                    miner.getImagesForPoints(Street.Points);
-                }
-            }
 
+        public static IImageMiner getImageMiner(ImageProvider imgProvider)
+        {
+            if (ImageMiners.ContainsKey(imgProvider))
+            {
+                return ImageMiners[imgProvider];
+            }
+            return null;
             
-        }*/
-
-        internal void getStreetPictures(ref StreetModel dbStreet)
-        {
-            //if (dbStreet.StreetPointModel.ElementAt(0).GSPanorama != null)
-            {
-                foreach (var miner in ImageMiners)
-                {
-                    miner.getImagesForPoints(dbStreet.StreetTrechosModel.SelectMany(p => p).ToList());
-                }
-            }
         }
     }
 }

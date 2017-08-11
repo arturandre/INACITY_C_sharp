@@ -38,13 +38,14 @@
             var mRegion = null;
             var mapOptions = {
                 zoom: 12,
-                center: { lat: -23.559359, lng: -46.731667}
+                center: { lat: -23.559359, lng: -46.731667 }
             };
         </script>
     }
 
 
-    ViewBag.Title = "Home Page";
+
+    ViewBag.Title = Resources.Home.HOME_PAGE;
 }
 
 <div class="jumbotron">
@@ -67,7 +68,7 @@
         <div class="mapcomponent">
             <label for="tbAddress">@Resources.Home.ADDRESS</label>
             <input type="text" id="tbAddress" />
-            <input type="button" id="btAddress" value="@Resources.Home.SEARCH" />
+            <input type="button" id="btSearchAddress" value="@Resources.Home.SEARCH" />
         </div>
 
         <div id="divAmenities" class="btn-group">
@@ -97,7 +98,7 @@
 
     </div>
     <div class="col-md-6" id="divStreetControls">
-        <h2>Detalhes e relatórios</h2>
+        <h2>@Resources.Home.DETAILS_REPORTS</h2>
         <div id="divControlsMenu">
             <input type="button" id="btStreets" class="btn btn-default" value="@Resources.Home.GET_STREETS" />
             <input type="button" id="btSaveSession" class="btn btn-default pull-right" value="@Resources.Home.SAVE_SESSION" />
@@ -125,33 +126,33 @@
             <div id="divNumPoints">
                 <div>
                     <input checked="checked" type="checkbox" id="cbInterpolatePoints" />
-                    <label for="cbInterpolatePoints">Buscar mais pontos</label>
+                    <label for="cbInterpolatePoints">@Resources.Home.MORE_POINTS</label>
                     <img src="~/Content/questionmark.png"
-                         class="masterTooltip" title="Com esta opção os pontos obtidos para a rua serão interpolados a fim de se buscar mais imagens para a rua. A espectativa de tempo pode aumentar." />
+                         class="masterTooltip" title="@Resources.Home.MORE_POINTS_HELP" />
                 </div>
                 <br />
             </div>
-            <input type="button" id="btDownloadImages" class="btn btn-default pull-right" value="Descarregar imagens" />
+            <input type="button" id="btDownloadImages" class="btn btn-default pull-right" value="@Resources.Home.DOWNLOAD_IMAGES" />
             <br />
-            <div id="divImageNavControls" class="row" style="margin-top:15px;">
+            <div id="divImageNavControls" class="row hidden" style="margin-top:15px;">
                 <div class="col-md-3 pull-left">
-                    <button type="button" class="btn btn-default" aria-label="Imagem anterior"
+                    <button type="button" class="btn btn-default" aria-label="@Resources.Home.PREV_IMAGE"
                             id="btPreviousStreetImage">
                         <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
                     </button>
                 </div>
                 <div class="col-md-6 text-center">
-                    <button type="button" class="btn btn-default hidden" aria-label="Play"
+                    <button type="button" class="btn btn-default hidden" aria-label="@Resources.Home.PLAY"
                             id="btAutoPlayStreetImages">
                         <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
                     </button>
-                    <button type="button" class="btn btn-default" aria-label="Pause"
+                    <button type="button" class="btn btn-default" aria-label="@Resources.Home.PAUSE"
                             id="btAutoPlayPauseStreetImages">
                         <span class="glyphicon glyphicon-pause" aria-hidden="true"></span>
                     </button>
                 </div>
                 <div class="col-md-3 pull-right">
-                    <button type="button" class="btn btn-default pull-right" aria-label="Imagem anterior"
+                    <button type="button" class="btn btn-default pull-right" aria-label="@Resources.Home.NEXT_IMAGE"
                             id="btNextStreetImage">
                         <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                     </button>
@@ -159,7 +160,7 @@
             </div>
             <br />
             <div id="divMapNavigator">
-                <label for="sdLocationPoint">Use este controle para navegar entre os pontos encontrados:</label>
+                <label for="sdLocationPoint">@Resources.Home.LOCATION_SLIDER_HELP</label>
                 <input type="range" id="sdLocationPoint" />
             </div>
         </div>
@@ -169,6 +170,47 @@
     </div>
 
 </div>
+
+<script>
+            function getResourceString(msgCode)
+            {
+                switch (msgCode)
+                {
+                    case "GET_STREETS":
+                        return "@Resources.Home.GET_STREETS";
+                    case "ABORT_CALL":
+                        return "@Resources.Home.ABORT_CALL";
+                    case "GD_STEP1":
+                    return "@Resources.Home.GD_STEP1";
+                    case "GD_STEP2":
+                    return "@Resources.Home.GD_STEP2";
+                    case "GD_STEP3":
+                    return "@Resources.Home.GD_STEP3";
+                default:
+                    return "";
+                }
+            }
+
+        @*function setHelpMessage(numMessage)
+        {
+            switch(numMessage)
+            {
+                case 0:
+                    $("#lblGuide").html("@Resources.Home.GD_STEP1");
+                    break;
+                case 1:
+                    $("#lblGuide").html("@Resources.Home.GD_STEP2");
+                    break;
+                case 2:
+                    $("#lblGuide").html("@Resources.Home.GD_STEP3");
+                    break;
+                default:
+                    $("#lblGuide").html("");
+                    break;
+
+            }
+        }*@
+</script>
 
 <script src="~/Client/Scripts/Views/HomeIndexScript.js"></script>
 

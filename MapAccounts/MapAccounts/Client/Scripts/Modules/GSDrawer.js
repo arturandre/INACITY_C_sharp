@@ -28,6 +28,8 @@ GSDrawer.prototype.onImageChanged = null;
 GSDrawer.prototype.onSelectedStreetChanged = null;
 GSDrawer.prototype.onSelectedRegionChanged = null;
 GSDrawer.prototype.onStreetFocused = null;
+GSDrawer.prototype.onStreetsLoaded = null;
+GSDrawer.prototype.onStreetsUnloaded = null;
 
 
 function GSDrawer() {
@@ -207,7 +209,7 @@ function GSDrawer() {
     this.setSelectedStreet = function (Street) {
     	if (selectedStreet == Street) return;
 
-    	this.originalImages = [];
+        this.originalImages = [];
         this.pause();
         selectedStreet = Street;
         resetImageData();

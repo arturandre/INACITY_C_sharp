@@ -29,7 +29,7 @@ namespace MapAccounts.Models.Maps.GeoSampa
                         String[] values = line.Split(',');
                         BusStopNode bs = new BusStopNode();
                         bs.X = Double.Parse(values[0], NumberStyles.Any, CultureInfo.InvariantCulture) + offsetLng;
-                        bs.Y = Double.Parse(values[1]) + offsetLat;
+                        bs.Y = Double.Parse(values[1], NumberStyles.Any, CultureInfo.InvariantCulture) + offsetLng;
                         bs.pt_nome = values[2];
                         bs.pt_enderec = values[3];
                         bs.pt_descric = values[4];

@@ -1,4 +1,4 @@
-Limitações:
+﻿Limitações:
 
 !  Verificar porque o filtro de árvores na Av. Corifeu de Azevedo Marques da um erro 500
 !! Limitação do servidor do Azure porque o número de imagens é muito alto (460+) localmente funciona normalmente.
@@ -28,6 +28,7 @@ Melhoras:
 
 Próximas:
 
+* Consertar o botão de desselecionar rua quando uma rua/região está sendo visualizada
 * Assim que for selecionada a busca de imagens numa região habilitar os filtros (bug no disable)
 * Não deixar a página travada enquanto está coletando imagens da região
 * Exibir o loading enquanto as imagens da região estão sendo coletadas
@@ -36,6 +37,7 @@ Próximas:
 * Evitar que clicando errado a região seja re-selecionada acidentalmente (ou a rua).
 * Permitir que o usuário cancele a chamada AJAX em progresso (qualquer que ela seja).
 * Generalizar o algoritmo para normalizar nomes de ruas, toda palavra abreviada (com ponto) de uma rua é testada contra todas as outras palavras da outra rua até encontrar o nome que ela abrevia (indexOf = 0) dai tanto a palavra abreviada quanto à outra que fez o match são removidas e então a semelhança é testada.
+* Internacionalizar as mensagens do HomeIndexScript que faltam (ex. linha 522 "Ver ruas" : "Ver HeatMap")
 
 Talvez:
 

@@ -628,8 +628,8 @@ function getImagesForStreetClick() {
                     }
                     updateControls(4);
                     divLoading.style.display = 'none';
+                    gsdrawer.loadImagesFromStreetIntoArray();
                 }, 10, 10);
-            gsdrawer.loadImagesFromStreetIntoArray();
             //gsdrawer.getImagesFromSelectedStreet(, cbInterpolatePoints.checked);
         }
         else {

@@ -6,22 +6,22 @@ using System.Linq;
 
 namespace MapAccounts.Managers
 {
-    public class ImageManager
+    public class ImageMinerManager
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         private static Dictionary<ImageProvider, IImageMiner> ImageMiners { get; set; }
-        private static ImageManager instance = null;
+        private static ImageMinerManager instance = null;
 
-        private ImageManager()
+        private ImageMinerManager()
         {
             ImageMiners = new Dictionary<ImageProvider, IImageMiner>();
             ImageMiners.Add(ImageProvider.Google, new GSMiner());
             //{ ImageProvider.Google, new GSMiner() };
         }
 
-        public static ImageManager getInstance()
+        public static ImageMinerManager getInstance()
         {
-            if (instance == null) instance = new ImageManager();
+            if (instance == null) instance = new ImageMinerManager();
             return instance;
         }
 

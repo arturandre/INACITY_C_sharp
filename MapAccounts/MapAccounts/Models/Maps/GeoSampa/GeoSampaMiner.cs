@@ -1,6 +1,7 @@
 ﻿using MapAccounts.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -27,7 +28,7 @@ namespace MapAccounts.Models.Maps.GeoSampa
                         if (String.IsNullOrEmpty(line)) break;
                         String[] values = line.Split(',');
                         BusStopNode bs = new BusStopNode();
-                        bs.X = Double.Parse(values[0]) + offsetLng;
+                        bs.X = Double.Parse(values[0], NumberStyles.Any, CultureInfo.InvariantCulture) + offsetLng;
                         bs.Y = Double.Parse(values[1]) + offsetLat;
                         bs.pt_nome = values[2];
                         bs.pt_enderec = values[3];

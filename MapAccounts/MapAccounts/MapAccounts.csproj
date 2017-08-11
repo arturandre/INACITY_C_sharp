@@ -216,6 +216,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Comparers\OSMNodeComparer.cs" />
     <Compile Include="Comparers\PointComparer.cs" />
     <Compile Include="Controllers\LocalizedControllerActivator.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -245,6 +246,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DatabaseModels\SegmentModel.cs" />
     <Compile Include="Models\DatabaseModels\HeatmapPointModel.cs" />
+    <Compile Include="Models\Imagery\ImageProvider.cs" />
     <Compile Include="Models\Primitives\Converters\Base64Converter.cs" />
     <Compile Include="Models\Imagery\Google\GSMiner.cs" />
     <Compile Include="Models\Imagery\Google\GSQueryBuilder.cs" />
@@ -257,7 +259,6 @@
     <Compile Include="ComputerVision\ImageProcessing\TreesFilter.cs" />
     <Compile Include="Models\Primitives\HeatMapPointDTO.cs" />
     <Compile Include="Models\Primitives\PictureDTO.cs" />
-    <Compile Include="Comparers\NodeComparer.cs" />
     <Compile Include="Models\Maps\GeoSampa\BusStopNode.cs" />
     <Compile Include="Models\Maps\GeoSampa\GeoSampaMiner.cs" />
     <Compile Include="Models\Primitives\Converters\RegionDTOConverter.cs" />

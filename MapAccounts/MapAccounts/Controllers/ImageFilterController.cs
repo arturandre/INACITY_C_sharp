@@ -14,7 +14,7 @@ namespace MapAccounts.Controllers
     [RoutePrefix("api/ImageFilter")]
     public class ImageFilterController : ApiController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        //private ApplicationDbContext db = new ApplicationDbContext();
         [Route("DetectFeaturesInSequence/{filterType}")]
         [HttpPost]
         public IEnumerable<FilterResultDTO> DetectFeaturesInSequence([FromBody] IEnumerable<PictureDTO> pictures, String filterType)

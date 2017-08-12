@@ -8,7 +8,7 @@ namespace MapAccounts.Managers
 {
     public class ImageMinerManager
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        //private ApplicationDbContext db = new ApplicationDbContext();
         private static Dictionary<ImageProvider, IImageMiner> ImageMiners { get; set; }
         private static ImageMinerManager instance = null;
 

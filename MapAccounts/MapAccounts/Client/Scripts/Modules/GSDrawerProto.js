@@ -81,6 +81,10 @@ GSDrawer.prototype.clearRegions = function () {
         region.GSrectangle.setMap(null);
     }
     this.clearPolylinesOnMap();
+    this.clearImagePresentation();
+    this.clearAmenities();
+    this.resetImageData();
+    this.setImagePinPoint(null);
 };
 
 GSDrawer.prototype.getRegion = function () {
@@ -632,6 +636,10 @@ GSDrawer.prototype.clearImagePresentation = function () {
     if (this.imgPresenter) {
         clearInterval(gsdrawer.imgPresenter);
         this.imgPresenter = null;
+    }
+    if (this.onClearImagePresentation)
+    {
+        this.onClearImagePresentation();
     }
 };
 

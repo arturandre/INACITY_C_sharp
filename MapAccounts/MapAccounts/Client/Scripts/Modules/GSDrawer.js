@@ -24,6 +24,7 @@ function callInitMap() {
 
 GSDrawer.prototype.onPause = null;
 GSDrawer.prototype.onImagePresentation = null;
+GSDrawer.prototype.onClearImagePresentation = null;
 GSDrawer.prototype.onImageChanged = null;
 GSDrawer.prototype.onSelectedStreetChanged = null;
 GSDrawer.prototype.onSelectedRegionChanged = null;
@@ -109,16 +110,16 @@ function GSDrawer() {
     }
 
     this.setImagePinPoint = function (positionData) {
-        var position = new google.maps.LatLng({ lat: positionData.location.lat, lng: positionData.location.lng });
-        if (!!imagePinPoint) {
+        if (imagePinPoint) {
             imagePinPoint.setMap(null);
             imagePinPoint = null;
         }
-        if (!!imagePinPointArrow) {
+        if (imagePinPointArrow) {
             imagePinPointArrow.setMap(null);
             imagePinPointArrow = null;
         }
-        if (!!position) {
+        if (positionData) {
+            var position = new google.maps.LatLng({ lat: positionData.location.lat, lng: positionData.location.lng });
             imagePinPoint = new google.maps.Marker({
                 icon: window.location.origin + '/Content/blueeyedmarker.png',
                 position: position,
@@ -212,13 +213,13 @@ function GSDrawer() {
         this.originalImages = [];
         this.pause();
         selectedStreet = Street;
-        resetImageData();
+        this.resetImageData();
         if (!!this.onSelectedStreetChanged) {
             this.onSelectedStreetChanged(Street);
         }
     }
 
-    var resetImageData = function () {
+    this.resetImageData = function () {
         imagesMetaData =
         {
             "interpolate": null,

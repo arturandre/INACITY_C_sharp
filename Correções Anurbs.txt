@@ -16,11 +16,9 @@ https://www.google.com.br/maps/@-23.5893518,-46.7339528,3a,75y,21.15h,78t/data=!
 
 Bugs:
 
-* Consertar Clicar para ver imagens da mesma rua aumenta o vetor de imagens
-
-* Não bloquear a UI ao buscar imagens para uma região/rua
-
 ! A seleção de áreas muito grandes (determinar limite) gera um bug em função do número de requisições feitas por segundo para o GSV, determinar qual esse limite e informar o usuário para que selecione uma área menor
+* Quando outra região é selecionada é preciso limpar o buffer de imagens
+! Tratar quando usuário clica para ver images da região e ao mesmo tempo coleta ruas
 
 Melhoras:
 
@@ -30,6 +28,7 @@ Melhoras:
 
 Próximas:
 
+* Não bloquear a UI ao buscar imagens para uma região/rua
 * Implementar botão para abortar chamada atual (qualquer que seja ela)
 * Consertar o botão de desselecionar rua quando uma rua/região está sendo visualizada
 * Assim que for selecionada a busca de imagens numa região habilitar os filtros (bug no disable)
@@ -51,6 +50,7 @@ Talvez:
 
 Done:
 
+-> Consertar Clicar para ver imagens da mesma rua aumenta o vetor de imagens
 -> Fazer o slider de navegação se mover conforme as imagens mudam
 -> Mudar o slider de navegação de lugar (deixar ele junto dos botões de navegação)
 -> Parar o autoplay quando o usuário clicar para ver uma feature urbana (ponto de ônibus)

@@ -393,6 +393,10 @@ function bindings() {
         gsdrawer.onStreetsLoaded = function () {
             btStreets.disabled = false;
         }
+        gsdrawer.onClearImagePresentation = function ()
+        {
+            imgPreview.src = "/out8.jpg";
+        }
     };
     imgPreview.src = "/out8.jpg";
     gsdrawer.imgPreview = document.getElementById("imgPreview");

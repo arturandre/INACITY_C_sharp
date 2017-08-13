@@ -615,6 +615,15 @@ function getCrackFilteredImages() {
 }
 
 function getImagesForStreetClick() {
+    var type = 'originalSet';
+    if (gsdrawer.getImagesMetaData()[type]) {
+        gsdrawer.setHeatMapData(type);
+        toggleHeatMap(false);
+        gsdrawer.startImagePresentation(type);
+        updateControls(5);
+        return;
+    }
+
     divLoading.style.display = 'block';
     try {
         if (gsdrawer.getSelectedStreet()) {

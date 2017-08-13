@@ -18,6 +18,8 @@ Bugs:
 
 * Consertar Clicar para ver imagens da mesma rua aumenta o vetor de imagens
 
+* Não bloquear a UI ao buscar imagens para uma região/rua
+
 ! A seleção de áreas muito grandes (determinar limite) gera um bug em função do número de requisições feitas por segundo para o GSV, determinar qual esse limite e informar o usuário para que selecione uma área menor
 
 Melhoras:
@@ -28,6 +30,7 @@ Melhoras:
 
 Próximas:
 
+* Implementar botão para abortar chamada atual (qualquer que seja ela)
 * Consertar o botão de desselecionar rua quando uma rua/região está sendo visualizada
 * Assim que for selecionada a busca de imagens numa região habilitar os filtros (bug no disable)
 * Não deixar a página travada enquanto está coletando imagens da região

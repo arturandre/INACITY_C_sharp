@@ -233,6 +233,8 @@ GSDrawer.prototype.getImagesFromSelectedRegion = function (interpolate, callback
                             }
                             if (that.originalImages && that.originalImages.length > 0) {
                                 that.startImagePresentation("originalSet");
+                                var type = "originalSet";
+                                that.getImagesMetaData()[type] = true;
                             }
                         });
                     }
@@ -545,7 +547,8 @@ GSDrawer.prototype.getImagesForStreet = function (Street, interpolate, callback,
                 //if (!point.PanoramaDTO) point.PanoramaDTO = {};
                 //if (point.PanoramaDTO.Pictures === null) point.PanoramaDTO.Pictures = [];
                 var pano = point.PanoramaDTO.pano;
-                if (!!pano && pano.length === 22) {
+                if (point.panoramaStatus === "OK"){
+                ///if (!!pano && pano.length === 22) {
                     var finalURL = 'http://maps.googleapis.com/maps/api/streetview?size=640x640&pano=' +
                         pano + '&heading=' +
                         point.PanoramaDTO.frontAngle +
@@ -617,8 +620,10 @@ GSDrawer.prototype.loadImagesFromStreetIntoArray = function () {
     if (that.getImgIndex() >= that.originalImages.length) {
         that.setImgIndex(0);
     }
-    if (!!that.originalImages && that.originalImages.length > 0) {
+    if (that.originalImages && that.originalImages.length > 0) {
         that.startImagePresentation("originalSet");
+        var type = "originalSet";
+        that.getImagesMetaData()[type] = true;
     }
 
 };

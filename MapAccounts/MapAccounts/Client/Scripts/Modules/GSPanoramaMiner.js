@@ -20,7 +20,7 @@
                     sv.getPanoramaByLocation(Point, that.rangeForPanorama, function (data, status) {
                         Point.panoramaStatus = status;
                         Point.PanoramaDTO = new PanoramaDTO();
-                        if (status === "OK") {
+                        if (Point.panoramaStatus === "OK") {
                             if (GSPanoramaMiner.stringDistance(GSPanoramaMiner.normalizeStreetName(data.location.description), GSPanoramaMiner.normalizeStreetName(that.currentStreet.Name)) < 0.9) {
                                 Point.panoramaStatus = 'WRONG_STREET';
                             }
@@ -29,6 +29,10 @@
                                 Point.PanoramaDTO.pano = data.location.pano;
                                 Point.PanoramaDTO.frontAngle = data.tiles.originHeading;
                                 Point.PanoramaDTO.pitch = data.tiles.originPitch;
+                            }
+                            else
+                            {
+                                Point.panoramaStatus = "WRONG_PANO";
                             }
                         }
                         if (--that.currentThreads == 0) {
@@ -50,7 +54,7 @@
         $.each(that.currentStreet.Trechos, function (iTrecho, Trecho) {
             $.each(Trecho, function (idxPoint, Point) {
 
-                if (Point.PanoramaDTO) {
+                if (Point.panoramaStatus === "OK") {
                     if (Point.PanoramaDTO.pano === last) {
                         Point.PanoramaDTO = new PanoramaDTO();
                         Point.panoramaStatus = "SAME_POINT";

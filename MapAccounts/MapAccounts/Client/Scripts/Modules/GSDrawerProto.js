@@ -211,9 +211,13 @@ GSDrawer.prototype.getImagesFromSelectedRegion = function (interpolate, callback
     var streetThreads = 0;
     var auxFunc = function () {
         gsdrawer.selectedRegions.map(function (i) { streetThreads += i.StreetDTO.length; });
+        if (streetThreads > 100)
+        {
+            alert("Erro: Número de ruas maior que 100 (" + streetThreads + "), por favor selecione uma região menor");
+            return;
+        }
         $.each(that.selectedRegions, function (idxRegion, region) {
             $.each(region.StreetDTO, function (idxStreet, Street) {
-
                 that.getImagesForStreet(Street, interpolate, function (status) {
                     auxImagesVector.push(Street);
                     //console.log(Street); console.log(status);
@@ -255,7 +259,7 @@ GSDrawer.prototype.getImagesFromSelectedRegion = function (interpolate, callback
         });
     }
     else {
-        auxFunc();
+        return auxFunc();
     }
 
 };

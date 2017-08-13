@@ -17,9 +17,10 @@ https://www.google.com.br/maps/@-23.5893518,-46.7339528,3a,75y,21.15h,78t/data=!
 Bugs:
 
 ! A seleção de áreas muito grandes (determinar limite) gera um bug em função do número de requisições feitas por segundo para o GSV, determinar qual esse limite e informar o usuário para que selecione uma área menor
-* Quando outra região é selecionada é preciso limpar o buffer de imagens
-! Tratar quando usuário clica para ver images da região e ao mesmo tempo coleta ruas
+-> Talvez a melhor solução não seja limitar o número de ruas que podem ser visualizadas, mas sim visualizar uma rua de cadas vez, ou seja, primeiro o sistema coleta uma rua, exibe todas as imagens dela e em seguida carrega as imagens da próxima rua, ***isso desabilitaria a função do slider dado que não é viável carregar todas as imagens (ou suas referências) duma única vez***
 
+! Tratar quando usuário clica para ver images da região e ao mesmo tempo coleta ruas
+-> Bloquear botões de chamadas AJAX enquanto uma chamada estiver em andamento / Criar um botão para cancelar qualquer chamada que estiver em andamento
 Melhoras:
 
 * Sampling 2D dos mapas
@@ -50,6 +51,7 @@ Talvez:
 
 Done:
 
+-> Quando outra região é selecionada é preciso limpar o buffer de imagens
 -> Consertar Clicar para ver imagens da mesma rua aumenta o vetor de imagens
 -> Fazer o slider de navegação se mover conforme as imagens mudam
 -> Mudar o slider de navegação de lugar (deixar ele junto dos botões de navegação)

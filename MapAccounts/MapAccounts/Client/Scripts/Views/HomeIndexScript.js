@@ -638,8 +638,9 @@ function getImagesForStreetClick() {
 
     divLoading.style.display = 'block';
     try {
-        if (gsdrawer.getSelectedStreet()) {
-            gsdrawer.getImagesForStreet(gsdrawer.getSelectedStreet(), cbInterpolatePoints.checked,
+        const theStreet = gsdrawer.getSelectedStreet();
+        if (theStreet) {
+            gsdrawer.getImagesForStreet(theStreet, cbInterpolatePoints.checked,
                 function (status) {
                     if (status.validImage === 0) {
                         alert('Não foi possível coletar nenhuma imagem para esta rua. \n' + status.wrongImage + ' localizações em endereços incorretos. \n' + status.zeroImage + ' localizações sem imagens.');
@@ -647,9 +648,9 @@ function getImagesForStreetClick() {
                     else {
                         alert('Foram coletadas ' + status.validImage + ' imagem(ns) válida(s) para esta rua. \n' + status.wrongImage + ' localização(ões) em endereço(s) incorreto(s). \n' + status.zeroImage + ' localização(ões) sem imagem(ns).');
                     }
-                    divLoading.style.display = 'none';
                     gsdrawer.loadImagesFromStreetIntoArray();
                     updateControls(4);
+                    divLoading.style.display = 'none';
                 }, 10, 10);
             //gsdrawer.getImagesFromSelectedStreet(, cbInterpolatePoints.checked);
         }

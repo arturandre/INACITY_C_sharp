@@ -256,6 +256,8 @@ GSDrawer.prototype.getImagesFromSelectedRegion = function (interpolate, callback
     if (!that.selectedRegions[0].StreetDTO) {
         that.getStreetsInRegions(function () {
             auxFunc();
+            if (callback)
+            callback();
         });
     }
     else {

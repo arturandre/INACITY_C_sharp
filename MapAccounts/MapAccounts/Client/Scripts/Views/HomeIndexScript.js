@@ -596,12 +596,11 @@ function getFilteredImages(type, obj) {
 
     var filterCall = null;
     var filterUrl = "";
-    if (type === 'Generic') {
         filterCall = imfilter.applyGenericFilter;
+    if (type === 'Generic') {
         filterUrl = window.location.origin + '/api/ImageFilter/GenericFilterTest';
     }
     else {
-        filterCall = imfilter.applyGenericFilter;
         filterUrl = window.location.origin + '/api/ImageFilter/DetectFeaturesInSequence';
     }
 
@@ -648,20 +647,14 @@ function getImagesForStreetClick() {
                     else {
                         alert('Foram coletadas ' + status.validImage + ' imagem(ns) válida(s) para esta rua. \n' + status.wrongImage + ' localização(ões) em endereço(s) incorreto(s). \n' + status.zeroImage + ' localização(ões) sem imagem(ns).');
                     }
-                    updateControls(4);
                     divLoading.style.display = 'none';
                     gsdrawer.loadImagesFromStreetIntoArray();
+                    updateControls(4);
                 }, 10, 10);
             //gsdrawer.getImagesFromSelectedStreet(, cbInterpolatePoints.checked);
         }
         else {
-            gsdrawer.getImagesFromSelectedRegion(function (status) {
-                if (status.validImage === 0) {
-                    alert('Não foi possível coletar nenhuma imagem para esta rua. \n' + status.wrongImage + ' localizações em endereços incorretos. \n' + status.zeroImage + ' localizações sem imagens.');
-                }
-                else {
-                    alert('Foram coletadas ' + status.validImage + ' imagem(ns) válida(s) para esta região. \n' + status.wrongImage + ' localização(ões) em endereço(s) incorreto(s). \n' + status.zeroImage + ' localização(ões) sem imagem(ns).');
-                }
+            gsdrawer.getImagesFromSelectedRegion(false, function (status) {
                 updateControls(4);
                 divLoading.style.display = 'none';
             }, cbInterpolatePoints.checked);

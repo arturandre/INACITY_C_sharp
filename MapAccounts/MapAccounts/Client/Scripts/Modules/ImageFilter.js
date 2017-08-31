@@ -66,6 +66,11 @@ ImageFilter.prototype.applyGenericFilter = function(pictures, remoteUrl, type, c
     if (!callback) throw "Error in applyGenericFilter! Callback is missing!"
     jQuery.support.cors = true;
 
+    for (var pictures_index = 0; pictures_index < pictures.length; pictures_index++)
+    {
+        pictures[pictures_index].imageID = pictures_index;
+    }
+
     var settings = {
         "async": true,
         "crossDomain": true,
@@ -91,10 +96,6 @@ ImageFilter.prototype.applyGenericFilter = function(pictures, remoteUrl, type, c
             callback(response, type);
             console.debug("Filter Images adquired!");
         }
-
-            
-            
-        
     });
 
     

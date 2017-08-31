@@ -4,6 +4,8 @@ var btAmenitiesImages = document.getElementById("btAmenitiesImages");
 var btSnapInMap = document.getElementById("btSnapInMap");
 var btSaveSession = document.getElementById("btSaveSession");
 
+var btUnsetStreet = document.getElementById("btUnsetStreet");
+
 var btPreviousStreetImage = document.getElementById("btPreviousStreetImage");
 var btAutoPlayStreetImages = document.getElementById("btAutoPlayStreetImages");
 var btAutoPlayPauseStreetImages = document.getElementById("btAutoPlayPauseStreetImages");
@@ -312,6 +314,7 @@ $(function () {
 });
 
 function bindings() {
+    btUnsetStreet.onclick = btUnsetStreetClick;
     btSnapInMap.onclick = btSnapInMapClick;
     btAmenitiesImages.onclick = btAmenitiesImagesClick;
     btSearchAddress.onclick = panMapByAddress;
@@ -400,6 +403,12 @@ function bindings() {
     };
     imgPreview.src = "/out8.jpg";
     gsdrawer.imgPreview = document.getElementById("imgPreview");
+}
+
+var btUnsetStreetClick = function ()
+{
+    gsdrawer.drawStreetsInMap(gsdrawer.selectedRegions[0].StreetDTO);
+    updateControls(2);
 }
 
 var btPreviousStreetImageClick = function () {

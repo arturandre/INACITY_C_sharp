@@ -417,6 +417,8 @@
     <None Include="Properties\PublishProfiles\anurbs - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\AnurbsPago.pubxml" />
     <None Include="Properties\PublishProfiles\GSAutomapper3.pubxml" />
+    <None Include="Properties\PublishProfiles\INACITYFork - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\INACITYFork - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\MapRegion.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\FileSaver.min.js" />

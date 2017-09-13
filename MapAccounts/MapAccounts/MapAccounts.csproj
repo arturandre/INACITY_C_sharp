@@ -223,6 +223,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Comparers\OSMNodeComparer.cs" />
     <Compile Include="Comparers\PointComparer.cs" />
+    <Compile Include="Controllers\HomologController.cs" />
     <Compile Include="Controllers\LocalizedControllerActivator.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DBHeatMapController.cs" />
@@ -239,6 +240,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\HtmlHelperExtensions.cs" />
+    <Compile Include="Helpers\MatHelper.cs" />
     <Compile Include="Helpers\PathMap.cs" />
     <Compile Include="Managers\ImageMinerManager.cs" />
     <Compile Include="Managers\MapManager.cs" />
@@ -260,7 +262,7 @@
     <Compile Include="Models\Primitives\FilterResultDTO.cs" />
     <Compile Include="ComputerVision\ImageProcessing\ImageFilter.cs" />
     <Compile Include="Managers\ImageFilterManager.cs" />
-    <Compile Include="ComputerVision\ImageProcessing\ImageHelper.cs" />
+    <Compile Include="Helpers\ImageHelper.cs" />
     <Compile Include="ComputerVision\ImageProcessing\TreesFilter.cs" />
     <Compile Include="Models\Primitives\HeatMapPointDTO.cs" />
     <Compile Include="Models\Primitives\PictureDTO.cs" />

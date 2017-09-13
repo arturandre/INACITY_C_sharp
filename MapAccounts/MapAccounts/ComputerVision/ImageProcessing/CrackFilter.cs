@@ -6,6 +6,7 @@ using System.Drawing;
 using Emgu.CV.Util;
 using MapAccounts.Models.Primitives;
 using MapAccounts.Models.Primitives.Converters;
+using MapAccounts.Helpers;
 
 namespace MapAccounts.ComputerVision.ImageProcessing
 {

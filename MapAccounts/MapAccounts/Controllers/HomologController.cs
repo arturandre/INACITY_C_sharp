@@ -78,7 +78,7 @@ namespace MapAccounts.Controllers
                 
 
                 var image = new Image<Bgr, byte>(image_bitmap);
-                var xpto = new TreesFilter().MaskTest(image);
+                var xpto = new TreesFilter().Mask(image);
                 //return xpto;
                 string path = Server.MapPath("~/App_Data/temp.png");
                 xpto.Save(path);

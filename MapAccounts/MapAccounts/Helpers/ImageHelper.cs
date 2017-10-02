@@ -138,6 +138,32 @@ namespace MapAccounts.Helpers
             var range3 = new Image<Bgr, float>(new Image<Gray, float>[] { range3_1, range3_2, range3_3 });
             var range4 = new Image<Bgr, float>(new Image<Gray, float>[] { range4_1, range4_2, range4_3 });
 
+            
+            underidx.Dispose();
+            underidx1.Dispose();
+            underidx2.Dispose();
+            underidx3.Dispose();
+            overidx.Dispose();
+            overidx1.Dispose();
+            overidx2.Dispose();
+            overidx3.Dispose();
+            t1.Dispose();
+            t2.Dispose();
+            t3.Dispose();
+            range1_1.Dispose();
+            range1_2.Dispose();
+            range1_3.Dispose();
+            range2_1.Dispose();
+            range2_2.Dispose();
+            range2_3.Dispose();
+            range3_1.Dispose();
+            range3_2.Dispose();
+            range3_3.Dispose();
+            range4_1.Dispose();
+            range4_2.Dispose();
+            range4_3.Dispose();
+
+
             var P = new Image<Bgr, float>(new Image<Gray, float>[] { p, p, p });
             var Q = new Image<Bgr, float>(new Image<Gray, float>[] { q, q, q });
 
@@ -147,6 +173,11 @@ namespace MapAccounts.Helpers
                 P.Mul(range4);
             rgb_c *= 255.0;
 
+            P.Dispose();
+            Q.Dispose();
+            p.Dispose();
+            q.Dispose();
+            t.Dispose();
             var rgb_cShape = new Image<Bgr, float>(bgrimage.Cols, bgrimage.Rows);
             MatHelper.CopyTo(ref rgb_c, 0, 0, rgb_c.Cols, rgb_c.Rows, ref rgb_cShape, 0, 0, rgb_cShape.Cols, rgb_cShape.Rows);
             //var H = hsv.Split()[0];
@@ -311,43 +342,66 @@ namespace MapAccounts.Helpers
 
         public static Image<Bgr, byte> Bgr2Croma(Image<Bgr, byte> Image)
         {
-            Mat ImageSquared = new Mat();
-            CvInvoke.Multiply(Image, Image, ImageSquared, 1, Emgu.CV.CvEnum.DepthType.Cv32F);
-            var channels = ImageSquared.Split();
-            var sumChannels = new Mat();
-            //sumChannels.SetTo(new MCvScalar(1, 1, 1));
-            CvInvoke.Add(channels[0], channels[1], sumChannels);
-            CvInvoke.Add(sumChannels, channels[2], sumChannels);
-            Mat sqrtChannels = new Mat();
-            CvInvoke.Sqrt(sumChannels, sqrtChannels);
-            var zeroMask = new Mat(sqrtChannels.Size, sqrtChannels.Depth, sqrtChannels.NumberOfChannels);
-            CvInvoke.Threshold(sqrtChannels, zeroMask, 0, 1, Emgu.CV.CvEnum.ThresholdType.BinaryInv);
-            var onesMatrix = new Mat(sqrtChannels.Size, sqrtChannels.Depth, sqrtChannels.NumberOfChannels);
-            onesMatrix.SetTo(new MCvScalar(1));
-            try
-            {
-                CvInvoke.Add(sqrtChannels, onesMatrix, sqrtChannels, zeroMask.ToImage<Gray, byte>());
-            }
-            catch (Exception)
-            {
+            var floatImage = Image.Convert<Bgr, float>();
+            floatImage._Mul(1.0 / 256.0);
+            var ret = Bgr2Croma(floatImage);
+            ret._Mul(255.0);
+            return ret.Convert<Bgr, byte>();
+        }
 
-                throw;
-            }
+        public static Image<Bgr, float> Bgr2Croma(Image<Bgr, float> floatImage)
+        {
+            var split = floatImage.Split();
+            var b = split[0];
+            var g = split[1];
+            var r = split[2];
 
-            var mergedSum = new Mat();
-            using (VectorOfMat vm = new VectorOfMat(sqrtChannels, sqrtChannels, sqrtChannels))
-            {
-                CvInvoke.Merge(vm, mergedSum);
-            }
-            var cromaMat = new Mat();
-            CvInvoke.Divide(Image, mergedSum, cromaMat, 1, Emgu.CV.CvEnum.DepthType.Cv32F);
-            var cromaImage = cromaMat.ToImage<Bgr, float>();
-            cromaImage._Mul(255);
-            sumChannels.Dispose();
-            mergedSum.Dispose();
-            onesMatrix.Dispose();
-            zeroMask.Dispose();
-            return cromaImage.Convert<Bgr, byte>();
+            var sum = b + g + r;
+            b = b.Mul(1.0 / sum);
+            g = g.Mul(1.0 / sum);
+            r = r.Mul(1.0 / sum);
+            VectorOfMat bgr = new VectorOfMat(b.Mat, g.Mat, r.Mat);
+            CvInvoke.Merge(bgr, floatImage);
+            
+            return floatImage;
+
+            //Mat ImageSquared = new Mat();
+            //CvInvoke.Multiply(Image, Image, ImageSquared, 1, Emgu.CV.CvEnum.DepthType.Cv32F);
+            //var channels = ImageSquared.Split();
+            //var sumChannels = new Mat();
+            ////sumChannels.SetTo(new MCvScalar(1, 1, 1));
+            //CvInvoke.Add(channels[0], channels[1], sumChannels);
+            //CvInvoke.Add(sumChannels, channels[2], sumChannels);
+            //Mat sqrtChannels = new Mat();
+            //CvInvoke.Sqrt(sumChannels, sqrtChannels);
+            //var zeroMask = new Mat(sqrtChannels.Size, sqrtChannels.Depth, sqrtChannels.NumberOfChannels);
+            //CvInvoke.Threshold(sqrtChannels, zeroMask, 0, 1, Emgu.CV.CvEnum.ThresholdType.BinaryInv);
+            //var onesMatrix = new Mat(sqrtChannels.Size, sqrtChannels.Depth, sqrtChannels.NumberOfChannels);
+            //onesMatrix.SetTo(new MCvScalar(1));
+            //try
+            //{
+            //    CvInvoke.Add(sqrtChannels, onesMatrix, sqrtChannels, zeroMask.ToImage<Gray, byte>());
+            //}
+            //catch (Exception)
+            //{
+
+            //    throw;
+            //}
+
+            //var mergedSum = new Mat();
+            //using (VectorOfMat vm = new VectorOfMat(sqrtChannels, sqrtChannels, sqrtChannels))
+            //{
+            //    CvInvoke.Merge(vm, mergedSum);
+            //}
+            //var cromaMat = new Mat();
+            //CvInvoke.Divide(Image, mergedSum, cromaMat, 1, Emgu.CV.CvEnum.DepthType.Cv32F);
+            //var cromaImage = cromaMat.ToImage<Bgr, float>();
+            //cromaImage._Mul(255);
+            //sumChannels.Dispose();
+            //mergedSum.Dispose();
+            //onesMatrix.Dispose();
+            //zeroMask.Dispose();
+            //return cromaImage.Convert<Bgr, byte>();
         }
     }
 }

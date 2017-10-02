@@ -78,6 +78,8 @@
             .replace('Doutora ', '')
             .replace('Prefeito ', '')
             .replace('Marechal ', '')
+            .replace('Professor ', '')
+            .replace('Professora ', '')
             .replace('Av. ', '')
             .replace('R. ', '')
             .replace('Estr. ', '')
@@ -86,7 +88,9 @@
             .replace('Dr. ', '')
             .replace('Dra. ', '')
             .replace('Pref. ', '')
-            .replace('Mal. ', '');
+            .replace('Mal. ', '')
+            .replace('Prof. ', '');;
+
 
     };
 

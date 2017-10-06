@@ -183,6 +183,27 @@
   <data name="NEXT_IMAGE" xml:space="preserve">
     <value>Next image</value>
   </data>
+  <data name="NO_IMAGES_1" xml:space="preserve">
+    <value>It wasn't possible to get any picture for this street. \n</value>
+  </data>
+  <data name="NO_IMAGES_2" xml:space="preserve">
+    <value> pictures in wrong addresses\n</value>
+  </data>
+  <data name="NO_IMAGES_3" xml:space="preserve">
+    <value> locations without pictures.</value>
+  </data>
+  <data name="OK_IMAGES_1" xml:space="preserve">
+    <value>There's</value>
+  </data>
+  <data name="OK_IMAGES_2" xml:space="preserve">
+    <value> picture(s) available for this address. \n</value>
+  </data>
+  <data name="OK_IMAGES_3" xml:space="preserve">
+    <value> picture(s) in wrong address(es). \n</value>
+  </data>
+  <data name="OK_IMAGES_4" xml:space="preserve">
+    <value> position(s) without picture(s).</value>
+  </data>
   <data name="PAUSE" xml:space="preserve">
     <value>Pause</value>
   </data>
@@ -206,6 +227,12 @@
   </data>
   <data name="SEARCH" xml:space="preserve">
     <value>Search</value>
+  </data>
+  <data name="SEE_HEATMAP" xml:space="preserve">
+    <value>See heatmap</value>
+  </data>
+  <data name="SEE_STREETS" xml:space="preserve">
+    <value>See streets</value>
   </data>
   <data name="SELECT_OPERATION" xml:space="preserve">
     <value>Choose an operation:</value>

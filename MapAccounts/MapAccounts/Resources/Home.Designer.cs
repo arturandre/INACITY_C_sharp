@@ -19,7 +19,7 @@ namespace Resources {
     // através de uma ferramenta como ResGen ou Visual Studio.
     // Para adicionar ou remover um associado, edite o arquivo .ResX e execute ResGen novamente
     // com a opção /str, ou recrie o projeto do VS.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Home {
@@ -259,6 +259,69 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a It wasn&apos;t possible to get any picture for this street. \n.
+        /// </summary>
+        public static string NO_IMAGES_1 {
+            get {
+                return ResourceManager.GetString("NO_IMAGES_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a  pictures in wrong addresses\n.
+        /// </summary>
+        public static string NO_IMAGES_2 {
+            get {
+                return ResourceManager.GetString("NO_IMAGES_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a  locations without pictures..
+        /// </summary>
+        public static string NO_IMAGES_3 {
+            get {
+                return ResourceManager.GetString("NO_IMAGES_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a There&apos;s.
+        /// </summary>
+        public static string OK_IMAGES_1 {
+            get {
+                return ResourceManager.GetString("OK_IMAGES_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a  picture(s) available for this address. \n.
+        /// </summary>
+        public static string OK_IMAGES_2 {
+            get {
+                return ResourceManager.GetString("OK_IMAGES_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a  picture(s) in wrong address(es). \n.
+        /// </summary>
+        public static string OK_IMAGES_3 {
+            get {
+                return ResourceManager.GetString("OK_IMAGES_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a  position(s) without picture(s)..
+        /// </summary>
+        public static string OK_IMAGES_4 {
+            get {
+                return ResourceManager.GetString("OK_IMAGES_4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Pause.
         /// </summary>
         public static string PAUSE {
@@ -327,6 +390,24 @@ namespace Resources {
         public static string SEARCH {
             get {
                 return ResourceManager.GetString("SEARCH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a See heatmap.
+        /// </summary>
+        public static string SEE_HEATMAP {
+            get {
+                return ResourceManager.GetString("SEE_HEATMAP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a See streets.
+        /// </summary>
+        public static string SEE_STREETS {
+            get {
+                return ResourceManager.GetString("SEE_STREETS", resourceCulture);
             }
         }
         

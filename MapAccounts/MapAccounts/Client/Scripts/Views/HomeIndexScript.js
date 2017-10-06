@@ -151,7 +151,7 @@ function updateControls(step) {
         case 3:
             //$("#lblGuide").html("");
             $("#btHeatMapStreetsToggle").addClass("disabled");
-            $("#btPictures").siblings().addClass("disabled");
+            $("#btPictures").siblings().removeClass("disabled");
             divAmenities.style.display = 'block';
             divStreetControls.style.display = 'block';
             divReports.style.display = 'block';
@@ -528,11 +528,11 @@ function toggleHeatMap(force) {
     gsdrawer.toggleHeatMapMode(force);
     if (force === true || force === false) {
         modeStreetHeatMap = force;
-        btHeatMapStreetsToggle.value = force ? "Ver ruas" : "Ver HeatMap";
+        btHeatMapStreetsToggle.value = force ? getResourceString("SEE_STREETS") : getResourceString("SEE_HEATMAP");
     }
     else {
         modeStreetHeatMap = !modeStreetHeatMap;
-        btHeatMapStreetsToggle.value = modeStreetHeatMap ? "Ver ruas" : "Ver HeatMap";
+        btHeatMapStreetsToggle.value = modeStreetHeatMap ? getResourceString("SEE_STREETS") : getResourceString("SEE_HEATMAP");
     }
 }
 
@@ -643,10 +643,11 @@ function getImagesForStreetClick() {
             gsdrawer.getImagesForStreet(theStreet, cbInterpolatePoints.checked,
                 function (status) {
                     if (status.validImage === 0) {
-                        alert('Não foi possível coletar nenhuma imagem para esta rua. \n' + status.wrongImage + ' localizações em endereços incorretos. \n' + status.zeroImage + ' localizações sem imagens.');
+                        //
+                        alert(getResourceString("NO_IMAGES_1") + status.wrongImage + getResourceString("NO_IMAGES_2") + status.zeroImage + getResourceString("NO_IMAGES_3"));
                     }
                     else {
-                        alert('Foram coletadas ' + status.validImage + ' imagem(ns) válida(s) para esta rua. \n' + status.wrongImage + ' localização(ões) em endereço(s) incorreto(s). \n' + status.zeroImage + ' localização(ões) sem imagem(ns).');
+                        alert(getResourceString("NO_IMAGES_1") + status.validImage + getResourceString("NO_IMAGES_2") + status.wrongImage + getResourceString("NO_IMAGES_3") + status.zeroImage + getResourceString("NO_IMAGES_4"));
                     }
                     gsdrawer.loadImagesFromStreetIntoArray();
                     updateControls(4);

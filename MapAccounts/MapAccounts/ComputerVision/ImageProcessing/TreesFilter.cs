@@ -42,6 +42,52 @@ namespace MapAccounts.ComputerVision.ImageProcessing
 
         public Image<Gray, byte> Mask(Image<Bgr, byte> Image)
         {
+            var lowR = 0.0228 * 256;
+            var highR = 0.8876 * 256;
+            var lowG = 0.0515 * 256;
+            var highG = 0.9167 * 256;
+            var lowB = 0 * 256;
+            var highB = 0.3030 * 256;
+            var lowH = 0.0228 * 180;
+            var highH = 0.8876 * 180;
+            var lowS = 0.0515 * 256;
+            var highS = 0.9167 * 256;
+            var lowV = 0 * 256;
+            var highV = 0.3030 * 256;
+            var lowRn = 0.2088 * 256;
+            var highRn = 0.5097 * 256;
+            var lowGn = 0.3726 * 256;
+            var highGn = 0.6000 * 256;
+            var lowBn = 0 * 256;
+            var highBn = 0.3468 * 256;
+
+
+            #region Color_mask
+
+            var hsvImage = Image.Convert<Hsv, byte>();
+            var hsvMask = hsvImage.InRange(new Hsv(lowH, lowS, lowV), new Hsv(highH, highS, highV));
+
+            var cromaImage = ImageHelper.Bgr2Croma(Image);
+            var cromaMask = cromaImage.InRange(new Bgr(lowBn, lowGn, lowRn), new Bgr(highBn, highGn, highRn));
+
+            var rgbMask = Image.InRange(new Bgr(lowB, lowG, lowR), new Bgr(highB, highG, highR));
+
+            #endregion Color_mask
+
+            var combinedMasks = rgbMask.CopyBlank();
+            CvInvoke.Multiply(rgbMask, hsvMask, combinedMasks);
+            CvInvoke.Multiply(cromaMask, combinedMasks, combinedMasks);
+
+
+            hsvImage.Dispose();
+            hsvMask.Dispose();
+            cromaImage.Dispose();
+            cromaMask.Dispose();
+            rgbMask.Dispose();
+            return combinedMasks;
+        }
+        public Image<Gray, byte> Old_Mask(Image<Bgr, byte> Image)
+        {
             var lowH = 1.0 / 8.0;
             var highH = 1.0 / 2.0;
             var lowS = 32.0 / 100.0;
@@ -80,7 +126,7 @@ namespace MapAccounts.ComputerVision.ImageProcessing
                     hueChannelUINT16.Data[i, j, 0] = LUT.Data[0, hueChannelUINT16.Data[i, j, 0], 0];
                 }
             }
-            
+
             var maskLUT = hueChannelUINT16.Convert<Gray, byte>();
 
             var cromaImage = ImageHelper.Bgr2Croma(Image);
@@ -146,7 +192,7 @@ namespace MapAccounts.ComputerVision.ImageProcessing
                 1,
                 Emgu.CV.CvEnum.BorderType.Constant,
                 new MCvScalar(0));
-            
+
             hsvImage.Dispose();
             hsvOriginalImage.Dispose();
             hsvSplit[0].Dispose();
@@ -158,85 +204,55 @@ namespace MapAccounts.ComputerVision.ImageProcessing
             return combinedMasks;
         }
 
-
         public Image<Bgr, byte> MaskTest(Image<Bgr, byte> Image)
         {
-            var floatImg = Image.Convert<Bgr, float>();
-            floatImg._Mul(1.0 / 256.0);
+            //var floatImg = Image.Convert<Bgr, float>();
+            //floatImg._Mul(1.0 / 256.0);
+                 
 
-            var lowH = 0.0001*180;
-            var highH = 1.0250*180;
-            var lowS = 0.0001;
-            var highS = 0.9500;
-
-            var str_elem_close = 6;
-            var str_elem_open = 24;
-            var str_elem_gradient_width = 15;
-            var str_elem_gradient_height = 9;
-            var gradient_factor = 0.4654;
+            var lowR = 0.0228*256;
+            var highR = 0.8876 * 256;
+            var lowG = 0.0515 * 256;
+            var highG = 0.9167 * 256;
+            var lowB = 0 * 256;
+            var highB = 0.3030 * 256;
+            var lowH = 0.0228*180;
+            var highH = 0.8876*180;
+            var lowS = 0.0515 * 256;
+            var highS = 0.9167 * 256;
+            var lowV = 0 * 256;
+            var highV = 0.3030 * 256;
+            var lowRn = 0.2088 * 256;
+            var highRn = 0.5097 * 256;
+            var lowGn = 0.3726 * 256;
+            var highGn = 0.6000 * 256;
+            var lowBn = 0 * 256;
+            var highBn = 0.3468 * 256;
             
-
-            var cromaImage = ImageHelper.Bgr2Croma(floatImg);
-
-            #region Morphology_mask
-            var strel = CvInvoke.GetStructuringElement(Emgu.CV.CvEnum.ElementShape.Rectangle,
-                new System.Drawing.Size(
-                    str_elem_gradient_width , 
-                    str_elem_gradient_height), new System.Drawing.Point(-1, -1));
-            var gImage = cromaImage.Convert<Gray, float>();
-            CvInvoke.MorphologyEx(gImage, gImage,
-                Emgu.CV.CvEnum.MorphOp.Blackhat,
-                strel,
-                new System.Drawing.Point(-1, -1),
-                1, Emgu.CV.CvEnum.BorderType.Constant, new MCvScalar(0));
-            var mean = CvInvoke.Mean(gImage);
-            gImage._ThresholdBinary(new Gray(mean.V0*gradient_factor), new Gray(1));
-            strel.Dispose();
-            #endregion Morphology_mask
 
             #region Color_mask
 
-            var hsvImage = cromaImage.Convert<Hsv, float>();
-            var hsvMask = hsvImage.InRange (new Hsv(lowH, lowS, 0), new Hsv(highH, highS, 1));
+            var hsvImage = Image.Convert<Hsv, byte>();
+            var hsvMask = hsvImage.InRange (new Hsv(lowH, lowS, lowV), new Hsv(highH, highS, highV));
 
+            var cromaImage = ImageHelper.Bgr2Croma(Image);
+            var cromaMask = cromaImage.InRange(new Bgr(lowBn, lowGn, lowRn), new Bgr(highBn, highGn, highRn));
+
+            var rgbMask = Image.InRange(new Bgr(lowB, lowG, lowR), new Bgr(highB, highG, highR));
 
             #endregion Color_mask
 
-            var combinedMasks = gImage.Mul(hsvMask.Convert<Gray, float>());
-            
+            var combinedMasks = rgbMask.CopyBlank();
+            CvInvoke.Multiply(rgbMask, hsvMask, combinedMasks);
+            CvInvoke.Multiply(cromaMask, combinedMasks, combinedMasks);
 
-            //Noise treatment
-            combinedMasks._MorphologyEx(
-                Emgu.CV.CvEnum.MorphOp.Close,
-                CvInvoke.GetStructuringElement(
-                    Emgu.CV.CvEnum.ElementShape.Rectangle,
-                    new System.Drawing.Size(str_elem_close, str_elem_close),
-                    new System.Drawing.Point(-1, -1)),
-                new System.Drawing.Point(-1, -1),
-                1,
-                Emgu.CV.CvEnum.BorderType.Constant,
-                new MCvScalar(0));
-
-            combinedMasks._MorphologyEx(
-                Emgu.CV.CvEnum.MorphOp.Open,
-                CvInvoke.GetStructuringElement(
-                    Emgu.CV.CvEnum.ElementShape.Rectangle,
-                    new System.Drawing.Size(str_elem_open, str_elem_open),
-                    new System.Drawing.Point(-1, -1)),
-                new System.Drawing.Point(-1, -1),
-                1,
-                Emgu.CV.CvEnum.BorderType.Constant,
-                new MCvScalar(0));
 
             hsvImage.Dispose();
-            //hsvOriginalImage.Dispose();
-            //hsvSplit[0].Dispose();
-            //hsvSplit[1].Dispose();
-            //hsvSplit[2].Dispose();
             hsvMask.Dispose();
-            gImage.Dispose();
             cromaImage.Dispose();
-            return Image.Copy(combinedMasks.Convert<Gray, byte>());
+            cromaMask.Dispose();
+            rgbMask.Dispose();
+            return Image.Copy(combinedMasks);
         }
 
     }

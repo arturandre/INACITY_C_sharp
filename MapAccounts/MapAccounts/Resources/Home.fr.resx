@@ -186,6 +186,27 @@
   <data name="NEXT_IMAGE" xml:space="preserve">
     <value>Image suivante</value>
   </data>
+  <data name="NO_IMAGES_1" xml:space="preserve">
+    <value>Ce n'était pas possible collecter aucune image de cette rue. \n</value>
+  </data>
+  <data name="NO_IMAGES_2" xml:space="preserve">
+    <value> emplacements en mauvaises adresses. \n</value>
+  </data>
+  <data name="NO_IMAGES_3" xml:space="preserve">
+    <value> emplacement(s) sans image(s).</value>
+  </data>
+  <data name="OK_IMAGES_1" xml:space="preserve">
+    <value>Ont été obtenus</value>
+  </data>
+  <data name="OK_IMAGES_2" xml:space="preserve">
+    <value> image(s) valide(s) de cette addresse. \n</value>
+  </data>
+  <data name="OK_IMAGES_3" xml:space="preserve">
+    <value> image(s) dans des addresse(s) incorrete(s). \n</value>
+  </data>
+  <data name="OK_IMAGES_4" xml:space="preserve">
+    <value> emplacement(s) sans image(s).</value>
+  </data>
   <data name="PAUSE" xml:space="preserve">
     <value>Pause</value>
   </data>
@@ -209,6 +230,12 @@
   </data>
   <data name="SEARCH" xml:space="preserve">
     <value>Chercher</value>
+  </data>
+  <data name="SEE_HEATMAP" xml:space="preserve">
+    <value>Voir de carte de chaleur</value>
+  </data>
+  <data name="SEE_STREETS" xml:space="preserve">
+    <value>Voir des rues</value>
   </data>
   <data name="SELECT_OPERATION" xml:space="preserve">
     <value>Choississez une opération:</value>

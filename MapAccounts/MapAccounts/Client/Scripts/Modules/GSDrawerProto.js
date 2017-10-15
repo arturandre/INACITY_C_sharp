@@ -2,6 +2,10 @@
 
 GSDrawer.prototype.focusStreetOnMap = function (Street) {
     if (this.getSelectedStreet() === Street) return;
+    if (this.getSelectedStreet() && !confirm(getResourceString("CHANGE_ADDRESS_WARN")))
+    {
+        return;
+    }
     var that = this;
     this.setSelectedStreet(Street);
     console.log(Street ? Street.Trechos.length : null);
@@ -76,6 +80,9 @@ GSDrawer.streetToGSPolylineArray = function (Street, mColor) {
 };
 
 GSDrawer.prototype.clearRegions = function () {
+    if (this.getSelectedStreet() && !confirm(getResourceString("CHANGE_ADDRESS_WARN"))) {
+        return;
+    }
     while (this.selectedRegions.length > 0) {
         var region = this.selectedRegions.pop();
         region.GSrectangle.setMap(null);

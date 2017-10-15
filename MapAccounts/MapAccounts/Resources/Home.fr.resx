@@ -126,6 +126,9 @@
   <data name="BUS_STOPS" xml:space="preserve">
     <value>Arrêts de bus</value>
   </data>
+  <data name="CHANGE_ADDRESS_WARN" xml:space="preserve">
+    <value>Vous-voulez changer l'adresse choisissée?</value>
+  </data>
   <data name="CONTACT" xml:space="preserve">
     <value>Contacter</value>
   </data>

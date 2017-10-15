@@ -88,6 +88,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Do you want to change the selected address?.
+        /// </summary>
+        public static string CHANGE_ADDRESS_WARN {
+            get {
+                return ResourceManager.GetString("CHANGE_ADDRESS_WARN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Contact.
         /// </summary>
         public static string CONTACT {

@@ -37,7 +37,7 @@ Próximas:
 
   
 * Detectar qual o browser e mostrar o alerta só quando o browser for diferente ao invés de exibir sempre
-* Evitar que clicando errado a região seja re-selecionada acidentalmente (ou a rua).
+
 * Permitir que o usuário cancele a chamada AJAX em progresso (qualquer que ela seja).
 * Generalizar o algoritmo para normalizar nomes de ruas, toda palavra abreviada (com ponto) de uma rua é testada contra todas as outras palavras da outra rua até encontrar o nome que ela abrevia (indexOf = 0) dai tanto a palavra abreviada quanto à outra que fez o match são removidas e então a semelhança é testada.
 
@@ -54,6 +54,7 @@ Talvez:
 
 Done:
 
+T-> Evitar que clicando errado a região seja re-selecionada acidentalmente (ou a rua).
 -> Internacionalizar as mensagens do HomeIndexScript que faltam (ex. linha 522 "Ver ruas" : "Ver HeatMap")
 -> Implementar novo filtro de árvores (Implementado filtro RGB, HSV, Croma)
 -> Exibir o loading enquanto as imagens da região estão sendo coletadas

@@ -7,6 +7,8 @@ using MapAccounts.Helpers;
 using Emgu.CV.CvEnum;
 using MapAccounts.Models.Primitives;
 using MapAccounts.Models.Primitives.Converters;
+using Emgu.CV.Util;
+using System.Drawing;
 
 namespace MapAccounts.ComputerVision.ImageProcessing
 {
@@ -42,24 +44,24 @@ namespace MapAccounts.ComputerVision.ImageProcessing
 
         public Image<Gray, byte> Mask(Image<Bgr, byte> Image)
         {
-            var lowR = 0.0228 * 256;
-            var highR = 0.8876 * 256;
-            var lowG = 0.0515 * 256;
-            var highG = 0.9167 * 256;
-            var lowB = 0 * 256;
-            var highB = 0.3030 * 256;
+            var lowR = 0.0228 * 255;
+            var highR = 0.8876 * 255;
+            var lowG = 0.0515 * 255;
+            var highG = 0.9167 * 255;
+            var lowB = 0 * 255;
+            var highB = 0.3030 * 255;
             var lowH = 0.0228 * 180;
             var highH = 0.8876 * 180;
-            var lowS = 0.0515 * 256;
-            var highS = 0.9167 * 256;
-            var lowV = 0 * 256;
-            var highV = 0.3030 * 256;
-            var lowRn = 0.2088 * 256;
-            var highRn = 0.5097 * 256;
-            var lowGn = 0.3726 * 256;
-            var highGn = 0.6000 * 256;
-            var lowBn = 0 * 256;
-            var highBn = 0.3468 * 256;
+            var lowS = 0.0515 * 255;
+            var highS = 0.9167 * 255;
+            var lowV = 0 * 255;
+            var highV = 0.3030 * 255;
+            var lowRn = 0.2088 * 255;
+            var highRn = 0.5097 * 255;
+            var lowGn = 0.3726 * 255;
+            var highGn = 0.6000 * 255;
+            var lowBn = 0 * 255;
+            var highBn = 0.3468 * 255;
 
 
             #region Color_mask
@@ -77,7 +79,38 @@ namespace MapAccounts.ComputerVision.ImageProcessing
             var combinedMasks = rgbMask.CopyBlank();
             CvInvoke.Multiply(rgbMask, hsvMask, combinedMasks);
             CvInvoke.Multiply(cromaMask, combinedMasks, combinedMasks);
+            CvInvoke.Dilate(combinedMasks, combinedMasks, CvInvoke.GetStructuringElement(ElementShape.Ellipse, new Size(7, 7), new Point(-1, -1)), new Point(-1, -1), 1, BorderType.Default, new MCvScalar(255));
+            CvInvoke.Erode(combinedMasks, combinedMasks, CvInvoke.GetStructuringElement(ElementShape.Ellipse, new Size(7, 7), new Point(-1, -1)), new Point(-1, -1), 1, BorderType.Default, new MCvScalar(255));
 
+            using (Mat hierarchy = new Mat())
+            using (VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint())
+            {
+
+
+                CvInvoke.FindContours(combinedMasks, contours, hierarchy,
+                    RetrType.Ccomp, ChainApproxMethod.ChainApproxSimple);
+
+                for (int i = 0; i < contours.Size; i++)
+                {
+
+                    var contour = contours[i];
+                    var vf = new PointF[contour.Size];
+                    for (int ii = 0; ii < contour.Size; ii++) vf[ii] = new PointF(contour[ii].X, contour[ii].Y);
+                    VectorOfPointF vvf = new VectorOfPointF(vf);
+                    var c = new VectorOfPointF();
+                    CvInvoke.ConvexHull(vvf, c, false, true);
+                    var cf = c.ToArray();
+                    var vp = new Point[c.Size];
+                    for (int ii = 0; ii < c.Size; ii++) vp[ii] = new Point((int)cf[ii].X, (int)cf[ii].Y);
+                    var c2 = new VectorOfPoint(vp);
+
+                    CvInvoke.DrawContours(combinedMasks, contours, i, new MCvScalar(255), -1);
+
+                    //if (c.Size > 1)
+                    //    CvInvoke.FillConvexPoly(combinedMasks, c2, new MCvScalar(255), LineType.FourConnected);
+                }
+            }
+            //combinedMasks._ThresholdBinary(new Gray(0), new Gray(255));
 
             hsvImage.Dispose();
             hsvMask.Dispose();
@@ -208,16 +241,16 @@ namespace MapAccounts.ComputerVision.ImageProcessing
         {
             //var floatImg = Image.Convert<Bgr, float>();
             //floatImg._Mul(1.0 / 256.0);
-                 
 
-            var lowR = 0.0228*256;
+
+            var lowR = 0.0228 * 256;
             var highR = 0.8876 * 256;
             var lowG = 0.0515 * 256;
             var highG = 0.9167 * 256;
             var lowB = 0 * 256;
             var highB = 0.3030 * 256;
-            var lowH = 0.0228*180;
-            var highH = 0.8876*180;
+            var lowH = 0.0228 * 180;
+            var highH = 0.8876 * 180;
             var lowS = 0.0515 * 256;
             var highS = 0.9167 * 256;
             var lowV = 0 * 256;
@@ -228,12 +261,12 @@ namespace MapAccounts.ComputerVision.ImageProcessing
             var highGn = 0.6000 * 256;
             var lowBn = 0 * 256;
             var highBn = 0.3468 * 256;
-            
+
 
             #region Color_mask
 
             var hsvImage = Image.Convert<Hsv, byte>();
-            var hsvMask = hsvImage.InRange (new Hsv(lowH, lowS, lowV), new Hsv(highH, highS, highV));
+            var hsvMask = hsvImage.InRange(new Hsv(lowH, lowS, lowV), new Hsv(highH, highS, highV));
 
             var cromaImage = ImageHelper.Bgr2Croma(Image);
             var cromaMask = cromaImage.InRange(new Bgr(lowBn, lowGn, lowRn), new Bgr(highBn, highGn, highRn));

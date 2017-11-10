@@ -243,6 +243,9 @@
   <data name="SELECT_OPERATION" xml:space="preserve">
     <value>Choississez une opération:</value>
   </data>
+  <data name="SET_FILTER_ENDPOINT" xml:space="preserve">
+    <value>Insérez l'adresse du web service qui traitera les images:</value>
+  </data>
   <data name="TG_HEATMAP" xml:space="preserve">
     <value>Voir carte de chaleur</value>
   </data>

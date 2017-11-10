@@ -430,6 +430,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Insert the address of the endpoint that will process the images:.
+        /// </summary>
+        public static string SET_FILTER_ENDPOINT {
+            get {
+                return ResourceManager.GetString("SET_FILTER_ENDPOINT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a See heatmap.
         /// </summary>
         public static string TG_HEATMAP {

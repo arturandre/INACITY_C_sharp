@@ -240,6 +240,9 @@
   <data name="SELECT_OPERATION" xml:space="preserve">
     <value>Choose an operation:</value>
   </data>
+  <data name="SET_FILTER_ENDPOINT" xml:space="preserve">
+    <value>Insert the address of the endpoint that will process the images:</value>
+  </data>
   <data name="TG_HEATMAP" xml:space="preserve">
     <value>See heatmap</value>
   </data>

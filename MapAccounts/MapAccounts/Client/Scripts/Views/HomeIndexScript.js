@@ -20,7 +20,7 @@ var modeStreetHeatMap = false;
 
 var divReports = document.getElementById("divReports");
 var divAmenities = document.getElementById("divAmenities");
-var divAmenitiesControls = document.getElementById("divAmenitiesControls");
+//var divAmenitiesControls = document.getElementById("divAmenitiesControls");
 var divImageNavControls = document.getElementById("divImageNavControls");
 
 
@@ -112,7 +112,7 @@ function updateControls(step) {
             sdLocationPoint.disabled = true;
             btDownloadImages.disabled = true;
             //divFilters.style.display = 'none';
-            divAmenitiesControls.style.display = 'none';
+            //divAmenitiesControls.style.display = 'none';
             break;
         //Região selecionada -> Coletar ruas | Amenities
         case 1:
@@ -128,7 +128,7 @@ function updateControls(step) {
             sdLocationPoint.disabled = true;
             btDownloadImages.disabled = true;
             //divFilters.style.display = 'none';
-            divAmenitiesControls.style.display = 'none';
+            //divAmenitiesControls.style.display = 'none';
             break;
         //Ruas coletadas -> Selecionar rua
         case 2:
@@ -145,7 +145,7 @@ function updateControls(step) {
             sdLocationPoint.disabled = true;
             btDownloadImages.disabled = true;
             //divFilters.style.display = 'none';
-            divAmenitiesControls.style.display = 'none';
+            //divAmenitiesControls.style.display = 'none';
             break;
         //Rua selecionada -> Ver imagens
         case 3:
@@ -160,7 +160,7 @@ function updateControls(step) {
             //sdLocationPoint.disabled = true;
             btDownloadImages.disabled = true;
             //divFilters.style.display = 'none';
-            divAmenitiesControls.style.display = 'none';
+            //divAmenitiesControls.style.display = 'none';
             break;
         //Imagens coletadas -> Selecionar filtro(s)
         case 4:
@@ -175,7 +175,7 @@ function updateControls(step) {
             //sdLocationPoint.disabled = false;
             btDownloadImages.disabled = false;
             //divFilters.style.display = 'block';
-            divAmenitiesControls.style.display = 'none';
+            //divAmenitiesControls.style.display = 'none';
             break;
         //Filtro selecionado -> Ver HeatMap | Interagir com slider de imagem
         case 5:
@@ -189,7 +189,7 @@ function updateControls(step) {
             //sdLocationPoint.disabled = false;
             btDownloadImages.disabled = false;
             //divFilters.style.display = 'block';
-            divAmenitiesControls.style.display = 'none';
+            //divAmenitiesControls.style.display = 'none';
             break;
         //Vendo imagens de amenities (Pontos de ônibus e afins)
         case 6:
@@ -203,7 +203,7 @@ function updateControls(step) {
             //btDownloadImages.disabled = true;
             //divFilters.style.display = 'none';
 
-            divAmenitiesControls.style.display = 'flex';
+            //divAmenitiesControls.style.display = 'flex';
             break;
         default:
             break;
@@ -597,8 +597,13 @@ function getFilteredImages(type, obj) {
     var filterCall = null;
     var filterUrl = "";
         filterCall = imfilter.applyGenericFilter;
-    if (type === 'Generic') {
-        filterUrl = window.location.origin + '/api/ImageFilter/GenericFilterTest';
+        if (type === 'Generic') {
+            filterUrl = window.location.origin + '/api/ImageFilter/GenericFilterTest';
+            var newFilter = prompt(getResourceString("SET_FILTER_ENDPOINT"), filterUrl);
+            if (newFilter !== null && newFilter !== "")
+            {
+                filterUrl = newFilter;
+            }
     }
     else {
         filterUrl = window.location.origin + '/api/ImageFilter/DetectFeaturesInSequence';

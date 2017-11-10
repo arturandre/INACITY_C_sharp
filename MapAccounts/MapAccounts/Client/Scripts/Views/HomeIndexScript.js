@@ -598,7 +598,9 @@ function getFilteredImages(type, obj) {
     var filterUrl = "";
         filterCall = imfilter.applyGenericFilter;
         if (type === 'Generic') {
-            filterUrl = window.location.origin + '/api/ImageFilter/GenericFilterTest';
+            type = 'Trees';
+            console.log('Type: ' + type);
+            filterUrl = window.location.origin + '/api/ImageFilter/DetectFeaturesInSequence';
             var newFilter = prompt(getResourceString("SET_FILTER_ENDPOINT"), filterUrl);
             if (newFilter !== null && newFilter !== "")
             {

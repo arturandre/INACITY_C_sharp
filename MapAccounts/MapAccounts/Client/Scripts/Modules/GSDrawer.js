@@ -169,7 +169,7 @@ function GSDrawer() {
                 return;
             }
 
-            var gspan = new GSPanoramaMiner();
+            var gspan = new GSPanoramaMiner(null, null, 10);
 
             gspan.getPanoramaId(p2, function (data, status) {
                 if (status === "OK") {

@@ -8,6 +8,15 @@
         this.completedCallback = _completedCallback;
     }
 
+    getPanoramaId(Point, callback)
+    {
+        var that = this;
+        var sv = new google.maps.StreetViewService();
+        sv.getPanoramaByLocation(Point, that.rangeForPanorama, function (data, status) {
+            callback(data, status);
+        });
+    }
+
     getPanoramasForStreet() {
         var that = this;
         that.concatenatedPoints = [];

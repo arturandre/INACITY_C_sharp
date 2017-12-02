@@ -1,5 +1,6 @@
 ﻿var geometryLib = null;
 var AMENITY_PANORAMA_MAXDISTANCE = 10;
+
 //Funções associadas ao callback de inicialização do Google Maps
 
 function initMap() {
@@ -34,6 +35,10 @@ GSDrawer.prototype.onStreetsUnloaded = null;
 
 
 function GSDrawer() {
+
+    this.MAX_IMAGES_PER_REGION = 1000;
+
+
     var that = this;
 
     var filterType = ["Cracks", "Trees"];

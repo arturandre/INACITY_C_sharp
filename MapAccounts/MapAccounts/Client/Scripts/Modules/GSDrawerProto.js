@@ -218,9 +218,9 @@ GSDrawer.prototype.getImagesFromSelectedRegion = function (interpolate, callback
     var streetThreads = 0;
     var auxFunc = function () {
         gsdrawer.selectedRegions.map(function (i) { streetThreads += i.StreetDTO.length; });
-        if (streetThreads > 100)
+        if (streetThreads > that.MAX_IMAGES_PER_REGION)
         {
-            alert("Erro: Número de ruas maior que 100 (" + streetThreads + "), por favor selecione uma região menor");
+            alert("Erro: Número de ruas maior que " + that.MAX_IMAGES_PER_REGION+" (" + streetThreads + "), por favor selecione uma região menor");
             return;
         }
         $.each(that.selectedRegions, function (idxRegion, region) {

@@ -654,7 +654,7 @@ function getImagesForStreetClick() {
                         alert(getResourceString("NO_IMAGES_1") + status.wrongImage + getResourceString("NO_IMAGES_2") + status.zeroImage + getResourceString("NO_IMAGES_3"));
                     }
                     else {
-                        alert(getResourceString("NO_IMAGES_1") + status.validImage + getResourceString("NO_IMAGES_2") + status.wrongImage + getResourceString("NO_IMAGES_3") + status.zeroImage + getResourceString("NO_IMAGES_4"));
+                        alert(getResourceString("OK_IMAGES_1") + status.validImage + getResourceString("OK_IMAGES_2") + status.wrongImage + getResourceString("OK_IMAGES_3") + status.zeroImage + getResourceString("OK_IMAGES_4"));
                     }
                     gsdrawer.loadImagesFromStreetIntoArray();
                     updateControls(4);

@@ -196,7 +196,7 @@
     <value> locations without pictures.</value>
   </data>
   <data name="OK_IMAGES_1" xml:space="preserve">
-    <value>There's</value>
+    <value>There's </value>
   </data>
   <data name="OK_IMAGES_2" xml:space="preserve">
     <value> picture(s) available for this address. \n</value>

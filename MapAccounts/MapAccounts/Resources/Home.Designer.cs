@@ -295,7 +295,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a There&apos;s.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a There&apos;s .
         /// </summary>
         public static string OK_IMAGES_1 {
             get {

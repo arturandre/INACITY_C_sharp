@@ -196,7 +196,7 @@
     <value> localizações sem imagens.</value>
   </data>
   <data name="OK_IMAGES_1" xml:space="preserve">
-    <value>Foram coletadas</value>
+    <value>Foram coletadas </value>
   </data>
   <data name="OK_IMAGES_2" xml:space="preserve">
     <value> imagem(ns) válida(s) para esta rua. \n</value>

@@ -199,7 +199,7 @@
     <value> emplacement(s) sans image(s).</value>
   </data>
   <data name="OK_IMAGES_1" xml:space="preserve">
-    <value>Ont été obtenus</value>
+    <value>Ont été obtenus </value>
   </data>
   <data name="OK_IMAGES_2" xml:space="preserve">
     <value> image(s) valide(s) de cette addresse. \n</value>

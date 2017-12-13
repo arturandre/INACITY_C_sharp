@@ -60,6 +60,7 @@ jobManager.onCreate = function (e, job) {
     node.id = "job" + job.id;
     node.innerHTML = "0/"+job.maxProgress+" - 0%";
     divProcess.appendChild(node);
+    window.onbeforeunload = confirmExit;
 };
 jobManager.onUpdate = function (e, job) {
     $("#job" + job.id).html(job.progress+ "/" + job.maxProgress + " - "+ Math.floor(100.0*(job.progress/job.maxProgress)) + "%");
@@ -67,6 +68,13 @@ jobManager.onUpdate = function (e, job) {
 jobManager.onRemove = function (e, job) {
     $("#job" + job.id).remove();
 };
+jobManager.onFinishedAllJobs = function (e, job)
+{
+    if (activeAjaxCalls === 0)
+    { 
+        window.onbeforeunload = null;
+    }
+}
 
 
 var activeAjaxCalls = 0;
@@ -244,6 +252,10 @@ function updateLocationPointSlider() {
     }
 }
 
+function confirmExit() {
+    return "Ainda exitem processos sendo executados, deseja sair?";
+}
+
 //#region Time estimation
 var timeWaitFactor = 6481829.0909;
 
@@ -323,12 +335,17 @@ $(function () {
             divLoading.style.display = 'block';
             start_time = new Date().getTime();
             activeAjaxCalls++;
-
+            
+            window.onbeforeunload = confirmExit;
         },
         ajaxStop: function () {
-            if (activeAjaxCalls--) {
+            if (--activeAjaxCalls) {
                 divLoading.style.display = 'none';
                 btStreets.value = getResourceString("GET_STREETS");
+                if (jobManager.activeJobs === 0)
+                { 
+                    window.onbeforeunload = null;
+                }
             }
             var request_time = new Date().getTime() - start_time;
             console.log("Ajax call took: " + request_time + " ms");
@@ -642,6 +659,7 @@ function getFilteredImages(type, obj) {
         updateControls(5);
     }.bind(null, type));
     if (jobId >= 0) {
+        imageHubProxy.checkHubConnection(true);
         imageHubProxy.server.detectFeaturesInSequence(gsdrawer.originalImages, type, jobId);
     }
 

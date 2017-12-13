@@ -5,6 +5,7 @@
         this.onCreate = null;
         this.onUpdate = null;
         this.onRemove = null;
+        this.onFinishedAllJobs = null;
     }
 
     createJob(progress, maxProgress, description, done) {
@@ -33,7 +34,13 @@
 
         var deletedJob = this.jobsQueue[jobid];
         delete this.jobsQueue[jobid]
-        this.activeJobs--;
+        if (--this.activeJobs)
+        {
+            if (this.onFinishedAllJobs)
+            {
+                this.onFinishedAllJobs(this);
+            }
+        }
         if (this.onRemove) {
             this.onRemove(this, deletedJob);
         }
@@ -48,6 +55,7 @@
         }
     }
 
+    
 }
 
 

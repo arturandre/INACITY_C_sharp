@@ -11,4 +11,16 @@
     $.connection.hub.start().done(function () {
     });
 
+    imageHubProxy.checkHubConnection = function(retry, done)
+    { 
+        var isHubDisconnected = $.connection.hub && $.connection.hub.state === $.signalR.connectionState.disconnected;
+        if (isHubDisconnected && retry) {
+            $.connection.hub.start().done(
+                function (done) {
+                    if (done) done();
+                });
+        }
+        else if (done) { done(); }
+        return isHubDisconnected;
+    }
 //});

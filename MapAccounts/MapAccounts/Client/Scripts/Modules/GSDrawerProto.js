@@ -2,8 +2,7 @@
 
 GSDrawer.prototype.focusStreetOnMap = function (Street) {
     if (this.getSelectedStreet() === Street) return;
-    if (this.getSelectedStreet() && !confirm(getResourceString("CHANGE_ADDRESS_WARN")))
-    {
+    if (this.getSelectedStreet() && !confirm(getResourceString("CHANGE_ADDRESS_WARN"))) {
         return;
     }
     var that = this;
@@ -218,9 +217,8 @@ GSDrawer.prototype.getImagesFromSelectedRegion = function (interpolate, callback
     var streetThreads = 0;
     var auxFunc = function () {
         gsdrawer.selectedRegions.map(function (i) { streetThreads += i.StreetDTO.length; });
-        if (streetThreads > that.MAX_IMAGES_PER_REGION)
-        {
-            alert("Erro: Número de ruas maior que " + that.MAX_IMAGES_PER_REGION+" (" + streetThreads + "), por favor selecione uma região menor");
+        if (streetThreads > that.MAX_IMAGES_PER_REGION) {
+            alert("Erro: Número de ruas maior que " + that.MAX_IMAGES_PER_REGION + " (" + streetThreads + "), por favor selecione uma região menor");
             return;
         }
         $.each(that.selectedRegions, function (idxRegion, region) {
@@ -238,7 +236,7 @@ GSDrawer.prototype.getImagesFromSelectedRegion = function (interpolate, callback
                                     var ponto = ImagesVector.Trechos[j][i];
                                     var panoDTO = ponto.PanoramaDTO;
                                     if (panoDTO && panoDTO.pano) {
-                                        panoDTO.Pictures[0].filterResults = {};
+                                        panoDTO.Pictures[0].filterResults = [];
                                         that.originalImages.push(panoDTO.Pictures[0]);
                                     }
                                 }
@@ -264,7 +262,7 @@ GSDrawer.prototype.getImagesFromSelectedRegion = function (interpolate, callback
         that.getStreetsInRegions(function () {
             auxFunc();
             if (callback)
-            callback();
+                callback();
         });
     }
     else {
@@ -345,8 +343,8 @@ GSDrawer.prototype.getImagesForStreet = function (Street, interpolate, callback,
                 //if (!point.PanoramaDTO) point.PanoramaDTO = {};
                 //if (point.PanoramaDTO.Pictures === null) point.PanoramaDTO.Pictures = [];
                 var pano = point.PanoramaDTO.pano;
-                if (point.panoramaStatus === "OK"){
-                ///if (!!pano && pano.length === 22) {
+                if (point.panoramaStatus === "OK") {
+                    ///if (!!pano && pano.length === 22) {
                     var finalURL = 'http://maps.googleapis.com/maps/api/streetview?size=640x640&pano=' +
                         pano + '&heading=' +
                         point.PanoramaDTO.frontAngle +
@@ -389,7 +387,7 @@ GSDrawer.prototype.getImagesForStreet = function (Street, interpolate, callback,
                 Street.imagesLoaded = true;
             }
         }
-        
+
         callback(ret_status);
 
     };
@@ -410,7 +408,7 @@ GSDrawer.prototype.loadImagesFromStreetIntoArray = function () {
             var ponto = that.getSelectedStreet().Trechos[j][i];
             var panoDTO = ponto.PanoramaDTO;
             if (panoDTO.pano) {
-                panoDTO.Pictures[0].filterResults = {};
+                panoDTO.Pictures[0].filterResults = [];
                 that.originalImages.push(panoDTO.Pictures[0]);
             }
         }
@@ -431,8 +429,7 @@ GSDrawer.prototype.clearImagePresentation = function () {
         clearInterval(gsdrawer.imgPresenter);
         this.imgPresenter = null;
     }
-    if (this.onClearImagePresentation)
-    {
+    if (this.onClearImagePresentation) {
         this.onClearImagePresentation();
     }
 };
@@ -564,5 +561,11 @@ GSDrawer.prototype.setFilteredSet = function (filterDTOs, type) {
     that.originalImages = that.originalImages.filter(function (el) {
         return el.filterResults !== null && el.filterResults[type] !== null;
     });
-
 };
+
+GSDrawer.prototype.setFilteredImage = function (filterDTO, type) {
+    var that = this;
+
+    that.getImagesMetaData()[type] = true;
+    that.originalImages[filterDTO.imageID].filterResults[type] = filterDTO;
+}

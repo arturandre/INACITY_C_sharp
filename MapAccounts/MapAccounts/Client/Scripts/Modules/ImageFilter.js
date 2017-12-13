@@ -1,9 +1,8 @@
-﻿function ImageFilter()
+﻿class ImageFilter
 {
+    constructor() { }
 
-}
-
-ImageFilter.prototype.getTreesForSelectedStreet = function (Street, callback) {
+    getTreesForSelectedStreet(Street, callback) {
     var that = this;
     if (!callback) throw "Error in getTreesForSelectedStreet! Callback is missing!"
     jQuery.support.cors = true;
@@ -34,7 +33,7 @@ ImageFilter.prototype.getTreesForSelectedStreet = function (Street, callback) {
     });
 }
 
-ImageFilter.prototype.getCracksForSelectedStreet = function (Street, callback)
+    getCracksForSelectedStreet(Street, callback)
 {
     var that = this;
     if (!callback) throw "Error in getTreesForSelectedStreet! Callback is missing!"
@@ -61,7 +60,7 @@ ImageFilter.prototype.getCracksForSelectedStreet = function (Street, callback)
     });
 }
 
-ImageFilter.prototype.applyGenericFilter = function(pictures, remoteUrl, type, callback)
+    applyGenericFilter(pictures, remoteUrl, type, callback)
 {
     if (!callback) throw "Error in applyGenericFilter! Callback is missing!"
     jQuery.support.cors = true;
@@ -99,4 +98,6 @@ ImageFilter.prototype.applyGenericFilter = function(pictures, remoteUrl, type, c
     });
 
     
+}
+
 }

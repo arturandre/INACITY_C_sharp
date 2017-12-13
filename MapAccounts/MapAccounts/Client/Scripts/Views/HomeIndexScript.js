@@ -49,7 +49,27 @@ var btHospital = document.getElementById("btHospital");
 var btTreesHeatMap = document.getElementById("btTreesHeatMap");
 
 
+
+
 var divLoading = document.getElementById("divLoading");
+var divProcess = document.getElementById("divProcess");
+
+var jobManager = new JobManager();
+jobManager.onCreate = function (e, job) {
+    var node = document.createElement("p");
+    node.id = "job" + job.id;
+    node.innerHTML = "0/"+job.maxProgress+" - 0%";
+    divProcess.appendChild(node);
+};
+jobManager.onUpdate = function (e, job) {
+    $("#job" + job.id).html(job.progress+ "/" + job.maxProgress + " - "+ Math.floor(100.0*(job.progress/job.maxProgress)) + "%");
+};
+jobManager.onRemove = function (e, job) {
+    $("#job" + job.id).remove();
+};
+
+
+var activeAjaxCalls = 0;
 
 /*
 0 - Stopped
@@ -68,12 +88,12 @@ var setPlayPauseState = function (state) {
             gsdrawer.clearImagePresentation();
             btAmenitiesImages.src = "Content/playbutton.png";
             break;
-        //Playing
+            //Playing
         case 1:
             gsdrawer.showAllAmenitiesImages();
             btAmenitiesImages.src = "Content/pausebutton.png";
             break;
-        //Paused
+            //Paused
         case 2:
             gsdrawer.pause();
             btAmenitiesImages.src = "Content/playbutton.png";
@@ -114,7 +134,7 @@ function updateControls(step) {
             //divFilters.style.display = 'none';
             //divAmenitiesControls.style.display = 'none';
             break;
-        //Região selecionada -> Coletar ruas | Amenities
+            //Região selecionada -> Coletar ruas | Amenities
         case 1:
             //$("#lblGuide").html("Pressione coletar ruas se a região for a desejada.");
             $("#btPictures").siblings().addClass("disabled");
@@ -130,7 +150,7 @@ function updateControls(step) {
             //divFilters.style.display = 'none';
             //divAmenitiesControls.style.display = 'none';
             break;
-        //Ruas coletadas -> Selecionar rua
+            //Ruas coletadas -> Selecionar rua
         case 2:
             //$("#lblGuide").html("Selecione uma rua ou escolha visualizar as imagens da região.");
             $("#btHeatMapStreetsToggle").addClass("disabled");
@@ -147,7 +167,7 @@ function updateControls(step) {
             //divFilters.style.display = 'none';
             //divAmenitiesControls.style.display = 'none';
             break;
-        //Rua selecionada -> Ver imagens
+            //Rua selecionada -> Ver imagens
         case 3:
             //$("#lblGuide").html("");
             $("#btHeatMapStreetsToggle").addClass("disabled");
@@ -162,7 +182,7 @@ function updateControls(step) {
             //divFilters.style.display = 'none';
             //divAmenitiesControls.style.display = 'none';
             break;
-        //Imagens coletadas -> Selecionar filtro(s)
+            //Imagens coletadas -> Selecionar filtro(s)
         case 4:
             //$("#lblGuide").html("");
             $("#btHeatMapStreetsToggle").addClass("disabled");
@@ -177,7 +197,7 @@ function updateControls(step) {
             //divFilters.style.display = 'block';
             //divAmenitiesControls.style.display = 'none';
             break;
-        //Filtro selecionado -> Ver HeatMap | Interagir com slider de imagem
+            //Filtro selecionado -> Ver HeatMap | Interagir com slider de imagem
         case 5:
             //$("#lblGuide").html("");
             $("#btHeatMapStreetsToggle").removeClass("disabled");
@@ -191,7 +211,7 @@ function updateControls(step) {
             //divFilters.style.display = 'block';
             //divAmenitiesControls.style.display = 'none';
             break;
-        //Vendo imagens de amenities (Pontos de ônibus e afins)
+            //Vendo imagens de amenities (Pontos de ônibus e afins)
         case 6:
             //$("#lblGuide").html("");
             divAmenities.style.display = 'block';
@@ -282,10 +302,10 @@ var getStreetsInRegionAjaxArray = null;
 var start_time = null;
 
 $(function () {
-    $.getScript("Client/Scripts/Views/Tooltip.js", function () {
+    $.getScript(window.location.origin + "/Client/Scripts/Views/Tooltip.js", function () {
         //TODO: Handle script loading
     });
-    $.getScript("Client/Scripts/Modules/ImageDownloader.js", function () {
+    $.getScript(window.location.origin + "/Client/Scripts/Modules/ImageDownloader.js", function () {
         //TODO: Handle script loading
     });
 
@@ -302,13 +322,17 @@ $(function () {
         ajaxStart: function () {
             divLoading.style.display = 'block';
             start_time = new Date().getTime();
+            activeAjaxCalls++;
+
         },
         ajaxStop: function () {
-            divLoading.style.display = 'none';
-            //btStreets.value = 'Coletar ruas';
-            btStreets.value = getResourceString("GET_STREETS");
+            if (activeAjaxCalls--) {
+                divLoading.style.display = 'none';
+                btStreets.value = getResourceString("GET_STREETS");
+            }
             var request_time = new Date().getTime() - start_time;
             console.log("Ajax call took: " + request_time + " ms");
+
         }
     });
 });
@@ -396,8 +420,7 @@ function bindings() {
         gsdrawer.onStreetsLoaded = function () {
             btStreets.disabled = false;
         }
-        gsdrawer.onClearImagePresentation = function ()
-        {
+        gsdrawer.onClearImagePresentation = function () {
             imgPreview.src = "/out8.jpg";
         }
     };
@@ -405,8 +428,7 @@ function bindings() {
     gsdrawer.imgPreview = document.getElementById("imgPreview");
 }
 
-var btUnsetStreetClick = function ()
-{
+var btUnsetStreetClick = function () {
     gsdrawer.drawStreetsInMap(gsdrawer.selectedRegions[0].StreetDTO);
     updateControls(2);
 }
@@ -596,16 +618,15 @@ function getFilteredImages(type, obj) {
 
     var filterCall = null;
     var filterUrl = "";
-        filterCall = imfilter.applyGenericFilter;
-        if (type === 'Generic') {
-            type = 'Trees';
-            console.log('Type: ' + type);
-            filterUrl = window.location.origin + '/api/ImageFilter/DetectFeaturesInSequence';
-            var newFilter = prompt(getResourceString("SET_FILTER_ENDPOINT"), filterUrl);
-            if (newFilter !== null && newFilter !== "")
-            {
-                filterUrl = newFilter;
-            }
+    filterCall = imfilter.applyGenericFilter;
+    if (type === 'Generic') {
+        type = 'Trees';
+        console.log('Type: ' + type);
+        filterUrl = window.location.origin + '/api/ImageFilter/DetectFeaturesInSequence';
+        var newFilter = prompt(getResourceString("SET_FILTER_ENDPOINT"), filterUrl);
+        if (newFilter !== null && newFilter !== "") {
+            filterUrl = newFilter;
+        }
     }
     else {
         filterUrl = window.location.origin + '/api/ImageFilter/DetectFeaturesInSequence';
@@ -614,15 +635,25 @@ function getFilteredImages(type, obj) {
     gsdrawer.imgPreview = document.getElementById("imgPreview");
 
 
-
-    filterCall(gsdrawer.originalImages, filterUrl + "/" + type, type, function (filterDTOs, type) {
-        gsdrawer.setFilteredSet(filterDTOs, type);
+    var jobId = jobManager.createJob(0, gsdrawer.originalImages.length, type, function (type) {
         gsdrawer.setHeatMapData(type);
         toggleHeatMap(true);
         gsdrawer.startImagePresentation(type);
-
         updateControls(5);
-    });
+    }.bind(null, type));
+    if (jobId >= 0) {
+        imageHubProxy.server.detectFeaturesInSequence(gsdrawer.originalImages, type, jobId);
+    }
+
+
+    //filterCall(gsdrawer.originalImages, filterUrl + "/" + type, type, function (filterDTOs, type) {
+    //    gsdrawer.setFilteredSet(filterDTOs, type);
+    //    gsdrawer.setHeatMapData(type);
+    //    toggleHeatMap(true);
+    //    gsdrawer.startImagePresentation(type);
+
+    //    updateControls(5);
+    //});
 }
 
 function getTreeFilteredImages() {

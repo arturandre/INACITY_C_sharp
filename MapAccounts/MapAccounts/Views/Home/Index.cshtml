@@ -1,16 +1,24 @@
 ﻿@model MapAccounts.Models.Primitives.RegionDTO
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>*@
+
+<script src="~/Scripts/jquery-3.2.1.min.js"></script>
+<script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>
+<script src="~/signalr/hubs"></script>
+<script src="~/Client/Scripts/Modules/SignalRClient.js"></script>
 <script src="~/Scripts/FileSaver.min.js"></script>
 <script src="~/Scripts/jszip.min.js"></script>
 <script src="~/Client/Scripts/Primitives/PointDTO.js"></script>
 <script src="~/Client/Scripts/Primitives/PictureDTO.js"></script>
 <script src="~/Client/Scripts/Primitives/PanoramaDTO.js"></script>
+<script src="~/Client/Scripts/Primitives/Job.js"></script>
 <script src="~/Client/Scripts/Helpers/Geocoordinate.js"></script>
+<script src="~/Client/Scripts/Modules/JobManager.js"></script>
 <script src="~/Client/Scripts/Modules/GSHeatMap.js"></script>
 <script src="~/Client/Scripts/Modules/GSDrawer.js"></script>
 <script src="~/Client/Scripts/Modules/GSPanoramaMiner.js"></script>
 <script src="~/Client/Scripts/Modules/ImageFilter.js"></script>
+
 <link rel="stylesheet" type="text/css" href="~/Client/css/map.css" />
 <link rel="stylesheet" type="text/css" href="~/Client/css/controls.css" />
 
@@ -57,8 +65,13 @@
     <div class="alert alert-warning" role="alert">
         @Resources.Global.BRW_WARN
     </div>
-    <div id="divLoading">
-        <h1>@Resources.Global.LOADING <img src="~/Content/ajax-loader.gif" /></h1>
+    <div class="container">
+        <div id="divLoading" class="row text-center">
+            <h1>@Resources.Global.LOADING <img src="~/Content/ajax-loader.gif" /></h1>
+        </div>
+        <div id="divProcess" class="row text-center">
+            
+        </div>
     </div>
 
     <br />
@@ -172,53 +185,57 @@
 </div>
 
 <script>
-            function getResourceString(msgCode)
-            {
-                switch (msgCode)
-                {
-                    case "GET_STREETS":
-                        return "@Html.Raw(Resources.Home.GET_STREETS)";
-                    case "ABORT_CALL":
-                        return "@Html.Raw(Resources.Home.ABORT_CALL)";
-                    case "SEE_STREETS":
-                        return "@Html.Raw(Resources.Home.SEE_STREETS)";
-                    case "SEE_HEATMAP":
-                        return "@Html.Raw(Resources.Home.SEE_HEATMAP)";
-                    case "GD_STEP1":
-                        return "@Html.Raw(Resources.Home.GD_STEP1)";
-                    case "GD_STEP2":
-                        return "@Html.Raw(Resources.Home.GD_STEP2)";
-                    case "GD_STEP3":
-                        return "@Html.Raw(Resources.Home.GD_STEP3)";
-                    case "NO_IMAGES_1":
-                        return "@Html.Raw(Resources.Home.NO_IMAGES_1)";
-                    case "NO_IMAGES_2":
-                        return "@Html.Raw(Resources.Home.NO_IMAGES_2)";
-                    case "NO_IMAGES_3":
-                        return "@Html.Raw(Resources.Home.NO_IMAGES_3)";
-                    case "OK_IMAGES_1":
-                        return "@Html.Raw(Resources.Home.OK_IMAGES_1)";
-                    case "OK_IMAGES_2":
-                        return "@Html.Raw(Resources.Home.OK_IMAGES_2)";
-                    case "OK_IMAGES_3":
-                        return "@Html.Raw(Resources.Home.OK_IMAGES_3)";
-                    case "OK_IMAGES_4":
-                        return "@Html.Raw(Resources.Home.OK_IMAGES_4)";
-                    case "CHANGE_ADDRESS_WARN":
-                        return "@Html.Raw(Resources.Home.CHANGE_ADDRESS_WARN)";
-                    case "SET_FILTER_ENDPOINT":
-                        return "@Html.Raw(Resources.Home.SET_FILTER_ENDPOINT)";
+    function getResourceString(msgCode)
+    {
+        switch (msgCode)
+        {
+            case "GET_STREETS":
+                return "@Html.Raw(Resources.Home.GET_STREETS)";
+            case "ABORT_CALL":
+                return "@Html.Raw(Resources.Home.ABORT_CALL)";
+            case "SEE_STREETS":
+                return "@Html.Raw(Resources.Home.SEE_STREETS)";
+            case "SEE_HEATMAP":
+                return "@Html.Raw(Resources.Home.SEE_HEATMAP)";
+            case "GD_STEP1":
+                return "@Html.Raw(Resources.Home.GD_STEP1)";
+            case "GD_STEP2":
+                return "@Html.Raw(Resources.Home.GD_STEP2)";
+            case "GD_STEP3":
+                return "@Html.Raw(Resources.Home.GD_STEP3)";
+            case "NO_IMAGES_1":
+                return "@Html.Raw(Resources.Home.NO_IMAGES_1)";
+            case "NO_IMAGES_2":
+                return "@Html.Raw(Resources.Home.NO_IMAGES_2)";
+            case "NO_IMAGES_3":
+                return "@Html.Raw(Resources.Home.NO_IMAGES_3)";
+            case "OK_IMAGES_1":
+                return "@Html.Raw(Resources.Home.OK_IMAGES_1)";
+            case "OK_IMAGES_2":
+                return "@Html.Raw(Resources.Home.OK_IMAGES_2)";
+            case "OK_IMAGES_3":
+                return "@Html.Raw(Resources.Home.OK_IMAGES_3)";
+            case "OK_IMAGES_4":
+                return "@Html.Raw(Resources.Home.OK_IMAGES_4)";
+            case "CHANGE_ADDRESS_WARN":
+                return "@Html.Raw(Resources.Home.CHANGE_ADDRESS_WARN)";
+            case "SET_FILTER_ENDPOINT":
+                return "@Html.Raw(Resources.Home.SET_FILTER_ENDPOINT)";
 
 
-                default:
-                    return "";
-                }
-            }
+            default:
+                return "";
+        }
+    }
 
 
 </script>
 
+
+
+
 <script src="~/Client/Scripts/Views/HomeIndexScript.js"></script>
+
 
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzw_81uL52LSQVYvXEpweaBsr3m-xHYac&callback=initMap&libraries=visualization,geometry">

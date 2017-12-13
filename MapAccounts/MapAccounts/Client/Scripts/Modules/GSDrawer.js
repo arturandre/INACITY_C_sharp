@@ -418,7 +418,7 @@ function GSDrawer() {
         this.amenityMarkers.push(marker);
     }
 
-    $.getScript("Client/Scripts/Modules/GSDrawerProto.js", function () {
+    $.getScript(window.location.origin + "/Client/Scripts/Modules/GSDrawerProto.js", function () {
         //TODO: Handle script loading
     });
 

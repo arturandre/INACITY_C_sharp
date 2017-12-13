@@ -89,5 +89,22 @@ namespace MapAccounts.Managers
             //gist1.SaveChanges();
             //gist1.Dispose();
         }
+        internal void detectFeatureInPictureDTO(ref PictureDTO picture, FilterResultDTO.CaracteristicType filterType)
+        {
+            var filter = ImageFilters.FirstOrDefault(p => p.FilterType.Equals(filterType));
+            if (filter == null)
+                return;
+
+            var pictureBitmap = picture.getImage();
+            var img = new Image<Bgr, byte>(pictureBitmap);
+            var result = filter.filterImage(img);
+            result.imageID = picture.imageID;
+            result.panoID = picture.panoID;
+            if (picture.filterResults == null) picture.filterResults = new List<FilterResultDTO>();
+            picture.filterResults.Add(result);
+            img.Dispose();
+            pictureBitmap.Dispose();
+
+        }
     }
 }

@@ -659,8 +659,9 @@ function getFilteredImages(type, obj) {
         updateControls(5);
     }.bind(null, type));
     if (jobId >= 0) {
-        imageHubProxy.checkHubConnection(true);
-        imageHubProxy.server.detectFeaturesInSequence(gsdrawer.originalImages, type, jobId);
+        imageHubProxy.checkHubConnection(true, function () { 
+            imageHubProxy.server.detectFeaturesInSequence(gsdrawer.originalImages, type, jobId);
+        });
     }
 
 

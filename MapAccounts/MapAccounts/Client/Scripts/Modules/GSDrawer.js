@@ -36,7 +36,7 @@ GSDrawer.prototype.onStreetsUnloaded = null;
 
 function GSDrawer() {
 
-    this.MAX_IMAGES_PER_REGION = 1000;
+    this.MAX_IMAGES_PER_REGION = 27000;
 
 
     var that = this;

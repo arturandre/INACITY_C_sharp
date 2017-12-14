@@ -427,14 +427,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="OpenTK.dll.config" />
-    <None Include="Properties\PublishProfiles\anurbs - Web Deploy %282%29.pubxml" />
-    <None Include="Properties\PublishProfiles\anurbs - Web Deploy.pubxml" />
-    <None Include="Properties\PublishProfiles\AnurbsPago.pubxml" />
-    <None Include="Properties\PublishProfiles\GSAutomapper3.pubxml" />
-    <None Include="Properties\PublishProfiles\INACITYFork - FTP.pubxml" />
-    <None Include="Properties\PublishProfiles\INACITYFork - Web Deploy.pubxml" />
-    <None Include="Properties\PublishProfiles\MapRegion.pubxml" />
     <Content Include="Scripts\FileSaver.min.js" />
+    <None Include="Properties\PublishProfiles\anurbsdev - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\anurbsdev - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />

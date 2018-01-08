@@ -17,8 +17,13 @@ namespace MapAccounts
         {
             var hubConfiguration = new HubConfiguration();
             hubConfiguration.EnableDetailedErrors = true;
+            GlobalHost.DependencyResolver = hubConfiguration.Resolver;
+            GlobalHost.Configuration.MaxIncomingWebSocketMessageSize = null;
+            GlobalHost.Configuration.KeepAlive = null;
+            GlobalHost.Configuration.ConnectionTimeout = new TimeSpan(1, 0, 0);
             // Any connection or hub wire up and configuration should go here
             app.MapSignalR("/signalr", hubConfiguration);
+            
 
             // Configure the db context, user manager and signin manager to use a single instance per request
             app.CreatePerOwinContext(ApplicationDbContext.Create);

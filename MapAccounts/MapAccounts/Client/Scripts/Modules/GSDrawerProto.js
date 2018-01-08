@@ -228,6 +228,7 @@ GSDrawer.prototype.getImagesFromSelectedRegion = function (interpolate, callback
                     //console.log(Street); console.log(status);
                     if (--streetThreads === 0) {
                         that.originalImages = [];
+                        GSDrawer.pictureIndex = 0;
 
                         $.each(auxImagesVector, function (idxImagesVector, ImagesVector) {
                             //that.originalImages.push(ImagesVector);
@@ -333,7 +334,6 @@ GSDrawer.prototype.getImagesForStreet = function (Street, interpolate, callback,
             return;
         }
         //gsdrawer.resetStreetColor(Street);
-        var pictureIndex = 0;
         var trechos = Street.Trechos;
         for (var j = 0; j < trechos.length; j++) {
             var points = trechos[j];
@@ -354,7 +354,7 @@ GSDrawer.prototype.getImagesForStreet = function (Street, interpolate, callback,
                     //var finalURL = 'https://geo0.ggpht.com/cbk?cb_client=maps_sv.tactile&authuser=0&hl=en&panoid='+pano+'&output=tile&x=1&y=1&zoom=2&nbt&fover=2&key=AIzaSyCzw_81uL52LSQVYvXEpweaBsr3m - xHYac'
                     //var finalURL = 'https://cbks1.googleapis.com/cbk?output=tile&cb_client=apiv3&v=4&gl=US&zoom=3&x=3&y=1&panoid=' + pano + '&fover=2&onerr=3&key=AIzaSyCzw_81uL52LSQVYvXEpweaBsr3m - xHYac';
                     //var finalURL = 'https://geo0.ggpht.com/cbk?cb_client=maps_sv.tactile&authuser=0&hl=en&panoid=' + pano + '&output=tile&x=6&y=3&zoom=4&nbt&fover=2&key=AIzaSyCzw_81uL52LSQVYvXEpweaBsr3m - xHYac';
-                    var picture = PictureDTO.initialize(pictureIndex++, pano, point.PanoramaDTO.frontAngle, null, finalURL,
+                    var picture = PictureDTO.initialize(GSDrawer.pictureIndex++, pano, point.PanoramaDTO.frontAngle, null, finalURL,
                         PointDTO.initialize(point.ID, point.lat, point.lng), null);
 
                     point.PanoramaDTO.Pictures.push(picture);
@@ -380,7 +380,7 @@ GSDrawer.prototype.getImagesForStreet = function (Street, interpolate, callback,
 
 
 
-                picture = PictureDTO.initialize(pictureIndex++, lastPano, lastPoint.PanoramaDTO.frontAngle, null, finalURL,
+                picture = PictureDTO.initialize(GSDrawer.pictureIndex++, lastPano, lastPoint.PanoramaDTO.frontAngle, null, finalURL,
                     PointDTO.initialize(lastPoint.ID, lastPoint.lat, lastPoint.lng), null);
 
                 lastPoint.PanoramaDTO.Pictures.push(picture);

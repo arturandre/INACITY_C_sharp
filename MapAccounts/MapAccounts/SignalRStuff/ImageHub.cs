@@ -16,16 +16,15 @@ namespace MapAccounts.SignalRStuff
     {
         public override Task OnConnected()
         {
-
-
             return base.OnConnected();
         }
 
 
-        public async Task DetectFeaturesInSequence(IEnumerable<PictureDTO> pictures, String filterType, int jobId)
+        public async Task<String> DetectFeaturesInSequence(IEnumerable<PictureDTO> pictures, String filterType, int jobId)
         {
+            if (pictures == null) return "picture list empty";
+            //Task.Run(async () => { 
             var connectionId = Context.ConnectionId;
-            if (pictures == null) return;
             for (int i = 0; i < pictures.Count(); i++)
             {
                 var p = pictures.ElementAt(i);
@@ -36,10 +35,10 @@ namespace MapAccounts.SignalRStuff
 
                     try
                     {
-                        Task.Run(() =>
+                        Task.Run(async () =>
                         {
                             ResultsStoreManager storage = new ResultsStoreManager();
-                            storage.StoreHeatmapPoint(p, (CaracteristicType)Enum.Parse(typeof(CaracteristicType), filterType));
+                            await storage.StoreHeatmapPoint(p, (CaracteristicType)Enum.Parse(typeof(CaracteristicType), filterType));
                         });
                     }
                     catch (Exception ex)
@@ -51,9 +50,24 @@ namespace MapAccounts.SignalRStuff
                     p = null;
                 }
             }
+            //});
+            return "OK";
         }
 
 
+        public override System.Threading.Tasks.Task OnDisconnected(bool stopCalled)
+        {
+            if (stopCalled)
+            {
+                Console.WriteLine(String.Format("Client {0} explicitly closed the connection.", Context.ConnectionId));
+            }
+            else
+            {
+                Console.WriteLine(String.Format("Client {0} timed out .", Context.ConnectionId));
+            }
+
+            return base.OnDisconnected(stopCalled);
+        }
 
 
     }

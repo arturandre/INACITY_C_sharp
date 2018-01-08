@@ -30,13 +30,27 @@
             </div>
         </div>
     </div>
-    <div class="container body-content">
+    <div class="col-sm-2">
+        <ul class="list-group">
+            <li class="list-group-item">
+                <img style="margin-top:5px" src="~/Content/mslogo.png" />
+            </li>
+            <li class="list-group-item">
+                <img style="margin-top:5px" src="~/Content/interscitylogo.png" />
+            </li>
+        </ul>
+</div>
+    <div class="container body-content col-sm-8">
+
+
         @RenderBody()
         <hr />
         <footer>
             <p>@DateTime.Now.Year - @Resources.Global.PJT_SHORT</p>
         </footer>
+
     </div>
+    <div class="col-sm-2"></div>
 
     @*@Scripts.Render("~/bundles/jquery")*@
     @Scripts.Render("~/bundles/bootstrap")

@@ -400,7 +400,9 @@
     <Content Include="Content\eyeicon.png" />
     <Content Include="Content\eyeiconmini.png" />
     <Content Include="Content\greenmarker.png" />
+    <Content Include="Content\interscitylogo.png" />
     <Content Include="Content\LUTTrees.txt" />
+    <Content Include="Content\mslogo.png" />
     <Content Include="Content\pausebutton.png" />
     <Content Include="Content\playbutton.png" />
     <Content Include="Content\questionmark.png" />
@@ -428,8 +430,12 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="OpenTK.dll.config" />
     <Content Include="Scripts\FileSaver.min.js" />
+    <None Include="Properties\PublishProfiles\anurbs - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\anurbs - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\anurbsdev - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\anurbsdev - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\inacity - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\inacity - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />

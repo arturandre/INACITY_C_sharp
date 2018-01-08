@@ -37,7 +37,7 @@ GSDrawer.prototype.onStreetsUnloaded = null;
 function GSDrawer() {
 
     this.MAX_IMAGES_PER_REGION = 27000;
-
+    
 
     var that = this;
 
@@ -428,6 +428,7 @@ function myFunction(address) {
 }
 
 GSDrawer.initMap = null;
+GSDrawer.pictureIndex = 0;
 
 GSDrawer.redStroke = {
     geodesic: true,

@@ -26,38 +26,29 @@
                     <li>@Html.ActionLink(Resources.Home.CONTACT, "Contact", "Home")</li>
                     @*<li>@Html.ActionLink("User Maps", "Index", "UserMap")</li>*@
                 </ul>
+                
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href='/fr'><img border="0" alt="Langue française" src="~/Content/flag_fr.png" width="20px" height="20px"></a></li>
+                    <li><a href='/en-us'><img border="0" alt="English language" src="~/Content/flag_en-us.png" width="20px" height="20px"></a></li>
+                    <li><a href='/pt-br'><img border="0" alt="Língua portuguesa" src="~/Content/flag_pt-br.png" width="20px" height="20px"></a></li>
+                </ul>
                 @*@Html.Partial("_LoginPartial")*@
             </div>
         </div>
     </div>
-    <div class="col-sm-3">
-        <ul class="list-group">
-            <li class="list-group-item">
-                SPONSORS
-            </li>
-            <li class="list-group-item">
-                <a href="https://www.microsoft.com/">
-                    <img width="100%" style="margin-top:5px" src="~/Content/mslogo.png" />
-                </a>
-</li>
-            <li class="list-group-item">
-                <a href="http://interscity.org/">
-                    <img width="100%" style="margin-top:5px" src="~/Content/interscitylogo.png" />
-                </a>
-            </li>
-        </ul>
-</div>
-    <div class="container body-content col-sm-8">
+    
+    <div class="container body-content">
 
 
         @RenderBody()
         <hr />
         <footer>
             <p>@DateTime.Now.Year - @Resources.Global.PJT_SHORT</p>
+            <p>We acknowledge Microsoft for a sponsorship through the Microsoft Azure
+Sponsorship and Google for their Streetview API.</p>
         </footer>
 
     </div>
-    <div class="col-sm-2"></div>
 
     @*@Scripts.Render("~/bundles/jquery")*@
     @Scripts.Render("~/bundles/bootstrap")

@@ -56,9 +56,27 @@
     ViewBag.Title = Resources.Home.HOME_PAGE;
 }
 
-<div class="jumbotron">
-    <h1>INACITY</h1>
-    <p class="lead">@Resources.Global.PJT_NAME</p>
+<div class="jumbotron container">
+    <div class="row">
+        <h1>INACITY</h1>
+        <p class="lead">INvestigate and Analyse a City - INACITY</p>
+    </div>
+    <div class="row">
+        <div class="col-sm-2" style="margin-left:-15px">
+            <p>SPONSORS:</p>
+        </div>
+        <div class="col-sm-2">
+            <a href="https://www.microsoft.com/">
+                <img height="60px" style="margin-top:5px" src="/Content/mslogo.png">
+            </a>
+        </div>
+
+        <div class="col-sm-2">
+            <a href="http://interscity.org/">
+                <img height="60px" style="margin-top:5px" src="/Content/interscitylogo.png">
+            </a>
+        </div>
+    </div>
 </div>
 
 <div class="row">
@@ -70,7 +88,7 @@
             <h1>@Resources.Global.LOADING <img src="~/Content/ajax-loader.gif" /></h1>
         </div>
         <div id="divProcess" class="row text-center">
-            
+
         </div>
     </div>
 
@@ -105,7 +123,8 @@
             <input type="button" id="btUnsetStreet" value="@Resources.Home.UNSET_STREET" class="btn btn-default hidden" />
         </div>
         <div id="divMapSide">
-            <div class="mapcomponent" id="map"></div>
+            <div class="mapcomponent" id="map"></div></br>
+            <p id="lblSelectedArea"></p>
         </div>
 
 

@@ -399,6 +399,9 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\eyeicon.png" />
     <Content Include="Content\eyeiconmini.png" />
+    <Content Include="Content\flag_en-us.png" />
+    <Content Include="Content\flag_fr.png" />
+    <Content Include="Content\flag_pt-br.png" />
     <Content Include="Content\greenmarker.png" />
     <Content Include="Content\interscitylogo.png" />
     <Content Include="Content\LUTTrees.txt" />

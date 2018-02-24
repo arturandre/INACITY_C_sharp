@@ -20,11 +20,11 @@ GSDrawer.prototype.focusStreetOnMap = function (Street) {
     }
     var polylines = GSDrawer.streetToGSPolylineArray(Street);
     $.each(polylines, function (i, p) {
-        p.setMap(that.getMap());
         p.setOptions({ strokeColor: '#0000FF' });
         google.maps.event.addListener(p, 'click', function () {
             that.focusStreetOnMap(Street);
         });
+        p.setMap(that.getMap());
 
     });
     this.polylinesOnMap[Street.Name] = polylines;
@@ -129,6 +129,15 @@ GSDrawer.prototype.getRegion = function () {
         };
         var region = {};
         region.Bounds = Bounds;
+        var upperLeft = new google.maps.LatLng({ lat: North, lng: West });
+        var upperRight = new google.maps.LatLng({ lat: North, lng: East });
+        var bottomRight = new google.maps.LatLng({ lat: South, lng: East });
+        var bottomLeft = new google.maps.LatLng({ lat: South, lng: West });
+        region.LatLngMat = new Array();
+        region.LatLngMat.push(upperLeft);
+        region.LatLngMat.push(upperRight);
+        region.LatLngMat.push(bottomRight);
+        region.LatLngMat.push(bottomLeft);
         return region;
     }
 };

@@ -14,6 +14,7 @@ var btNextStreetImage = document.getElementById("btNextStreetImage");
 var btStreets = document.getElementById("btStreets");
 var lblMaxImages = document.getElementById("lblMaxImages");
 var lblNImages = document.getElementById("lblNImages");
+var lblSelectedArea = document.getElementById("lblSelectedArea");
 
 var btHeatMapStreetsToggle = document.getElementById("btHeatMapStreetsToggle");
 var modeStreetHeatMap = false;
@@ -55,6 +56,9 @@ var divLoading = document.getElementById("divLoading");
 var divProcess = document.getElementById("divProcess");
 
 var jobManager = new JobManager();
+
+
+
 jobManager.onCreate = function (e, job) {
     var node = document.createElement("p");
     node.id = "job" + job.id;
@@ -422,6 +426,22 @@ function bindings() {
         }
         gsdrawer.onSelectedRegionChanged = function () {
             updateControls(2);
+            if (gsdrawer.getRegion()) {
+                var SelectedArea = google.maps.geometry.computeArea(gsdrawer.getRegion().LatLngMat);
+                if (SelectedArea > 0)
+                {
+                    lblSelectedArea.innerHTML = "Selected area: " + google.maps.geometry.computeArea(gsdrawer.getRegion().LatLngMat + " m²");
+                }
+                else
+                {
+                    lblSelectedArea.innerHTML = "Selected area: Error, area less or equal than zero!";
+                }
+            }
+            else 
+            {
+                lblSelectedArea.innerHTML = "No area selected.";
+            }
+            
         }
         gsdrawer.onStreetFocused = function (obj) {
             updateControls(3);
@@ -433,9 +453,6 @@ function bindings() {
         }
         gsdrawer.onStreetsLoaded = function () {
             btStreets.disabled = true;
-        }
-        gsdrawer.onStreetsLoaded = function () {
-            btStreets.disabled = false;
         }
         gsdrawer.onClearImagePresentation = function () {
             imgPreview.src = "/out8.jpg";

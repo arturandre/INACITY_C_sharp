@@ -219,7 +219,7 @@ function GSDrawer() {
         this.pause();
         selectedStreet = Street;
         this.resetImageData();
-        if (!!this.onSelectedStreetChanged) {
+        if (this.onSelectedStreetChanged) {
             this.onSelectedStreetChanged(Street);
         }
     }

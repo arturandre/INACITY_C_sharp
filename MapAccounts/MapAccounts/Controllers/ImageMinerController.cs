@@ -1,4 +1,5 @@
-﻿using MapAccounts.Models;
+﻿using MapAccounts.Managers;
+using MapAccounts.Models;
 using MapAccounts.Models.Imagery;
 using MapAccounts.Models.Primitives;
 using System;
@@ -12,6 +13,7 @@ namespace MapAccounts.Controllers
     public class ImageMinerController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+         
 
         [HttpPost]
         [Route("ImagesFromStreet")]
@@ -32,17 +34,8 @@ namespace MapAccounts.Controllers
             {
                 try
                 {
-                    IImageMiner imageMiner = null;
-                    switch (imageProvider)
-                    {
-                        case ImageProvider.Google:
-                            imageMiner = new Models.Imagery.Google.GSMiner();
-                            break;
-                        default:
-                            imageMiner = new Models.Imagery.Google.GSMiner();
-                            break;
-                    }
-
+                    var imageMinerManager = ImageMinerManager.getInstance();
+                    IImageMiner imageMiner = imageMinerManager.getImageMiner(imageProvider);
                     picture.base64image = imageMiner.getImageBase64(picture.imageURI);
                     //(new Models.Imagery.Google.GSMiner()).DownloadBase64ImageFromURI();
                 }

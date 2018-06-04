@@ -1,5 +1,13 @@
 ﻿@model MapAccounts.Models.Primitives.RegionDTO
 
+@{
+    var gsvkey = System.Web.Configuration.WebConfigurationManager.AppSettings["googlestreet:key"];
+    var gsvurl = Html.Raw("https://maps.googleapis.com/maps/api/js?key=" + gsvkey + "&callback=initMap&libraries=visualization,geometry");
+}
+<script>
+    var gsvkey = "@gsvkey";
+</script>
+
 @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>*@
 
 <script src="~/Scripts/jquery-3.2.1.min.js"></script>
@@ -26,6 +34,7 @@
 @{
     <script>
         var gsdrawer = new GSDrawer();
+        var gspanominer = new GSPanoramaMiner(null, null, null);
         var imfilter = new ImageFilter();
     </script>
     if (Model != null)
@@ -256,6 +265,6 @@
 <script src="~/Client/Scripts/Views/HomeIndexScript.js"></script>
 
 
-<script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzw_81uL52LSQVYvXEpweaBsr3m-xHYac&callback=initMap&libraries=visualization,geometry">
+
 </script>
+<script async defer src = "@gsvurl"></script>

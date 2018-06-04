@@ -25,13 +25,18 @@ namespace MapAccounts.Managers
             return instance;
         }
 
-        public static IImageMiner getImageMiner(ImageProvider imgProvider)
+        public IImageMiner getImageMiner(ImageProvider imgProvider)
         {
             if (ImageMiners.ContainsKey(imgProvider))
             {
                 return ImageMiners[imgProvider];
             }
-            return null;
+            //TODO: Configurar heurística para determinar a plataforma de imageamento
+            else
+            {
+                return ImageMiners.Values.FirstOrDefault();
+            }
+            
             
         }
     }

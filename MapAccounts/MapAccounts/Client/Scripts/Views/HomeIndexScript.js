@@ -1,4 +1,75 @@
-﻿var btSearchAddress = document.getElementById("btSearchAddress");
+﻿function initMap() {
+    var myStyles = [
+        {
+            featureType: "poi",
+            elementType: "labels",
+            stylers: [
+                { visibility: "off" }
+            ]
+        }
+    ];
+    mapOptions.styles = myStyles;
+    gsdrawer.setMap(new google.maps.Map(document.getElementById("map"),
+        mapOptions));
+    $.each(gsdrawer.selectedRegions, function (index, region) {
+        gsdrawer.drawRegionOnMap(region);
+        gsdrawer.drawStreetsInMap(region.StreetDTO);
+    });
+
+    gsdrawer.onPause = function () {
+        btAutoPlayStreetImages.classList.remove('hidden');
+        btAutoPlayPauseStreetImages.classList.add('hidden');
+    }
+
+    gsdrawer.onImageChanged = function () {
+        sdLocationPoint.value = gsdrawer.getImgIndex();
+    }
+
+    gsdrawer.onSelectedStreetChanged = function (newStreet) {
+
+        if (newStreet === null) {
+            $("#btUnsetStreet").addClass("hidden");
+        }
+        else {
+            $("#btUnsetStreet").removeClass("hidden");
+        }
+
+    }
+    gsdrawer.onSelectedRegionChanged = function () {
+        updateControls(2);
+        //TODO: Mudar isto para lidar com uma coleção de regiões
+        let selectedRegion = gsdrawer.getSelectedRegions();
+        if (selectedRegion) {
+            var SelectedArea = google.maps.geometry.spherical.computeArea(selectedRegion.LatLngMat);
+            if (SelectedArea > 0) {
+                lblSelectedArea.innerHTML = "Selected area: " + SelectedArea + " m²";
+            }
+            else {
+                lblSelectedArea.innerHTML = "Selected area: Error, area less or equal than zero!";
+            }
+        }
+        else {
+            lblSelectedArea.innerHTML = "No area selected.";
+        }
+
+    }
+    gsdrawer.onStreetFocused = function (obj) {
+        updateControls(3);
+    }
+    gsdrawer.onImagePresentation = function () {
+        divImageNavControls.classList.remove("hidden");
+        sdLocationPoint.disabled = false;
+        updateLocationPointSlider();
+    }
+    gsdrawer.onStreetsLoaded = function () {
+        btStreets.disabled = true;
+    }
+    gsdrawer.onClearImagePresentation = function () {
+        imgPreview.src = "/out8.jpg";
+    }
+};
+
+var btSearchAddress = document.getElementById("btSearchAddress");
 var btPictures = document.getElementById("btPictures");
 var btAmenitiesImages = document.getElementById("btAmenitiesImages");
 var btSnapInMap = document.getElementById("btSnapInMap");
@@ -387,77 +458,7 @@ function bindings() {
         gsdrawer.setImgPresentationPosition(e.currentTarget.value);
     };
 
-    GSDrawer.initMap = function () {
-        var myStyles = [
-            {
-                featureType: "poi",
-                elementType: "labels",
-                stylers: [
-                    { visibility: "off" }
-                ]
-            }
-        ];
-        mapOptions.styles = myStyles;
-        gsdrawer.setMap(new google.maps.Map(document.getElementById("map"),
-            mapOptions));
-        $.each(gsdrawer.selectedRegions, function (index, region) {
-            gsdrawer.drawRegionOnMap(region);
-            gsdrawer.drawStreetsInMap(region.StreetDTO);
-        });
-
-        gsdrawer.onPause = function () {
-            btAutoPlayStreetImages.classList.remove('hidden');
-            btAutoPlayPauseStreetImages.classList.add('hidden');
-        }
-
-        gsdrawer.onImageChanged = function () {
-            sdLocationPoint.value = gsdrawer.getImgIndex();
-        }
-
-        gsdrawer.onSelectedStreetChanged = function (newStreet) {
-
-            if (newStreet === null) {
-                $("#btUnsetStreet").addClass("hidden");
-            }
-            else {
-                $("#btUnsetStreet").removeClass("hidden");
-            }
-
-        }
-        gsdrawer.onSelectedRegionChanged = function () {
-            updateControls(2);
-            if (gsdrawer.getRegion()) {
-                var SelectedArea = google.maps.geometry.computeArea(gsdrawer.getRegion().LatLngMat);
-                if (SelectedArea > 0)
-                {
-                    lblSelectedArea.innerHTML = "Selected area: " + google.maps.geometry.computeArea(gsdrawer.getRegion().LatLngMat + " m²");
-                }
-                else
-                {
-                    lblSelectedArea.innerHTML = "Selected area: Error, area less or equal than zero!";
-                }
-            }
-            else 
-            {
-                lblSelectedArea.innerHTML = "No area selected.";
-            }
-            
-        }
-        gsdrawer.onStreetFocused = function (obj) {
-            updateControls(3);
-        }
-        gsdrawer.onImagePresentation = function () {
-            divImageNavControls.classList.remove("hidden");
-            sdLocationPoint.disabled = false;
-            updateLocationPointSlider();
-        }
-        gsdrawer.onStreetsLoaded = function () {
-            btStreets.disabled = true;
-        }
-        gsdrawer.onClearImagePresentation = function () {
-            imgPreview.src = "/out8.jpg";
-        }
-    };
+    
     imgPreview.src = "/out8.jpg";
     gsdrawer.imgPreview = document.getElementById("imgPreview");
 }
@@ -712,7 +713,7 @@ function getImagesForStreetClick() {
     try {
         const theStreet = gsdrawer.getSelectedStreet();
         if (theStreet) {
-            gsdrawer.getImagesForStreet(theStreet, cbInterpolatePoints.checked,
+            gspanominer.getImagesForStreet(theStreet, cbInterpolatePoints.checked,
                 function (status) {
                     if (status.validImage === 0) {
                         //

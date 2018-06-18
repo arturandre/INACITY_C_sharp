@@ -1,5 +1,6 @@
 ﻿var geometryLib = null;
 var AMENITY_PANORAMA_MAXDISTANCE = 10;
+const gsvKey = 'AIzaSyD5HdIiGhBEap1V9hHPjhq87wB07Swg-Gc';
 
 //Funções associadas ao callback de inicialização do Google Maps
 
@@ -154,7 +155,7 @@ class GSDrawer {
                 var p2 = new google.maps.LatLng({ lat: lat2, lng: lng2 });
 
                 if (status === google.maps.GeocoderStatus.OK) {
-                    if (checkForDistance(p2, results[0].geometry.location)) {
+                    if (GSDrawer.checkForDistance(p2, results[0].geometry.location)) {
                         lat2 = results[0].geometry.location.lat();
                         lng2 = results[0].geometry.location.lng();
                         p2 = new google.maps.LatLng({ lat: lat2, lng: lng2 });
@@ -186,7 +187,7 @@ class GSDrawer {
                             data.location.pano +
                             '&heading=' + busStopHeading +
                             '&pitch=0' +
-                            '&key=AIzaSyCzw_81uL52LSQVYvXEpweaBsr3m - xHYac&sensor=false';
+                            '&key='+gsvKey+'&sensor=false';
                         that.pause();
                         that.setImgByUrl(busStopImageUrl);
                         console.debug(busStopImageUrl);
@@ -349,7 +350,7 @@ class GSDrawer {
                                 position.pano +
                                 '&heading=' + cameraHeading +
                                 '&pitch=0' +
-                                '&key=AIzaSyCzw_81uL52LSQVYvXEpweaBsr3m - xHYac&sensor=false';
+                                '&key='+gsvKey+'&sensor=false';
                             vMarker.imageUrl = imageUrl;
 
                             var picture = PictureDTO.initialize(pictureIndex++, position.pano, cameraHeading, null, imageUrl,
